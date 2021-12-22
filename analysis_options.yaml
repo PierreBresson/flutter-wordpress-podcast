@@ -1,0 +1,13 @@
+include: package:lint/analysis_options.yaml
+
+analyzer:
+  exclude: [lib/**.g.dart, lib/**.freezed.dart]
+
+linter:
+  rules:
+    # avoid_print: false
+    depend_on_referenced_packages: false
+    # prefer_function_declarations_over_variables: false
+    # avoid_redundant_argument_values: false
+    # avoid_function_literals_in_foreach_calls: false
+    sort_pub_dependencies: false
