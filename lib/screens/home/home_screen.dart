@@ -34,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final episodes = await httpRepository.getEpisodes(page: pageKey, categories: 9);
+      final episodes =
+          await httpRepository.getEpisodes(page: pageKey, categories: 9);
 
       final List<Episode> newItems = episodes;
 
@@ -78,23 +79,24 @@ class _HomeScreenState extends State<HomeScreen> {
               onTryAgain: _pagingController.refresh,
             ),
             itemBuilder: (context, item, index) => EpisodeCard(
-                imageUrl: item.imageUrl,
-                title: item.title,
-                audioFileUrl: item.audioFileUrl,
-                onPressed: () {
-                  showModalBottomSheet<void>(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
+              imageUrl: item.imageUrl,
+              title: item.title,
+              audioFileUrl: item.audioFileUrl,
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Player(imageUrl: item.imageUrl, title: item.title);
-                    },
-                  );
-                }),
+                  ),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Player(imageUrl: item.imageUrl, title: item.title);
+                  },
+                );
+              },
+            ),
           ),
           separatorBuilder: (context, index) => const SizedBox(
             height: 16,

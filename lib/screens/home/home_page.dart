@@ -4,7 +4,7 @@ import 'home_screen.dart';
 
 class HomePage extends StatelessWidget with PageMixin {
   @override
-  Widget build(BuildContext context) => HomeScreen();
+  Widget build(BuildContext context) => const HomeScreen();
 
   @override
   Widget get child => HomePage();

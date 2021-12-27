@@ -5,8 +5,13 @@ class Episode {
   final String audioFileUrl;
   final String imageUrl;
 
-  Episode(
-      {required this.audioFileUrl, required this.date, required this.id, required this.title, required this.imageUrl});
+  Episode({
+    required this.audioFileUrl,
+    required this.date,
+    required this.id,
+    required this.title,
+    required this.imageUrl,
+  });
 
   factory Episode.fromJson(Map<String, dynamic> json) {
     return Episode(

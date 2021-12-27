@@ -32,11 +32,22 @@ class Player extends StatelessWidget {
           padding: const EdgeInsets.all(18.0),
           child: Image(image: NetworkImage(imageUrl)),
         ),
-        const SizedBox(height: 30),
-        Text(
-          title,
-          maxLines: 1,
-          textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Text(
+            title,
+            maxLines: 1,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Expanded(
+          child: Slider(
+            max: 100.0,
+            value: 10,
+            onChanged: (value) {
+              //
+            },
+          ),
         ),
         const SizedBox(height: 20),
         Row(
