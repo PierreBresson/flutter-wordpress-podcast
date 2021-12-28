@@ -1,20 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fwp/blocs/blocs.dart';
+import 'package:fwp/screens/screens.dart';
 import 'package:fwp/style/style.dart';
-import 'package:go_router/go_router.dart';
 
-class FwpApp extends StatelessWidget {
-  final GoRouter _router;
+class FwpApp extends StatefulWidget {
+  const FwpApp({
+    Key? key,
+  }) : super(key: key);
 
-  const FwpApp({Key? key, required GoRouter router})
-      : _router = router,
-        super(key: key);
+  @override
+  State<FwpApp> createState() => _FwpAppState();
+}
+
+class _FwpAppState extends State<FwpApp> {
+  final screensTitle = ["Accueil", "Lecteur", "A propos"];
+  final screens = const [HomeScreen(), PlayerScreen(), AboutScreen()];
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routeInformationParser: _router.routeInformationParser,
-      routerDelegate: _router.routerDelegate,
+    return MaterialApp(
       theme: themeData,
+      home: BlocBuilder<BottomBarNavigationCubit, int>(
+        builder: (_, index) => Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            title: Text(
+              screensTitle[index],
+              style: Theme.of(context).textTheme.headline5,
+            ),
+          ),
+          body: IndexedStack(
+            index: index,
+            children: screens,
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.house),
+                label: screensTitle[0],
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.music_note),
+                label: screensTitle[1],
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.info),
+                label: screensTitle[2],
+              )
+            ],
+            currentIndex: index,
+            onTap: (index) =>
+                context.read<BottomBarNavigationCubit>().update(index),
+          ),
+        ),
+      ),
     );
   }
 }

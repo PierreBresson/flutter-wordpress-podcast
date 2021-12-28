@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
-import 'package:fwp/screens/pages.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -48,65 +47,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          "Thinkerview",
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.info_outline,
-              color: Colors.black,
-            ),
-            onPressed: () => AboutPage().go(context),
-          ),
-        ],
+    return RefreshIndicator(
+      onRefresh: () => Future.sync(
+        () => _pagingController.refresh(),
       ),
-      body: RefreshIndicator(
-        onRefresh: () => Future.sync(
-          () => _pagingController.refresh(),
-        ),
-        child: PagedListView.separated(
-          pagingController: _pagingController,
-          builderDelegate: PagedChildBuilderDelegate<Episode>(
-            animateTransitions: true,
-            firstPageErrorIndicatorBuilder: (_) => ErrorIndicator(
-              error: _pagingController.error.toString(),
-              onTryAgain: _pagingController.refresh,
-            ),
-            itemBuilder: (context, item, index) => EpisodeCard(
-              imageUrl: item.imageUrl,
-              title: item.title,
-              audioFileUrl: item.audioFileUrl,
-              onPressed: () {
-                showModalBottomSheet<void>(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
+      child: PagedListView.separated(
+        pagingController: _pagingController,
+        builderDelegate: PagedChildBuilderDelegate<Episode>(
+          animateTransitions: true,
+          firstPageErrorIndicatorBuilder: (_) => ErrorIndicator(
+            error: _pagingController.error.toString(),
+            onTryAgain: _pagingController.refresh,
+          ),
+          itemBuilder: (context, item, index) => EpisodeCard(
+            imageUrl: item.imageUrl,
+            title: item.title,
+            audioFileUrl: item.audioFileUrl,
+            onPressed: () {
+              showModalBottomSheet<void>(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Player(imageUrl: item.imageUrl, title: item.title);
-                  },
-                );
-              },
-            ),
-          ),
-          separatorBuilder: (context, index) => const SizedBox(
-            height: 16,
+                ),
+                context: context,
+                builder: (BuildContext context) {
+                  return Player(imageUrl: item.imageUrl, title: item.title);
+                },
+              );
+            },
           ),
         ),
-      ),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
-        backgroundColor: Colors.green,
-        child: Icon(Icons.music_note),
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 16,
+        ),
       ),
     );
   }

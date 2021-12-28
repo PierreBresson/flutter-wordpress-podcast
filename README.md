@@ -1,16 +1,24 @@
-# fwp
+# Flutter Wordpress Podcast
 
-A new Flutter project.
+Podcast white label app based on Wordpress API using Flutter framework.
 
-## Getting Started
+## Roadmap
 
-This project is a starting point for a Flutter application.
+Already existing and planned features.
 
-A few resources to get you started if this is your first Flutter project:
+✅ Play audio in the background and respond to controls on the lockscreen, media notification, headset
+❌ Details when clicking on a podcast item
+❌ Download podcast / offline mode
+❌ Chromecast / Airplay
+❌ AndroidAuto / CarPlay
+❌ Env config / scripts for white label apps
+❌ Search
+❌ Categories
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+App tested and working on :
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+✅ iOS
+✅ Android
+❌ Web
+❌ MacOS
+❌ Linux

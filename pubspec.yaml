@@ -1,5 +1,5 @@
 name: fwp
-description: A new Flutter project.
+description: Podcast white label app based on Wordpress API using Flutter framework
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
