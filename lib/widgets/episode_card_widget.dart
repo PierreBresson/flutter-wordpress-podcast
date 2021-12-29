@@ -16,40 +16,29 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 200.0,
-            child: Ink.image(
-              image: NetworkImage(imageUrl),
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Card(
+        margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200.0,
+              child: Ink.image(
+                image: NetworkImage(imageUrl),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Column(
-              children: [
-                Text(title),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: FittedBox(
-                    child: ElevatedButton(
-                      onPressed: onPressed,
-                      child: Row(
-                        children: const [
-                          Icon(Icons.play_arrow),
-                          Text("Play"),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Column(
+                children: [
+                  Text(title),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -59,10 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
             error: _pagingController.error.toString(),
             onTryAgain: _pagingController.refresh,
           ),
-          itemBuilder: (context, item, index) => EpisodeCard(
-            imageUrl: item.imageUrl,
-            title: item.title,
-            audioFileUrl: item.audioFileUrl,
+          itemBuilder: (context, episode, index) => EpisodeCard(
+            imageUrl: episode.imageUrl,
+            title: episode.title,
+            audioFileUrl: episode.audioFileUrl,
             onPressed: () {
               showModalBottomSheet<void>(
                 shape: const RoundedRectangleBorder(
@@ -72,9 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 context: context,
-                builder: (BuildContext context) {
-                  return Player(imageUrl: item.imageUrl, title: item.title);
-                },
+                builder: (BuildContext context) =>
+                    EpisodeOptions(episode: episode),
               );
             },
           ),
