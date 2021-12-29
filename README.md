@@ -6,6 +6,7 @@ Podcast white label app based on Wordpress API using Flutter framework.
 
 Already existing and planned features.
 
+- [x] Dark mode
 - [x] Play audio in the background and respond to controls on the lockscreen, media notification, headset
 - [ ] Env config / scripts for white label apps
 - [ ] Search

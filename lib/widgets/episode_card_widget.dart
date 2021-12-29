@@ -33,7 +33,10 @@ class EpisodeCard extends StatelessWidget {
               padding: const EdgeInsets.all(14.0),
               child: Column(
                 children: [
-                  Text(title),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
                 ],
               ),
             ),

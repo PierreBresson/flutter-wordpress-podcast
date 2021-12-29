@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/screens/screens.dart';
-import 'package:fwp/style/style.dart';
+import 'package:fwp/styles/themes.dart';
 
 class FwpApp extends StatefulWidget {
   const FwpApp({
@@ -20,17 +20,10 @@ class _FwpAppState extends State<FwpApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: themeData,
+      theme: ligthThemeData,
+      darkTheme: darkThemeData,
       home: BlocBuilder<BottomBarNavigationCubit, int>(
         builder: (_, index) => Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            title: Text(
-              screensTitle[index],
-              style: Theme.of(context).textTheme.headline5,
-            ),
-          ),
           body: IndexedStack(
             index: index,
             children: screens,

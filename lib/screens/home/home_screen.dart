@@ -47,39 +47,49 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () => Future.sync(
-        () => _pagingController.refresh(),
-      ),
-      child: PagedListView.separated(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate<Episode>(
-          animateTransitions: true,
-          firstPageErrorIndicatorBuilder: (_) => ErrorIndicator(
-            error: _pagingController.error.toString(),
-            onTryAgain: _pagingController.refresh,
-          ),
-          itemBuilder: (context, episode, index) => EpisodeCard(
-            imageUrl: episode.imageUrl,
-            title: episode.title,
-            audioFileUrl: episode.audioFileUrl,
-            onPressed: () {
-              showModalBottomSheet<void>(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                context: context,
-                builder: (BuildContext context) =>
-                    EpisodeOptions(episode: episode),
-              );
-            },
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          "Derniers épisodes",
+          style: Theme.of(context).textTheme.headline6,
         ),
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 16,
+      ),
+      body: RefreshIndicator(
+        onRefresh: () => Future.sync(
+          () => _pagingController.refresh(),
+        ),
+        child: PagedListView.separated(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<Episode>(
+            animateTransitions: true,
+            firstPageErrorIndicatorBuilder: (_) => ErrorIndicator(
+              error: _pagingController.error.toString(),
+              onTryAgain: _pagingController.refresh,
+            ),
+            itemBuilder: (context, episode, index) => EpisodeCard(
+              imageUrl: episode.imageUrl,
+              title: episode.title,
+              audioFileUrl: episode.audioFileUrl,
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  context: context,
+                  builder: (BuildContext context) =>
+                      EpisodeOptions(episode: episode),
+                );
+              },
+            ),
+          ),
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 16,
+          ),
         ),
       ),
     );
