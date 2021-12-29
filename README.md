@@ -10,6 +10,8 @@ Already existing and planned features.
 - [x] Play audio in the background and respond to controls on the lockscreen, media notification, headset
 - [ ] Env config / scripts for white label apps
 - [ ] Search
+- [ ] localization - i18
+- [ ] share episode with friend / deep-linking to open a specific episode
 - [ ] Categories screen
 - [ ] Chromecast / Airplay
 - [ ] Details when clicking on a podcast item

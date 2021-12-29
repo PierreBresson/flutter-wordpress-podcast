@@ -47,8 +47,11 @@ class EpisodeOptions extends StatelessWidget {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
                 .then((_) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("Le lien a été copié dans le presse-papiers")));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Le lien a été copié dans le presse-papiers"),
+                ),
+              );
             });
           },
           child: Text(

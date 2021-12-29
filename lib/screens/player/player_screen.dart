@@ -1,8 +1,8 @@
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/widgets/widgets.dart';
 
 const iconPlaySize = 60.0;
 
@@ -44,7 +44,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
       body: BlocConsumer<PlayerCubit, PlayerState>(
         listener: (context, playerState) async {
           try {
-            await _playerManager.init(playerState.audioFileUrl);
+            await _playerManager.init(
+              title: playerState.title,
+              audioFileUrl: playerState.audioFileUrl,
+            );
             _playerManager.play();
           } catch (e) {
             //TODO
@@ -71,67 +74,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 ),
               ),
               Column(
-                children: [
-                  ValueListenableBuilder<ProgressBarState>(
-                    valueListenable: _playerManager.progressNotifier,
-                    builder: (_, value, __) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: ProgressBar(
-                          progress: value.current,
-                          buffered: value.buffered,
-                          total: value.total,
-                          onSeek: _playerManager.seek,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        iconSize: 50,
-                        onPressed: () => _playerManager.goBackward30Seconds(),
-                        icon: const Icon(
-                          Icons.replay_30,
-                        ),
-                      ),
-                      ValueListenableBuilder<ButtonState>(
-                        valueListenable: _playerManager.buttonNotifier,
-                        builder: (_, value, __) {
-                          switch (value) {
-                            case ButtonState.loading:
-                              return Container(
-                                margin: const EdgeInsets.all(8.0),
-                                width: iconPlaySize,
-                                height: iconPlaySize,
-                                child: const CircularProgressIndicator(),
-                              );
-                            case ButtonState.paused:
-                              return IconButton(
-                                icon: const Icon(Icons.play_arrow),
-                                iconSize: iconPlaySize,
-                                onPressed: _playerManager.play,
-                              );
-                            case ButtonState.playing:
-                              return IconButton(
-                                icon: const Icon(Icons.pause),
-                                iconSize: iconPlaySize,
-                                onPressed: _playerManager.pause,
-                              );
-                          }
-                        },
-                      ),
-                      IconButton(
-                        onPressed: () => _playerManager.goForward30Seconds(),
-                        iconSize: 50,
-                        icon: const Icon(
-                          Icons.forward_30,
-                        ),
-                      ),
-                    ],
-                  ),
+                children: const [
+                  AudioProgressBar(),
+                  AudioControlButtons(),
+                  SizedBox(height: 10),
+                  // renderControls(),
                 ],
               ),
             ],
@@ -140,6 +87,54 @@ class _PlayerScreenState extends State<PlayerScreen> {
       ),
     );
   }
+
+  // Row renderControls() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       IconButton(
+  //         iconSize: 50,
+  //         onPressed: () => _playerManager.goBackward30Seconds(),
+  //         icon: const Icon(
+  //           Icons.replay_30,
+  //         ),
+  //       ),
+  //       ValueListenableBuilder<ButtonState>(
+  //         valueListenable: _playerManager.buttonNotifier,
+  //         builder: (_, value, __) {
+  //           switch (value) {
+  //             case ButtonState.loading:
+  //               return Container(
+  //                 margin: const EdgeInsets.all(8.0),
+  //                 width: iconPlaySize,
+  //                 height: iconPlaySize,
+  //                 child: const CircularProgressIndicator(),
+  //               );
+  //             case ButtonState.paused:
+  //               return IconButton(
+  //                 icon: const Icon(Icons.play_arrow),
+  //                 iconSize: iconPlaySize,
+  //                 onPressed: _playerManager.play,
+  //               );
+  //             case ButtonState.playing:
+  //               return IconButton(
+  //                 icon: const Icon(Icons.pause),
+  //                 iconSize: iconPlaySize,
+  //                 onPressed: _playerManager.pause,
+  //               );
+  //           }
+  //         },
+  //       ),
+  //       IconButton(
+  //         onPressed: () => _playerManager.goForward30Seconds(),
+  //         iconSize: 50,
+  //         icon: const Icon(
+  //           Icons.forward_30,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Padding renderImage(PlayerState player) {
     if (player.imageUrl.isEmpty) {
