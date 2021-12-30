@@ -4,9 +4,9 @@ Podcast white label app based on Wordpress API using Flutter framework.
 
 ## Preview
 
-![screenshot1](https://github.com/PierreBresson/flutter-wordpress-podcast/blob/main/preview/thinkerview-1.png)
-![screenshot2](https://github.com/PierreBresson/flutter-wordpress-podcast/blob/main/preview/thinkerview-2.png)
-![screenshot3](https://github.com/PierreBresson/flutter-wordpress-podcast/blob/main/preview/thinkerview-3.png)
+![screenshot1](https://github.com/PierreBresson/flutter-wordpress-podcast/blob/main/preview/thinkerview-1.jpg)
+![screenshot2](https://github.com/PierreBresson/flutter-wordpress-podcast/blob/main/preview/thinkerview-2.jpg)
+![screenshot3](https://github.com/PierreBresson/flutter-wordpress-podcast/blob/main/preview/thinkerview-3.jpg)
 
 ## Live demo
 
