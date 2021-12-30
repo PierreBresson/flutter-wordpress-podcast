@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -23,15 +24,16 @@ class AboutScreen extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 ElevatedButton(
-                  onPressed: null,
-                  child: Text("Faire un don"),
+                  onPressed: () => launch("https://ko-fi.com/pierrebresson"),
+                  child: const Text("Faire un don"),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
-                  onPressed: null,
-                  child: Text("Github"),
+                  onPressed: () => launch(
+                      "https://github.com/PierreBresson/flutter-wordpress-podcast"),
+                  child: const Text("Github"),
                 ),
               ],
             ),
@@ -42,33 +44,64 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 ElevatedButton(
-                  onPressed: null,
-                  child: Text("Faire un don"),
+                  onPressed: () => launch("https://tipeee.com/thinkerview"),
+                  child: const Text("Faire un don"),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
-                  onPressed: null,
-                  child: Text("Site internet"),
+                  onPressed: () => launch("https://www.thinkerview.com/"),
+                  child: const Text("Site internet"),
                 ),
               ],
             ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 ElevatedButton(
-                  onPressed: null,
-                  child: Text("Youtube"),
+                  onPressed: () =>
+                      launch("https://www.youtube.com/thinkerview"),
+                  child: const Text("Youtube"),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
-                  onPressed: null,
-                  child: Text("Twitter"),
+                  onPressed: () => launch("https://twitter.com/Thinker_View"),
+                  child: const Text("Twitter"),
                 ),
               ],
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () =>
+                      launch("https://www.facebook.com/Thinkerview/"),
+                  child: const Text("Facebook"),
+                ),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () =>
+                      launch("https://captainfact.io/s/Thinkerview"),
+                  child: const Text("CaptainFact"),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () => launch("https://mamot.fr/@thinkerview"),
+                  child: const Text("Mastodon"),
+                ),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () => launch("https://videos.thinkerview.com/"),
+                  child: const Text("Peertube"),
+                ),
+              ],
+            ),
           ],
         ),
       ),

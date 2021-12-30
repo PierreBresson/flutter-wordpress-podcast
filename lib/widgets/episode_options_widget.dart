@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/repositories/repositories.dart';
 
 class EpisodeOptions extends StatelessWidget {
   final Episode episode;
@@ -15,6 +16,7 @@ class EpisodeOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<PlayerCubit>();
+    final playerManager = getIt<PlayerManager>();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -31,10 +33,19 @@ class EpisodeOptions extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             cubit.playEpisode(episode);
-            Navigator.pop(context);
-            context.read<BottomBarNavigationCubit>().update(1);
+            try {
+              playerManager.loadEpisode(episode);
+              Navigator.pop(context);
+              context.read<BottomBarNavigationCubit>().update(1);
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Une erreur est survenue"),
+                ),
+              );
+            }
           },
           child: Text(
             "Lire l'épisode",

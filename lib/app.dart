@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fwp/blocs/blocs.dart';
+import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
 import 'package:fwp/styles/themes.dart';
 
@@ -14,8 +15,25 @@ class FwpApp extends StatefulWidget {
 }
 
 class _FwpAppState extends State<FwpApp> {
-  final screensTitle = ["Accueil", "Lecteur", "A propos"];
-  final screens = const [HomeScreen(), PlayerScreen(), AboutScreen()];
+  final screensTitle = ["Accueil", "Lecteur", "Livres", "A propos"];
+  final screens = const [
+    HomeScreen(),
+    PlayerScreen(),
+    BooksScreen(),
+    AboutScreen()
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    getIt<PlayerManager>().init();
+  }
+
+  @override
+  void dispose() {
+    getIt<PlayerManager>().dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +47,7 @@ class _FwpAppState extends State<FwpApp> {
             children: screens,
           ),
           bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
                 icon: const Icon(Icons.house),
@@ -39,8 +58,12 @@ class _FwpAppState extends State<FwpApp> {
                 label: screensTitle[1],
               ),
               BottomNavigationBarItem(
-                icon: const Icon(Icons.info),
+                icon: const Icon(Icons.book),
                 label: screensTitle[2],
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.info),
+                label: screensTitle[3],
               )
             ],
             currentIndex: index,

@@ -17,18 +17,7 @@ class MyAudioHandler extends BaseAudioHandler {
 
   MyAudioHandler() {
     _notifyAudioHandlerAboutPlaybackEvents();
-  }
-
-  Future<void> init(String url) async {
-    await _player.setUrl(url);
-  }
-
-  @override
-  Future<void> addQueueItem(MediaItem mediaItem) async {
-    final extras = mediaItem.extras;
-    if (extras != null) {
-      await _player.setUrl(extras.entries.first.value.toString());
-    }
+    _listenForDurationChanges();
   }
 
   void _notifyAudioHandlerAboutPlaybackEvents() {
@@ -60,6 +49,35 @@ class MyAudioHandler extends BaseAudioHandler {
         ),
       );
     });
+  }
+
+  void _listenForDurationChanges() {
+    _player.durationStream.listen((duration) {
+      final index = _player.currentIndex;
+      if (index == null || queue.value.isEmpty) return;
+      final newMediaItem = queue.value[index].copyWith(duration: duration);
+      mediaItem.add(newMediaItem);
+    });
+  }
+
+  @override
+  Future<void> fastForward() async {
+    _player.seek(_player.position + const Duration(seconds: 10));
+  }
+
+  @override
+  Future<void> rewind() async {
+    _player.seek(_player.position - const Duration(seconds: 10));
+  }
+
+  @override
+  Future<void> playMediaItem(MediaItem newMediaItem) async {
+    final url = newMediaItem.extras?.entries.first.value as String;
+    queue.add([newMediaItem]);
+    mediaItem.add(newMediaItem);
+
+    await _player.setUrl(url);
+    _player.play();
   }
 
   @override

@@ -11,11 +11,14 @@ class AudioProgressBar extends StatelessWidget {
     return ValueListenableBuilder<ProgressBarState>(
       valueListenable: playerManager.progressNotifier,
       builder: (_, value, __) {
-        return ProgressBar(
-          progress: value.current,
-          buffered: value.buffered,
-          total: value.total,
-          onSeek: playerManager.seek,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ProgressBar(
+            progress: value.current,
+            buffered: value.buffered,
+            total: value.total,
+            onSeek: playerManager.seek,
+          ),
         );
       },
     );

@@ -41,18 +41,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: BlocConsumer<PlayerCubit, PlayerState>(
-        listener: (context, playerState) async {
-          try {
-            await _playerManager.init(
-              title: playerState.title,
-              audioFileUrl: playerState.audioFileUrl,
-            );
-            _playerManager.play();
-          } catch (e) {
-            //TODO
-          }
-        },
+      body: BlocBuilder<PlayerCubit, PlayerState>(
         builder: (context, player) => Padding(
           padding: const EdgeInsets.fromLTRB(10, 20, 10, 30),
           child: Column(

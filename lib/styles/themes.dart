@@ -17,7 +17,7 @@ final ligthThemeData = ThemeData(
 );
 
 final darkThemeData = ThemeData(
-  primarySwatch: Colors.grey,
+  primarySwatch: Colors.teal,
   primaryColor: Colors.black,
   brightness: Brightness.dark,
   backgroundColor: const Color(0xFF212121),

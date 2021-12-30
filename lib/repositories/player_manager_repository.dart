@@ -1,6 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:fwp/models/models.dart';
+import 'package:fwp/models/episode_model.dart';
 import 'package:fwp/notifiers/notifiers.dart';
 import 'package:fwp/repositories/repositories.dart';
 
@@ -13,28 +13,37 @@ class PlayerManager {
   final _audioHandler = getIt<AudioHandler>();
 
   // Events: Calls coming from the UI
-  Future<void> init({String title = "", String audioFileUrl = ""}) async {
-    await _loadEpisode(
-      title: title,
-      audioFileUrl: audioFileUrl,
-    );
+  Future<void> init() async {
     _listenToPlaybackState();
     _listenToCurrentPosition();
     _listenToBufferedPosition();
     _listenToTotalDuration();
+    _listenToChangesInSong();
+    _listenToChangesInPlaylist();
   }
 
-  Future<void> _loadEpisode({
-    String title = "",
-    String audioFileUrl = "",
-  }) async {
+  void loadEpisode(Episode? episode) {
+    final title = episode?.title ?? "";
+    final artUri = Uri.parse(episode?.imageUrl ?? "");
+    final audioFileUrl = episode?.audioFileUrl ?? "";
+
     final mediaItem = MediaItem(
       id: title,
       album: "Thinkerview",
+      artUri: artUri,
       title: title,
       extras: {'url': audioFileUrl},
     );
-    _audioHandler.addQueueItem(mediaItem);
+
+    _audioHandler.playMediaItem(mediaItem);
+  }
+
+  void _listenToChangesInPlaylist() {
+    _audioHandler.queue.listen((playlist) {
+      if (playlist.isEmpty) {
+        currentSongTitleNotifier.value = '';
+      }
+    });
   }
 
   void _listenToPlaybackState() {
@@ -85,6 +94,12 @@ class PlayerManager {
         buffered: oldState.buffered,
         total: mediaItem?.duration ?? Duration.zero,
       );
+    });
+  }
+
+  void _listenToChangesInSong() {
+    _audioHandler.mediaItem.listen((mediaItem) {
+      currentSongTitleNotifier.value = mediaItem?.title ?? '';
     });
   }
 
