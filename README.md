@@ -39,7 +39,7 @@ App tested and working on :
 - [x] iOS
 - [x] Android
 - [ ] Web
-- [ ] MacOS
+- [ ] MacOS - in progress
 - [ ] Linux
 
 ### Getting started
@@ -51,7 +51,9 @@ Install libraries
 Running the app:
 
 `flutter run`
+`flutter run -d macos`
 
 Build for Android:
 
 `flutter build appbundle`
+`flutter build macos`

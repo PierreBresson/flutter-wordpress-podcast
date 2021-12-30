@@ -32,7 +32,8 @@ class AboutScreen extends StatelessWidget {
                 const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: () => launch(
-                      "https://github.com/PierreBresson/flutter-wordpress-podcast"),
+                    "https://github.com/PierreBresson/flutter-wordpress-podcast",
+                  ),
                   child: const Text("Github"),
                 ),
               ],

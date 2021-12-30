@@ -51,7 +51,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    renderImage(player),
+                    SizedBox(
+                      width: 400,
+                      child: renderImage(player),
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Text(
@@ -67,7 +70,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   AudioProgressBar(),
                   AudioControlButtons(),
                   SizedBox(height: 10),
-                  // renderControls(),
                 ],
               ),
             ],
@@ -77,69 +79,15 @@ class _PlayerScreenState extends State<PlayerScreen> {
     );
   }
 
-  // Row renderControls() {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       IconButton(
-  //         iconSize: 50,
-  //         onPressed: () => _playerManager.goBackward30Seconds(),
-  //         icon: const Icon(
-  //           Icons.replay_30,
-  //         ),
-  //       ),
-  //       ValueListenableBuilder<ButtonState>(
-  //         valueListenable: _playerManager.buttonNotifier,
-  //         builder: (_, value, __) {
-  //           switch (value) {
-  //             case ButtonState.loading:
-  //               return Container(
-  //                 margin: const EdgeInsets.all(8.0),
-  //                 width: iconPlaySize,
-  //                 height: iconPlaySize,
-  //                 child: const CircularProgressIndicator(),
-  //               );
-  //             case ButtonState.paused:
-  //               return IconButton(
-  //                 icon: const Icon(Icons.play_arrow),
-  //                 iconSize: iconPlaySize,
-  //                 onPressed: _playerManager.play,
-  //               );
-  //             case ButtonState.playing:
-  //               return IconButton(
-  //                 icon: const Icon(Icons.pause),
-  //                 iconSize: iconPlaySize,
-  //                 onPressed: _playerManager.pause,
-  //               );
-  //           }
-  //         },
-  //       ),
-  //       IconButton(
-  //         onPressed: () => _playerManager.goForward30Seconds(),
-  //         iconSize: 50,
-  //         icon: const Icon(
-  //           Icons.forward_30,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  Padding renderImage(PlayerState player) {
+  Image renderImage(PlayerState player) {
     if (player.imageUrl.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.all(40),
-        child: Image(
-          image: AssetImage(
-            'assets/images/thinkerview.png',
-          ),
+      return const Image(
+        image: AssetImage(
+          'assets/images/thinkerview.png',
         ),
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Image(image: NetworkImage(player.imageUrl)),
-    );
+    return Image(image: NetworkImage(player.imageUrl));
   }
 }
