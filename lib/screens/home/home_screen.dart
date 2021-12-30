@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
@@ -33,11 +34,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final episodes =
-          await httpRepository.getEpisodes(page: pageKey, categories: 9);
+      List<Episode> episodes = [];
+
+      final app = dotenv.env['APP'];
+
+      if (app == "Thinkerview") {
+        episodes = await httpRepository.getEpisodesFromCategory(
+          page: pageKey,
+          categories: 9,
+        );
+      } else if (app == "CauseCommune") {
+        episodes = await httpRepository.getEpisodes(
+          page: pageKey,
+        );
+      }
 
       final List<Episode> newItems = episodes;
-
       final nextPageKey = pageKey + 1;
       _pagingController.appendPage(newItems, nextPageKey);
     } catch (error) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
@@ -80,10 +81,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
   }
 
   Image renderImage(PlayerState player) {
+    final app = dotenv.env['APP'];
+    String imageUri = "";
+
+    if (app == "Thinkerview") {
+      imageUri = 'assets/images/thinkerview.png';
+    } else if (app == "CauseCommune") {
+      imageUri = 'assets/images/cause-commune.png';
+    }
+
     if (player.imageUrl.isEmpty) {
-      return const Image(
+      return Image(
         image: AssetImage(
-          'assets/images/thinkerview.png',
+          imageUri,
         ),
       );
     }
