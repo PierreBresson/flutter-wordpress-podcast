@@ -3,8 +3,10 @@ import 'package:fwp/models/models.dart';
 import 'package:http/http.dart';
 
 class HttpRepository {
-  Future<List<Episode>> getEpisodesFromCategory(
-      {int page = 1, int? categories}) async {
+  Future<List<Episode>> getEpisodesFromCategory({
+    int page = 1,
+    int? categories,
+  }) async {
     const String url = "https://www.thinkerview.com/wp-json/wp/v2/posts?";
     final String pageURL = "page=$page";
     final String categoriesURL =

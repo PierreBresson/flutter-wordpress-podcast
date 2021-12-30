@@ -1,12 +1,15 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:just_audio/just_audio.dart';
 
 Future<AudioHandler> initAudioService() async {
+  final String app = dotenv.env['APP']!;
+
   return AudioService.init(
     builder: () => MyAudioHandler(),
-    config: const AudioServiceConfig(
-      androidNotificationChannelId: 'com.thinkerview',
-      androidNotificationChannelName: 'Thinkerview',
+    config: AudioServiceConfig(
+      androidNotificationChannelId: app,
+      androidNotificationChannelName: app,
       androidNotificationOngoing: true,
     ),
   );
