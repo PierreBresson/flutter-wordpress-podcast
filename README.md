@@ -21,8 +21,10 @@ Already existing and planned features.
 - [x] Dark mode support
 - [x] Refactor into smaller widgets
 - [x] Test widgets and cubits
-- [x] Recommended books for Thinkerview
+- [x] Recommended books for Thinkerview - markdown screen
 - [x] Play audio in the background and respond to controls on the lockscreen, media notification, headset
+- [ ] Stream live radio
+- [ ] Audio playback when leaving app
 - [ ] Log crash/bugs to Sentry
 - [ ] Improved design
 - [ ] Image caching
