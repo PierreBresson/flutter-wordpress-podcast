@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/blocs/blocs.dart';
+import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
 import 'package:fwp/styles/themes.dart';
@@ -28,15 +29,16 @@ class _FwpAppState extends State<FwpApp> {
   void initState() {
     super.initState();
 
-    if (app == "Thinkerview") {
+    if (app == APP.thinkerview.name) {
       lightThemeData = ligthThemeDataThinkerview;
       darkThemeData = darkThemeDataThinkerview;
-      screensTitle = ["Accueil", "Lecteur", "Livres", "A propos"];
+      screensTitle = ["Accueil", "Lecteur", "Recherche", "Livres", "A propos"];
 
-      screens = [
-        const HomeScreen(),
-        const PlayerScreen(),
-        const BooksScreen(),
+      screens = const [
+        HomeScreen(),
+        PlayerScreen(),
+        SearchScreen(),
+        BooksScreen(),
         AboutScreen()
       ];
 
@@ -50,20 +52,29 @@ class _FwpAppState extends State<FwpApp> {
           label: screensTitle[1],
         ),
         BottomNavigationBarItem(
-          icon: const Icon(Icons.book),
+          icon: const Icon(Icons.search),
           label: screensTitle[2],
         ),
         BottomNavigationBarItem(
-          icon: const Icon(Icons.info),
+          icon: const Icon(Icons.book),
           label: screensTitle[3],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.info),
+          label: screensTitle[4],
         )
       ];
-    } else if (app == "CauseCommune") {
+    } else if (app == APP.causeCommune.name) {
       lightThemeData = ligthThemeDataCauseCommune;
       darkThemeData = darkThemeDataCauseCommune;
-      screensTitle = ["Accueil", "Lecteur", "A propos"];
+      screensTitle = ["Accueil", "Lecteur", "Recherche", "A propos"];
 
-      screens = [const HomeScreen(), const PlayerScreen(), AboutScreen()];
+      screens = const [
+        HomeScreen(),
+        PlayerScreen(),
+        SearchScreen(),
+        AboutScreen(),
+      ];
 
       bottomNavigationBarItems = [
         BottomNavigationBarItem(
@@ -75,8 +86,12 @@ class _FwpAppState extends State<FwpApp> {
           label: screensTitle[1],
         ),
         BottomNavigationBarItem(
-          icon: const Icon(Icons.info),
+          icon: const Icon(Icons.search),
           label: screensTitle[2],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.info),
+          label: screensTitle[3],
         )
       ];
     }

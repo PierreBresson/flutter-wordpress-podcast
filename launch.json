@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "APP=DEFAULT"
+            ]
+        }
+    ]
+}

@@ -48,14 +48,14 @@ App tested and working on :
 
 ### Getting started
 
-Install libraries
-
-`flutter pub get`
-
 Running the app:
 
 `flutter run`
 `flutter run -d macos`
+
+`flutter clean`
+`flutter clean && flutter run --flavor thinkerview`
+`flutter clean && flutter run --flavor causecommune`
 
 Build for Android:
 

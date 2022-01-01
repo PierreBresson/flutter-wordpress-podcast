@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/blocs/blocs.dart';
+import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
 
@@ -84,9 +85,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
     final app = dotenv.env['APP'];
     String imageUri = "";
 
-    if (app == "Thinkerview") {
+    if (app == APP.thinkerview.name) {
       imageUri = 'assets/images/thinkerview.png';
-    } else if (app == "CauseCommune") {
+    } else if (app == APP.causeCommune.name) {
       imageUri = 'assets/images/cause-commune.png';
     }
 

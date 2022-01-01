@@ -1,0 +1,1 @@
+enum APP { thinkerview, causeCommune }

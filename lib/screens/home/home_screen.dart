@@ -38,12 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
       final app = dotenv.env['APP'];
 
-      if (app == "Thinkerview") {
+      if (app == APP.thinkerview.name) {
         episodes = await httpRepository.getEpisodesFromCategory(
           page: pageKey,
           categories: 9,
         );
-      } else if (app == "CauseCommune") {
+      } else if (app == APP.causeCommune.name) {
         episodes = await httpRepository.getEpisodes(
           page: pageKey,
         );

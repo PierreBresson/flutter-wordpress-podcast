@@ -48,12 +48,24 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.cause.commune"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+    }
+
+    flavorDimensions "app"
+        productFlavors {
+ 
+        causecommune {
+            dimension "app"
+            applicationId "com.cause.commune"
+        }
+ 
+        thinkerview {
+            dimension "app"
+            applicationId "com.thinkerview"
+        }
     }
 
    signingConfigs {
