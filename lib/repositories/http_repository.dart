@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:http/http.dart';
 
+const apiPath = "wp-json/wp/v2";
 const thinkerviewUrl = "thinkerview.com";
 const causeCommuneUrl = "cause-commune.fm";
 
@@ -25,7 +26,7 @@ class HttpRepository {
     int? categories,
   }) async {
     final baseUrl = getBaseUrl();
-    final String url = "https://$baseUrl/wp-json/wp/v2/posts?";
+    final String url = "https://$baseUrl/$apiPath/posts?";
 
     final String pageURL = "page=$page";
     final String categoriesURL =
@@ -53,7 +54,7 @@ class HttpRepository {
   Future<List<Episode>> getEpisodes({int page = 1}) async {
     final baseUrl = getBaseUrl();
 
-    final String url = "https://$baseUrl/wp-json/wp/v2/podcast?";
+    final String url = "https://$baseUrl/$apiPath/podcast?";
     final String pageURL = "page=$page";
     final Response response = await get(Uri.parse(url + pageURL));
 
@@ -74,11 +75,33 @@ class HttpRepository {
     }
   }
 
-  Future<List<Episode>> searchEpisode(String searchText) async {
+  Future<List<int>> search(String searchText) async {
     final baseUrl = getBaseUrl();
 
-    final String url = "https://$baseUrl/wp-json/wp/v2/search?search=";
+    final String url = "https://$baseUrl/$apiPath/search?search=";
     final Response response = await get(Uri.parse(url + searchText));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> body = jsonDecode(response.body) as List<dynamic>;
+
+      final List<int> ids = body.map((post) => post['id'] as int).toList();
+
+      return ids;
+    } else {
+      throw "La recherche a échoué";
+    }
+  }
+
+  Future<List<Episode>> getEpisodesByIds(List<int> ids) async {
+    final baseUrl = getBaseUrl();
+    var query = "";
+
+    if (ids.isNotEmpty) {
+      ids.map((item) => query = "$query$item,").toList();
+    }
+
+    final String url = "https://$baseUrl/$apiPath/posts?include=";
+    final Response response = await get(Uri.parse(url + query));
 
     if (response.statusCode == 200) {
       final List<dynamic> body = jsonDecode(response.body) as List<dynamic>;

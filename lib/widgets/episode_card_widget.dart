@@ -16,6 +16,10 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (title == "" || imageUrl == "" || audioFileUrl == "") {
+      return const SizedBox.shrink();
+    }
+
     return GestureDetector(
       onTap: onPressed,
       child: Card(
