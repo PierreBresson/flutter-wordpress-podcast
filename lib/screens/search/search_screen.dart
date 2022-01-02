@@ -12,16 +12,21 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final FocusNode focusNode = FocusNode();
   final HttpRepository httpRepository = HttpRepository();
   List<Episode> episodes = [];
+  String query = "";
   bool hasError = false;
   bool hasUserStartedSearching = false;
   bool isLoading = true;
   bool isSearchViewClicked = false;
-  String queryText = "";
   bool isDarkMode = false;
 
   Future<void> search(String searchText) async {
+    if (searchText.isEmpty) {
+      return;
+    }
+
     try {
       setState(() {
         isLoading = true;
@@ -45,6 +50,13 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     final brightness = SchedulerBinding.instance!.window.platformBrightness;
     isDarkMode = brightness == Brightness.dark;
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        setState(() {
+          isSearchViewClicked = false;
+        });
+      }
+    });
   }
 
   @override
@@ -59,9 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
             icon: isSearchViewClicked
                 ? Icon(
                     Icons.close,
-                    color: isDarkMode
-                        ? Theme.of(context).primaryColorDark
-                        : Theme.of(context).primaryColorDark,
+                    color: Colors.white,
                   )
                 : const SizedBox.shrink(),
             onPressed: () {
@@ -92,19 +102,27 @@ class _SearchScreenState extends State<SearchScreen> {
     if (!isSearchViewClicked &&
         episodes.isNotEmpty &&
         hasUserStartedSearching) {
+      if (query.isEmpty) {
+        return Text(
+          'Résultats',
+          style: Theme.of(context).textTheme.headline6,
+        );
+      }
+
       return Text(
-        "Resultats",
+        'Résultats pour "$query"',
         style: Theme.of(context).textTheme.headline6,
       );
     }
 
     if (isSearchViewClicked) {
       return TextField(
-        style: const TextStyle(color: Colors.black),
+        focusNode: focusNode,
+        // style: const TextStyle(color: Colors.black),
         onSubmitted: (value) {
           isSearchViewClicked = false;
           setState(() {
-            queryText = value;
+            query = value;
           });
           search(value);
         },
@@ -112,11 +130,11 @@ class _SearchScreenState extends State<SearchScreen> {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: 'Chercher',
-          hintStyle: const TextStyle(color: Colors.black54),
+          // hintStyle: const TextStyle(color: Colors.black54),
           icon: IconButton(
             icon: const Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              // color: Colors.black,
             ),
             onPressed: () {
               setState(() {
@@ -126,7 +144,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
         autofocus: true,
-        cursorColor: Colors.black,
+        // cursorColor: Colors.black,
       );
     }
 
@@ -138,9 +156,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget renderNoSearchResult() {
     if (hasUserStartedSearching) {
-      return const Text(
-        'No results found',
-        style: TextStyle(fontSize: 24),
+      return const Center(
+        child: Text(
+          'Aucun résultat',
+          style: TextStyle(fontSize: 24),
+        ),
       );
     }
 

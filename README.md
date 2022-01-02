@@ -59,5 +59,8 @@ Running the app:
 
 Build for Android:
 
-`flutter build appbundle`
+`flutter build appbundle --flavor thinkerview`
+`flutter build appbundle --flavor causecommune`
+
+WIP :
 `flutter build macos`
