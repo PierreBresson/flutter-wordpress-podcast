@@ -1,1 +1,1 @@
-enum APP { thinkerview, causeCommune }
+enum APP { thinkerview, causecommune }

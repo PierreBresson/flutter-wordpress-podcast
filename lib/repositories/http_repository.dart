@@ -14,7 +14,7 @@ class HttpRepository {
 
     if (app == APP.thinkerview.name) {
       baseUrl = thinkerviewUrl;
-    } else if (app == APP.causeCommune.name) {
+    } else if (app == APP.causecommune.name) {
       baseUrl = causeCommuneUrl;
     }
 

@@ -64,7 +64,7 @@ class _FwpAppState extends State<FwpApp> {
           label: screensTitle[4],
         )
       ];
-    } else if (app == APP.causeCommune.name) {
+    } else if (app == APP.causecommune.name) {
       lightThemeData = ligthThemeDataCauseCommune;
       darkThemeData = darkThemeDataCauseCommune;
       screensTitle = ["Accueil", "Lecteur", "A propos"];

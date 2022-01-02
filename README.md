@@ -48,7 +48,7 @@ App tested and working on :
 
 ### Getting started
 
-Create `.env` file with `APP=causeCommune` or `APP=thinkerview` inside.
+Create `.env` file with `APP=causecommune` or `APP=thinkerview` inside.
 Create `firebase_options.dart` thanks to [firebase cli](https://codewithandrea.com/articles/firebase-flutterfire-cli-flavors/) `flutterfire config`.
 
 Running the app:

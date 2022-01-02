@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           page: pageKey,
           categories: 9,
         );
-      } else if (app == APP.causeCommune.name) {
+      } else if (app == APP.causecommune.name) {
         episodes = await httpRepository.getEpisodes(
           page: pageKey,
         );

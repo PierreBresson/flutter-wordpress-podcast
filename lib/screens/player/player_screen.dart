@@ -87,7 +87,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
     if (app == APP.thinkerview.name) {
       imageUri = 'assets/images/thinkerview.png';
-    } else if (app == APP.causeCommune.name) {
+    } else if (app == APP.causecommune.name) {
       imageUri = 'assets/images/cause-commune.png';
     }
 
