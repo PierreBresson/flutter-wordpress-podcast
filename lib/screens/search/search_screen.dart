@@ -69,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
         actions: <Widget>[
           IconButton(
             icon: isSearchViewClicked
-                ? Icon(
+                ? const Icon(
                     Icons.close,
                     color: Colors.white,
                   )

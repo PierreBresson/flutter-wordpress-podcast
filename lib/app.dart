@@ -67,12 +67,11 @@ class _FwpAppState extends State<FwpApp> {
     } else if (app == APP.causeCommune.name) {
       lightThemeData = ligthThemeDataCauseCommune;
       darkThemeData = darkThemeDataCauseCommune;
-      screensTitle = ["Accueil", "Lecteur", "Recherche", "A propos"];
+      screensTitle = ["Accueil", "Lecteur", "A propos"];
 
       screens = const [
         HomeScreen(),
         PlayerScreen(),
-        SearchScreen(),
         AboutScreen(),
       ];
 
@@ -86,12 +85,8 @@ class _FwpAppState extends State<FwpApp> {
           label: screensTitle[1],
         ),
         BottomNavigationBarItem(
-          icon: const Icon(Icons.search),
-          label: screensTitle[2],
-        ),
-        BottomNavigationBarItem(
           icon: const Icon(Icons.info),
-          label: screensTitle[3],
+          label: screensTitle[2],
         )
       ];
     }
