@@ -25,11 +25,11 @@ Already existing and planned features.
 - [x] Play audio in the background and respond to controls on the lockscreen, media notification, headset
 - [ ] Stream live radio
 - [ ] Audio playback when leaving app
-- [ ] Log crash/bugs to Sentry
+- [ ] Log crash/bugs to Firebase Crashlytics WIP: missing iOS
 - [ ] Improved design
 - [ ] Image caching
-- [ ] Env config / scripts for white label apps
-- [ ] Search
+- [x] Env config / scripts for white label apps
+- [x] Search
 - [ ] localization - i18
 - [ ] share episode with friend / deep-linking to open a specific episode
 - [ ] Categories screen
@@ -47,6 +47,9 @@ App tested and working on :
 - [ ] Linux
 
 ### Getting started
+
+Create `.env` file with `APP=causeCommune` or `APP=thinkerview` inside.
+Create `firebase_options.dart` thanks to [firebase cli](https://codewithandrea.com/articles/firebase-flutterfire-cli-flavors/) `flutterfire config`.
 
 Running the app:
 

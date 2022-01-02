@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -33,6 +34,7 @@ class _AboutScreenState extends State<AboutScreen> {
   String version = "";
   String buildNumber = "";
   List linksItems = [];
+  int tapped = 0;
 
   Future<void> getInfoPackage() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -89,9 +91,23 @@ class _AboutScreenState extends State<AboutScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante.",
+              InkWell(
+                child: const Text(
+                  "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à faire un don et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
+                ),
+                onTap: () {
+                  setState(() {
+                    tapped = tapped + 1;
+                  });
+                },
               ),
+              if (tapped > 5)
+                ElevatedButton(
+                  onPressed: () => FirebaseCrashlytics.instance.crash(),
+                  child: const Text("Crash app"),
+                )
+              else
+                const SizedBox.shrink(),
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () => launch("https://ko-fi.com/pierrebresson"),
