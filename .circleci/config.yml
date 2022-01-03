@@ -1,0 +1,54 @@
+version: 2.1
+
+orbs:
+  flutter: circleci/flutter@1.0.1
+
+jobs:
+  lint:
+    docker:
+      - image: cirrusci/flutter:2.8.1
+    steps:
+      - checkout
+      - flutter/install_pub:
+          app-dir: .
+          cache-version: v1
+      - run:
+          command: flutter analyze lib
+          name: Run static analysis
+          working_directory: .
+  format:
+    docker:
+      - image: cirrusci/flutter:2.8.1
+    steps:
+      - checkout
+      - flutter/install_pub:
+          app-dir: .
+          cache-version: v1
+      - run:
+          command: flutter format . --set-exit-if-changed
+          name: Check code format
+          working_directory: .
+  unit_test:
+    docker:
+      - image: cirrusci/flutter:2.8.1
+    steps:
+      - checkout
+      - flutter/install_pub:
+          app-dir: .
+          cache-version: v1
+      - run:
+          command: flutter test --coverage
+          name: Run Unit Test
+          working_directory: .
+      - run:
+          command: genhtml coverage/lcov.info -o coverage/html
+          name: Generate HTML coverage file
+          working_directory: .
+      - store_artifacts:
+          path: coverage/html
+workflows:
+  test:
+    jobs:
+      - lint
+      - format
+      - unit_test

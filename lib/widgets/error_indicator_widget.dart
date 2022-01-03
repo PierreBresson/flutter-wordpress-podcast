@@ -4,7 +4,13 @@ class ErrorIndicator extends StatelessWidget {
   final String error;
   final VoidCallback onTryAgain;
 
-  const ErrorIndicator({required this.error, required this.onTryAgain, Key? key}) : super(key: key);
+  const ErrorIndicator(
+      {required this.error,
+      required this.onTryAgain,
+      // linter false positive -- see https://dart-lang.github.io/linter/lints/require_trailing_commas.html
+      // ignore: require_trailing_commas
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

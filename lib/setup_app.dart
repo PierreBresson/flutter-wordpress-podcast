@@ -1,3 +1,7 @@
+// firebase files missing in the CI -- ignoring related linter errors
+// ignore_for_file: uri_does_not_exist
+// ignore_for_file: argument_type_not_assignable
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/services.dart';
