@@ -47,7 +47,7 @@ jobs:
       - store_artifacts:
           path: coverage/html
 workflows:
-  test:
+  format_and_test:
     jobs:
       - lint
       - format
