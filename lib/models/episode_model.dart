@@ -51,6 +51,11 @@ class Episode {
       );
     }
   }
+
+  @override
+  String toString() {
+    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title}';
+  }
 }
 
 class EpisodePlayable extends Episode {

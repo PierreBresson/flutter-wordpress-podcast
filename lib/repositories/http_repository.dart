@@ -7,6 +7,17 @@ const apiPath = "wp-json/wp/v2";
 const thinkerviewUrl = "thinkerview.com";
 const causeCommuneUrl = "cause-commune.fm";
 
+List<Episode> removeEmptyEpisodes(List<Episode> episodes) {
+  return episodes
+      .where(
+        (element) =>
+            element.audioFileUrl.isNotEmpty &&
+            element.imageUrl.isNotEmpty &&
+            element.title.isNotEmpty,
+      )
+      .toList();
+}
+
 class HttpRepository {
   String getBaseUrl() {
     final app = dotenv.env['APP'];
@@ -114,7 +125,7 @@ class HttpRepository {
         },
       ).toList();
 
-      return episodes;
+      return removeEmptyEpisodes(episodes);
     } else {
       throw "La recherche a échoué";
     }

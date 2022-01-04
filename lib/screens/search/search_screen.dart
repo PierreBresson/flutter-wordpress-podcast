@@ -35,9 +35,9 @@ class _SearchScreenState extends State<SearchScreen> {
       final searchEpisodes = await httpRepository.getEpisodesByIds(ids);
 
       setState(() {
-        episodes = searchEpisodes;
         isLoading = false;
         hasUserStartedSearching = true;
+        episodes = searchEpisodes;
       });
     } catch (error) {
       hasError = true;
@@ -46,7 +46,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     final brightness = SchedulerBinding.instance!.window.platformBrightness;
     isDarkMode = brightness == Brightness.dark;
