@@ -44,9 +44,6 @@ Future<void> setupApp() async {
         BlocProvider(
           create: (_) => BottomBarNavigationCubit(),
         ),
-        BlocProvider(
-          create: (_) => PlayerCubit(),
-        )
       ],
       child: const FwpApp(),
     ),

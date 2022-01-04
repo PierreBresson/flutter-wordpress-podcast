@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/blocs/blocs.dart';
-import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
 
@@ -43,62 +41,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: BlocBuilder<PlayerCubit, PlayerState>(
-        builder: (context, player) => Padding(
-          padding: const EdgeInsets.fromLTRB(10, 20, 10, 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 400,
-                      child: renderImage(player),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Text(
-                        player.title,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                children: const [
-                  AudioProgressBar(),
-                  AudioControlButtons(),
-                  SizedBox(height: 10),
-                ],
-              ),
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 20, 10, 30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const AudioMetaData(),
+            Column(
+              children: const [
+                AudioProgressBar(),
+                AudioControlButtons(),
+                SizedBox(height: 10),
+              ],
+            ),
+          ],
         ),
       ),
     );
-  }
-
-  Image renderImage(PlayerState player) {
-    final app = dotenv.env['APP'];
-    String imageUri = "";
-
-    if (app == APP.thinkerview.name) {
-      imageUri = 'assets/images/thinkerview.png';
-    } else if (app == APP.causecommune.name) {
-      imageUri = 'assets/images/cause-commune.png';
-    }
-
-    if (player.imageUrl.isEmpty) {
-      return Image(
-        image: AssetImage(
-          imageUri,
-        ),
-      );
-    }
-
-    return Image(image: NetworkImage(player.imageUrl));
   }
 }

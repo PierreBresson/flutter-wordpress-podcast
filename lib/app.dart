@@ -91,12 +91,26 @@ class _FwpAppState extends State<FwpApp> {
       ];
     }
 
-    getIt<PlayerManager>().init();
+    initPlayback();
+  }
+
+  Future<void> initPlayback() async {
+    await getIt<DatabaseHandler>().init();
+    await getIt<PlayerManager>().init();
+
+    final playerManager = getIt<PlayerManager>();
+    final episodePlayable =
+        await getIt<DatabaseHandler>().getFirstEpisodePlayable();
+
+    if (episodePlayable.audioFileUrl.isNotEmpty) {
+      playerManager.loadEpisodePlayable(episodePlayable);
+    }
   }
 
   @override
   void dispose() {
     getIt<PlayerManager>().dispose();
+
     super.dispose();
   }
 

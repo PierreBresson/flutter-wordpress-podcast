@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fwp/models/models.dart';
 import 'package:just_audio/just_audio.dart';
 
 Future<AudioHandler> initAudioService() async {
@@ -113,6 +114,26 @@ class MyAudioHandler extends BaseAudioHandler {
       _player.seek(_player.position + const Duration(seconds: 30));
     } else if (action == "backward") {
       _player.seek(_player.position - const Duration(seconds: 30));
+    } else if (action == 'loadEpisodePlayable') {
+      final episodePlayable = extras?.entries.first.value as EpisodePlayable;
+
+      final newMediaItem = MediaItem(
+        id: episodePlayable.id.toString(),
+        album: "",
+        artUri: Uri.parse(episodePlayable.imageUrl),
+        title: episodePlayable.title,
+        extras: {'url': episodePlayable.audioFileUrl},
+      );
+
+      queue.add([newMediaItem]);
+      mediaItem.add(newMediaItem);
+
+      final Duration position = Duration(
+        seconds: episodePlayable.positionInSeconds,
+      );
+
+      await _player.setUrl(newMediaItem.extras?['url'] as String);
+      await _player.seek(position);
     }
   }
 }

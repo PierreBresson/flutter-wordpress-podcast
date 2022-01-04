@@ -15,7 +15,6 @@ class EpisodeOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<PlayerCubit>();
     final playerManager = getIt<PlayerManager>();
 
     return Column(
@@ -34,9 +33,8 @@ class EpisodeOptions extends StatelessWidget {
         const SizedBox(height: 30),
         GestureDetector(
           onTap: () async {
-            cubit.playEpisode(episode);
             try {
-              playerManager.loadEpisode(episode);
+              playerManager.playEpisode(episode);
               Navigator.pop(context);
               context.read<BottomBarNavigationCubit>().update(1);
             } catch (e) {

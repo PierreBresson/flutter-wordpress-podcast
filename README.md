@@ -24,7 +24,7 @@ Already existing and planned features.
 - [x] Recommended books for Thinkerview - markdown screen
 - [x] Play audio in the background and respond to controls on the lockscreen, media notification, headset
 - [ ] Stream live radio
-- [ ] Audio playback when leaving app
+- [x] Audio playback when leaving app
 - [ ] Log crash/bugs to Firebase Crashlytics WIP: missing iOS
 - [ ] Improved design
 - [ ] Image caching

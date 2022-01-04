@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fwp/models/models.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -167,10 +169,11 @@ class _AboutScreenState extends State<AboutScreen> {
 
   Widget renderPodcastDescription() {
     var podcastDescription = "";
+    final app = dotenv.env['APP'];
 
-    if (packageName != "com.cause.commune") {
+    if (app == APP.causecommune.name) {
       podcastDescription = causeCommuneDescription;
-    } else if (packageName != "com.thinkerview") {
+    } else if (app == APP.thinkerview.name) {
       podcastDescription = thinkerviewDescrption;
     }
 

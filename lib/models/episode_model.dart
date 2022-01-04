@@ -52,3 +52,39 @@ class Episode {
     }
   }
 }
+
+class EpisodePlayable extends Episode {
+  int positionInSeconds;
+
+  @override
+  EpisodePlayable({
+    required this.positionInSeconds,
+    required int id,
+    required String audioFileUrl,
+    required String date,
+    required String title,
+    required String imageUrl,
+  }) : super(
+          id: id,
+          date: date,
+          audioFileUrl: audioFileUrl,
+          imageUrl: imageUrl,
+          title: title,
+        );
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'date': date,
+      'audioFileUrl': audioFileUrl,
+      'imageUrl': imageUrl,
+      'title': title,
+      'positionInSeconds': positionInSeconds,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds}';
+  }
+}

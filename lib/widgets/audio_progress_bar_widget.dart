@@ -8,6 +8,7 @@ class AudioProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();
+
     return ValueListenableBuilder<ProgressBarState>(
       valueListenable: playerManager.progressNotifier,
       builder: (_, value, __) {
