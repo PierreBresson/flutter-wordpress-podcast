@@ -9,11 +9,13 @@ build-android-thinkerview: ## build android thinkerview
 build-android-causecommune: ## build android causecommune
 	flutter build appbundle --flavor causecommune
 
-run-android-thinkerview
-	flutter clean && flutter run --flavor thinkerview
+run-android-thinkerview: ## run android thinkerview
+	flutter clean
+	flutter run --flavor thinkerview
 
-run-android-causecommune
-	flutter clean && flutter run --flavor causecommune
+run-android-causecommune: ## run android causecommune
+	flutter clean
+	flutter run --flavor causecommune
 
-upload-dSYMs-thinkerview
+upload-dSYMs-thinkerview: ## upload dSYMs thinkerview
 	ios/Pods/FirebaseCrashlytics/upload-symbols -gsp /path/to/thinkerview-GoogleService-Info.plist -p ios dSYMs

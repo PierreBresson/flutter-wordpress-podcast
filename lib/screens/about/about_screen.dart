@@ -75,7 +75,7 @@ class _AboutScreenState extends State<AboutScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 20, 10, 30),
+        padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
         child: renderLinks(),
       ),
     );
@@ -95,7 +95,7 @@ class _AboutScreenState extends State<AboutScreen> {
             children: [
               InkWell(
                 child: const Text(
-                  "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à faire un don et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
+                  "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à faire un don sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
                 ),
                 onTap: () {
                   setState(() {
@@ -103,7 +103,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   });
                 },
               ),
-              if (tapped > 5)
+              if (tapped > 10)
                 ElevatedButton(
                   onPressed: () => FirebaseCrashlytics.instance.crash(),
                   child: const Text("Crash app"),
@@ -112,8 +112,10 @@ class _AboutScreenState extends State<AboutScreen> {
                 const SizedBox.shrink(),
               const SizedBox(height: 10),
               ElevatedButton(
-                onPressed: () => launch("https://ko-fi.com/pierrebresson"),
-                child: const Text("Faire un don"),
+                onPressed: () => launch(
+                  "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
+                ),
+                child: const Text("Ko-fi Pierre Bresson"),
               ),
               ElevatedButton(
                 onPressed: () => launch(
