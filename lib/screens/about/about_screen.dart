@@ -147,15 +147,17 @@ class _AboutScreenState extends State<AboutScreen> {
                   Text(packageName),
                 ],
               ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Version "),
-                  Text(version),
-                  const Text(" - "),
-                  Text(buildNumber),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Version "),
+                    Text(version),
+                    const Text(" - "),
+                    Text(buildNumber),
+                  ],
+                ),
               ),
             ],
           );

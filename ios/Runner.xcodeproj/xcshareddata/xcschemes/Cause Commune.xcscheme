@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9E8BC5642784ECC500291E05"
-               BuildableName = "Cause Commne.app"
-               BlueprintName = "Cause Commne"
+               BuildableName = "Cause Commune.app"
+               BlueprintName = "Cause Commune"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9E8BC5642784ECC500291E05"
-            BuildableName = "Cause Commne.app"
-            BlueprintName = "Cause Commne"
+            BuildableName = "Cause Commune.app"
+            BlueprintName = "Cause Commune"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9E8BC5642784ECC500291E05"
-            BuildableName = "Cause Commne.app"
-            BlueprintName = "Cause Commne"
+            BuildableName = "Cause Commune.app"
+            BlueprintName = "Cause Commune"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
