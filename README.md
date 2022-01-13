@@ -51,19 +51,31 @@ App tested and working on :
 Create `.env` file with `APP=causecommune` or `APP=thinkerview` inside.
 Create `firebase_options.dart` thanks to [firebase cli](https://codewithandrea.com/articles/firebase-flutterfire-cli-flavors/) `flutterfire config`.
 
-Running the app:
+### Run the app
 
-`flutter run`
-`flutter run -d macos`
+`flutter pub get`
 
-`flutter clean`
+Android :
 `flutter clean && flutter run --flavor thinkerview`
+
 `flutter clean && flutter run --flavor causecommune`
 
-Build for Android:
+iOS :
+`flutter run --flavor "Cause Commune"`
+`flutter run --flavor Thinkerview`
+
+MacOS (experimental) :
+`flutter run -d macos`
+
+### Build app
+
+Android:
 
 `flutter build appbundle --flavor thinkerview`
 `flutter build appbundle --flavor causecommune`
 
-WIP :
+iOS:
+Select project and archive on Xcode
+
+MacOS (experimental) :
 `flutter build macos`

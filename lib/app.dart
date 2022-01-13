@@ -117,6 +117,7 @@ class _FwpAppState extends State<FwpApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: lightThemeData,
       darkTheme: darkThemeData,
       home: BlocBuilder<BottomBarNavigationCubit, int>(
