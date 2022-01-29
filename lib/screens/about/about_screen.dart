@@ -95,7 +95,7 @@ class _AboutScreenState extends State<AboutScreen> {
             children: [
               InkWell(
                 child: const Text(
-                  "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à faire un don sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
+                  "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à m'aider sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
                 ),
                 onTap: () {
                   setState(() {

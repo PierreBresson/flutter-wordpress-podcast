@@ -5,6 +5,8 @@ import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 
+const paddingItems = 18.0;
+
 class EpisodeOptions extends StatelessWidget {
   final Episode episode;
 
@@ -18,16 +20,18 @@ class EpisodeOptions extends StatelessWidget {
     final playerManager = getIt<PlayerManager>();
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 20),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            height: 6,
-            width: 38,
-            color: Colors.black38,
+        Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              height: 6,
+              width: 38,
+              color: Colors.black38,
+            ),
           ),
         ),
         const SizedBox(height: 30),
@@ -45,9 +49,21 @@ class EpisodeOptions extends StatelessWidget {
               );
             }
           },
-          child: Text(
-            "Lire l'épisode",
-            style: Theme.of(context).textTheme.headline6,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: paddingItems),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.play_arrow_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const Padding(padding: EdgeInsets.all(4)),
+                Text(
+                  "Lire l'épisode",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 30),
@@ -63,9 +79,22 @@ class EpisodeOptions extends StatelessWidget {
               );
             });
           },
-          child: Text(
-            "Copier lien fichier audio",
-            style: Theme.of(context).textTheme.headline6,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: paddingItems),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.copy,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const Padding(padding: EdgeInsets.all(4)),
+                Text(
+                  "Copier lien fichier audio",
+                  style: Theme.of(context).textTheme.headline6,
+                  textAlign: TextAlign.left,
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 50),
