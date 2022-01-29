@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/notifiers/notifiers.dart';
 import 'package:fwp/repositories/repositories.dart';
+import './app_image.dart';
 
 class AudioMetaData extends StatelessWidget {
   const AudioMetaData({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class AudioMetaData extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 300,
+                width: 200,
                 child: renderImage(value.artUri),
               ),
               Padding(
@@ -36,22 +37,9 @@ class AudioMetaData extends StatelessWidget {
     );
   }
 
-  Image renderImage(Uri audioUri) {
-    final app = dotenv.env['APP'];
-    String imageUri = "";
-
-    if (app == APP.thinkerview.name) {
-      imageUri = 'assets/images/thinkerview.png';
-    } else if (app == APP.causecommune.name) {
-      imageUri = 'assets/images/cause-commune.png';
-    }
-
+  Widget renderImage(Uri audioUri) {
     if (audioUri.toString().isEmpty) {
-      return Image(
-        image: AssetImage(
-          imageUri,
-        ),
-      );
+      return const AppImage();
     }
 
     return Image(image: NetworkImage(audioUri.toString()));
