@@ -108,8 +108,9 @@ class _FwpAppState extends State<FwpApp> {
   }
 
   @override
-  void dispose() {
-    getIt<PlayerManager>().dispose();
+  Future<void> dispose() async {
+    await getIt<PlayerManager>().dispose();
+    await getIt<DatabaseHandler>().dispose();
 
     super.dispose();
   }

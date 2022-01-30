@@ -40,16 +40,16 @@ class _PlayerScreenState extends State<PlayerScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 20, 10, 30),
+        padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             const AudioMetaData(),
             Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: const [
                 AudioProgressBar(),
                 AudioControlButtons(),
-                SizedBox(height: 10),
               ],
             ),
           ],

@@ -34,13 +34,17 @@ class PlayerManager {
 
     final artUri = Uri.parse(imageUrl);
     final audioFileUrl = episode?.audioFileUrl ?? "";
+    final articleUrl = episode?.articleUrl ?? "";
 
     final mediaItem = MediaItem(
       id: title,
       album: packageInfo.appName,
       artUri: artUri,
       title: title,
-      extras: {'url': audioFileUrl},
+      extras: {
+        'url': audioFileUrl,
+        'articleUrl': articleUrl,
+      },
     );
 
     getIt<DatabaseHandler>().insertEpisodePlayable(
@@ -48,6 +52,7 @@ class PlayerManager {
         date: episode?.date ?? "",
         id: 0,
         audioFileUrl: audioFileUrl,
+        articleUrl: articleUrl,
         title: title,
         imageUrl: imageUrl,
         positionInSeconds: 0,
@@ -97,6 +102,7 @@ class PlayerManager {
           id: 0,
           date: "",
           audioFileUrl: "",
+          articleUrl: "",
           title: "",
           imageUrl: "",
           positionInSeconds: position.inSeconds,
@@ -138,11 +144,19 @@ class PlayerManager {
       currentSongTitleNotifier.value = mediaItem?.title ?? '';
 
       final title = mediaItem?.title ?? '';
-      final url = mediaItem?.extras?['url'];
-      String audioUrl = '';
-      if (url != null) {
-        audioUrl = mediaItem?.extras?['url'] as String;
+
+      final audioFileUrl = mediaItem?.extras?['url'];
+      String audioFileUrlProcessed = '';
+      if (audioFileUrl != null) {
+        audioFileUrlProcessed = mediaItem?.extras?['url'] as String;
       }
+
+      final articleUrl = mediaItem?.extras?['articleUrl'];
+      String articleUrlProcessed = '';
+      if (articleUrl != null) {
+        articleUrlProcessed = mediaItem?.extras?['articleUrl'] as String;
+      }
+
       final imageUrl = mediaItem?.artUri.toString() ?? '';
 
       metaDataAudioNotifier.value = MetaDataAudioState(
@@ -154,7 +168,8 @@ class PlayerManager {
         EpisodePlayable(
           date: "",
           id: 0,
-          audioFileUrl: audioUrl,
+          audioFileUrl: audioFileUrlProcessed,
+          articleUrl: articleUrlProcessed,
           title: title,
           imageUrl: imageUrl,
           positionInSeconds: 0,
@@ -172,11 +187,13 @@ class PlayerManager {
 
   void goBackward30Seconds() => _audioHandler.customAction('backward');
 
-  void dispose() => _audioHandler.customAction('dispose');
+  Future<void> dispose() async => _audioHandler.customAction('dispose');
 
   void loadEpisodePlayable(EpisodePlayable episodePlayable) =>
       _audioHandler.customAction(
         'loadEpisodePlayable',
-        {"episodePlayable": episodePlayable},
+        {
+          "episodePlayable": episodePlayable,
+        },
       );
 }

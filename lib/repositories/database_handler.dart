@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:fwp/models/models.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -5,6 +6,8 @@ import 'package:sqflite/sqflite.dart';
 const tablename = 'episodeplayable';
 
 const id = 0;
+const databaseName = 'database.db';
+const databaseVersion = 4;
 
 class DatabaseHandler {
   late Database database;
@@ -13,29 +16,57 @@ class DatabaseHandler {
     final path = await getDatabasesPath();
 
     database = await openDatabase(
-      join(path, 'database.db'),
+      join(path, databaseName),
+      onUpgrade: onUpgrade,
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE $tablename(id INTEGER PRIMARY KEY, audioFileUrl TEXT, date TEXT, title TEXT, imageUrl TEXT, positionInSeconds INTEGER)',
+          'CREATE TABLE $tablename(id INTEGER PRIMARY KEY, audioFileUrl TEXT, articleUrl TEXT, date TEXT, title TEXT, imageUrl TEXT, positionInSeconds INTEGER)',
         );
       },
-      version: 1,
+      version: databaseVersion,
     );
   }
 
+  void onUpgrade(Database db, int oldVersion, int newVersion) {
+    if (oldVersion < newVersion) {
+      try {
+        db.execute("ALTER TABLE $tablename ADD COLUMN articleUrl TEXT;");
+      } catch (error) {
+        if (kDebugMode) {
+          print(error);
+        }
+      }
+    }
+  }
+
+  Future<void> dispose() async {
+    final path = await getDatabasesPath();
+
+    database = await openDatabase(join(path, databaseName));
+
+    await database.close();
+  }
+
   Future<void> insertEpisodePlayable(EpisodePlayable episodePlayable) async {
-    await database.insert(
-      tablename,
-      EpisodePlayable(
-        id: id,
-        title: episodePlayable.title,
-        date: episodePlayable.date,
-        audioFileUrl: episodePlayable.audioFileUrl,
-        imageUrl: episodePlayable.imageUrl,
-        positionInSeconds: episodePlayable.positionInSeconds,
-      ).toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    try {
+      await database.insert(
+        tablename,
+        EpisodePlayable(
+          id: id,
+          title: episodePlayable.title,
+          date: episodePlayable.date,
+          audioFileUrl: episodePlayable.audioFileUrl,
+          articleUrl: episodePlayable.articleUrl,
+          imageUrl: episodePlayable.imageUrl,
+          positionInSeconds: episodePlayable.positionInSeconds,
+        ).toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+    }
   }
 
   Future<void> updateEpisodePlayable(EpisodePlayable episodePlayable) async {
@@ -50,6 +81,9 @@ class DatabaseHandler {
     final audioFileUrl = episodePlayable.audioFileUrl.isNotEmpty
         ? episodePlayable.audioFileUrl
         : currentEpisodePlayable.audioFileUrl;
+    final articleUrl = episodePlayable.articleUrl.isNotEmpty
+        ? episodePlayable.articleUrl
+        : currentEpisodePlayable.articleUrl;
     final imageUrl = episodePlayable.imageUrl.isNotEmpty
         ? episodePlayable.imageUrl
         : currentEpisodePlayable.imageUrl;
@@ -63,30 +97,52 @@ class DatabaseHandler {
       title: title,
       date: date,
       audioFileUrl: audioFileUrl,
+      articleUrl: articleUrl,
       imageUrl: imageUrl,
       positionInSeconds: positionInSeconds,
     );
 
-    await database.update(
-      tablename,
-      newEpisodePlayable.toMap(),
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    try {
+      await database.update(
+        tablename,
+        newEpisodePlayable.toMap(),
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+    }
   }
 
   Future<List<EpisodePlayable>> getAllEpisodePlayables() async {
     final List<Map<String, dynamic>> maps = await database.query(tablename);
 
     return List.generate(maps.length, (i) {
-      return EpisodePlayable(
-        id: maps[i]['id'] as int,
-        title: maps[i]['title'] as String,
-        date: maps[i]['date'] as String,
-        audioFileUrl: maps[i]['audioFileUrl'] as String,
-        imageUrl: maps[i]['imageUrl'] as String,
-        positionInSeconds: maps[i]['positionInSeconds'] as int,
-      );
+      EpisodePlayable episode;
+      try {
+        episode = EpisodePlayable(
+          id: maps[i]['id'] as int,
+          title: maps[i]['title'] as String,
+          date: maps[i]['date'] as String,
+          audioFileUrl: maps[i]['audioFileUrl'] as String,
+          articleUrl: maps[i]['articleUrl'] as String,
+          imageUrl: maps[i]['imageUrl'] as String,
+          positionInSeconds: maps[i]['positionInSeconds'] as int,
+        );
+      } catch (e) {
+        episode = EpisodePlayable(
+          id: 0,
+          title: "",
+          date: "",
+          audioFileUrl: "",
+          articleUrl: "",
+          imageUrl: "",
+          positionInSeconds: 0,
+        );
+      }
+      return episode;
     });
   }
 
@@ -101,6 +157,7 @@ class DatabaseHandler {
         title: "",
         date: "",
         audioFileUrl: "",
+        articleUrl: "",
         imageUrl: "",
         positionInSeconds: 0,
       );

@@ -8,10 +8,12 @@ class Episode {
   final String date;
   final String audioFileUrl;
   final String imageUrl;
+  final String articleUrl;
 
   Episode({
     required this.id,
     required this.audioFileUrl,
+    required this.articleUrl,
     required this.date,
     required this.title,
     required this.imageUrl,
@@ -28,6 +30,7 @@ class Episode {
           title: unescape.convert(json['title']['rendered'] as String),
           date: json['date'] as String,
           audioFileUrl: json['meta']['audio_file'] as String,
+          articleUrl: json['link'] as String,
           imageUrl: json['episode_featured_image'] as String,
         );
       } else if (APP.causecommune.name == app) {
@@ -36,6 +39,7 @@ class Episode {
           title: unescape.convert(json['title']['rendered'] as String),
           date: json['date'] as String,
           audioFileUrl: json['meta']['audio_file'] as String,
+          articleUrl: json['link'] as String,
           imageUrl: json['episode_player_image'] as String,
         );
       } else {
@@ -44,9 +48,10 @@ class Episode {
     } catch (e) {
       return Episode(
         id: 0,
-        audioFileUrl: "",
         date: "",
         title: "",
+        audioFileUrl: "",
+        articleUrl: "",
         imageUrl: "",
       );
     }
@@ -54,7 +59,7 @@ class Episode {
 
   @override
   String toString() {
-    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title}';
+    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, articleUrl $articleUrl}';
   }
 }
 
@@ -69,10 +74,12 @@ class EpisodePlayable extends Episode {
     required String date,
     required String title,
     required String imageUrl,
+    required String articleUrl,
   }) : super(
           id: id,
           date: date,
           audioFileUrl: audioFileUrl,
+          articleUrl: articleUrl,
           imageUrl: imageUrl,
           title: title,
         );
@@ -82,6 +89,7 @@ class EpisodePlayable extends Episode {
       'id': id,
       'date': date,
       'audioFileUrl': audioFileUrl,
+      'articleUrl': articleUrl,
       'imageUrl': imageUrl,
       'title': title,
       'positionInSeconds': positionInSeconds,
@@ -90,6 +98,6 @@ class EpisodePlayable extends Episode {
 
   @override
   String toString() {
-    return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds}';
+    return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl}';
   }
 }

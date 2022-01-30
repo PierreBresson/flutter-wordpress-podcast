@@ -108,8 +108,8 @@ class MyAudioHandler extends BaseAudioHandler {
   @override
   Future customAction(String action, [Map<String, dynamic>? extras]) async {
     if (action == 'dispose') {
-      await _player.dispose();
       super.stop();
+      await _player.dispose();
     } else if (action == "forward") {
       _player.seek(_player.position + const Duration(seconds: 30));
     } else if (action == "backward") {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fwp/models/models.dart';
 import 'package:fwp/notifiers/notifiers.dart';
 import 'package:fwp/repositories/repositories.dart';
 import './app_image.dart';
@@ -8,9 +6,30 @@ import './app_image.dart';
 class AudioMetaData extends StatelessWidget {
   const AudioMetaData({Key? key}) : super(key: key);
 
+  double getImageWidth(double screenWidth) {
+    var imageWidth = 180.0;
+
+    if (screenWidth > 340.0) {
+      imageWidth = 220.0;
+    }
+    if (screenWidth > 370) {
+      imageWidth = 260.0;
+    }
+    if (screenWidth >= 390) {
+      imageWidth = 300.0;
+    }
+
+    if (screenWidth > 500) {
+      imageWidth = 400.0;
+    }
+
+    return imageWidth;
+  }
+
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return ValueListenableBuilder<MetaDataAudioState>(
       valueListenable: playerManager.metaDataAudioNotifier,
@@ -20,7 +39,7 @@ class AudioMetaData extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 200,
+                width: getImageWidth(screenWidth),
                 child: renderImage(value.artUri),
               ),
               Padding(
@@ -28,6 +47,7 @@ class AudioMetaData extends StatelessWidget {
                 child: Text(
                   value.title,
                   textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
             ],

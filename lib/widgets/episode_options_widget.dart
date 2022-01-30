@@ -36,31 +36,30 @@ class EpisodeOptions extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         GestureDetector(
-          onTap: () async {
-            try {
-              playerManager.playEpisode(episode);
-              Navigator.pop(context);
-              context.read<BottomBarNavigationCubit>().update(1);
-            } catch (e) {
+          onTap: () {
+            Navigator.pop(context);
+            Clipboard.setData(ClipboardData(text: episode.articleUrl))
+                .then((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text("Une erreur est survenue"),
+                  content: Text("Le lien a été copié dans le presse-papiers"),
                 ),
               );
-            }
+            });
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: paddingItems),
             child: Row(
               children: [
                 Icon(
-                  Icons.play_arrow_rounded,
+                  Icons.copy,
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const Padding(padding: EdgeInsets.all(4)),
                 Text(
-                  "Lire l'épisode",
+                  "Copier lien article",
                   style: Theme.of(context).textTheme.headline6,
+                  textAlign: TextAlign.left,
                 ),
               ],
             ),
@@ -92,6 +91,38 @@ class EpisodeOptions extends StatelessWidget {
                   "Copier lien fichier audio",
                   style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.left,
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 30),
+        GestureDetector(
+          onTap: () async {
+            try {
+              playerManager.playEpisode(episode);
+              Navigator.pop(context);
+              context.read<BottomBarNavigationCubit>().update(1);
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Une erreur est survenue"),
+                ),
+              );
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: paddingItems),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.play_arrow_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const Padding(padding: EdgeInsets.all(4)),
+                Text(
+                  "Lire l'épisode",
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ],
             ),
