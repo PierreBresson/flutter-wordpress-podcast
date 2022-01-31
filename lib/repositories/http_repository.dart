@@ -72,7 +72,7 @@ class HttpRepository {
 
       return episodes;
     } else {
-      throw "Impossible de recuperer les episodes";
+      throw "Impossible de recuperer les épisodes";
     }
   }
 
@@ -97,7 +97,7 @@ class HttpRepository {
 
       return episodes;
     } else {
-      throw "Impossible de recuperer les episodes";
+      throw "Impossible de recuperer les épisodes";
     }
   }
 
@@ -143,7 +143,23 @@ class HttpRepository {
 
       return removeEmptyEpisodes(episodes);
     } else {
-      throw "La recherche a échoué";
+      throw "Impossible de recuperer les épisodes";
+    }
+  }
+
+  Future<int> getLiveBroadcastInfo() async {
+    const String url = "https://audio.libre-a-toi.org/api/live-info-v2";
+    final Response response = await get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> body =
+          jsonDecode(response.body) as Map<String, dynamic>;
+
+      print(body);
+
+      return 1;
+    } else {
+      throw "Impossible de recuperer les informations du direct";
     }
   }
 }

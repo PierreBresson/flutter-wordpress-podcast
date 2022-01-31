@@ -15,6 +15,7 @@ class PlayerScreen extends StatefulWidget {
 
 class _PlayerScreenState extends State<PlayerScreen> {
   late final PlayerManager _playerManager;
+  final HttpRepository httpRepository = HttpRepository();
 
   @override
   void initState() {
@@ -38,6 +39,26 @@ class _PlayerScreenState extends State<PlayerScreen> {
           "Lecteur",
           style: Theme.of(context).textTheme.headline6,
         ),
+        actions: [
+          Center(
+            child: InkWell(
+              onTap: () async {
+                //play direct
+                final results = await httpRepository.getLiveBroadcastInfo();
+                //https://icecast.libre-a-toi.org:8444/voixdulat_ssl
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                child: Text(
+                  "Direct",
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
