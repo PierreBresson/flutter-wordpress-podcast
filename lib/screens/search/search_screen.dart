@@ -20,7 +20,6 @@ class _SearchScreenState extends State<SearchScreen> {
   bool hasUserStartedSearching = false;
   bool isLoading = true;
   bool isSearchViewClicked = false;
-  bool isDarkMode = false;
 
   Future<void> search(String searchText) async {
     if (searchText.isEmpty) {
@@ -47,8 +46,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    final brightness = SchedulerBinding.instance!.window.platformBrightness;
-    isDarkMode = brightness == Brightness.dark;
     focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         setState(() {
