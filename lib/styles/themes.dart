@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './fonts.dart';
 
+const backgroundColor = Color(0xFFFAFAFA);
+
 final ligthThemeDataThinkerview = ThemeData(
   primarySwatch: Colors.teal,
   primaryColor: Colors.white,
   brightness: Brightness.light,
-  backgroundColor: const Color(0xFFE5E5E5),
+  backgroundColor: backgroundColor,
   secondaryHeaderColor: Colors.black,
   dividerColor: Colors.white54,
   scaffoldBackgroundColor: Colors.white,
@@ -20,7 +22,7 @@ final darkThemeDataThinkerview = ThemeData(
   primarySwatch: Colors.teal,
   primaryColor: Colors.black,
   brightness: Brightness.dark,
-  backgroundColor: const Color(0xFF212121),
+  backgroundColor: Colors.black,
   secondaryHeaderColor: Colors.white,
   dividerColor: Colors.black12,
   scaffoldBackgroundColor: Colors.black87,
@@ -50,7 +52,7 @@ final ligthThemeDataCauseCommune = ThemeData(
   primarySwatch: primaryCauseCommune,
   primaryColor: Colors.white,
   brightness: Brightness.light,
-  backgroundColor: const Color(0xFFE5E5E5),
+  backgroundColor: backgroundColor,
   secondaryHeaderColor: Colors.black,
   dividerColor: Colors.white54,
   scaffoldBackgroundColor: Colors.white,
@@ -64,7 +66,7 @@ final darkThemeDataCauseCommune = ThemeData(
   primarySwatch: primaryCauseCommune,
   primaryColor: Colors.black,
   brightness: Brightness.dark,
-  backgroundColor: const Color(0xFF212121),
+  backgroundColor: Colors.black,
   secondaryHeaderColor: Colors.white,
   dividerColor: Colors.black12,
   scaffoldBackgroundColor: Colors.black87,
