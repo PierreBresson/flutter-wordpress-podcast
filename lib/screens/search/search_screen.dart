@@ -60,6 +60,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -68,9 +71,9 @@ class _SearchScreenState extends State<SearchScreen> {
         actions: <Widget>[
           IconButton(
             icon: isSearchViewClicked
-                ? const Icon(
+                ? Icon(
                     Icons.close,
-                    color: Colors.white,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   )
                 : const SizedBox.shrink(),
             onPressed: () {
@@ -117,7 +120,6 @@ class _SearchScreenState extends State<SearchScreen> {
     if (isSearchViewClicked) {
       return TextField(
         focusNode: focusNode,
-        // style: const TextStyle(color: Colors.black),
         onSubmitted: (value) {
           isSearchViewClicked = false;
           setState(() {
@@ -129,11 +131,9 @@ class _SearchScreenState extends State<SearchScreen> {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: 'Chercher',
-          // hintStyle: const TextStyle(color: Colors.black54),
           icon: IconButton(
             icon: const Icon(
               Icons.arrow_back,
-              // color: Colors.black,
             ),
             onPressed: () {
               setState(() {
@@ -143,7 +143,6 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
         autofocus: true,
-        // cursorColor: Colors.black,
       );
     }
 

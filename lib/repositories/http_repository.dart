@@ -19,8 +19,9 @@ List<Episode> removeEmptyEpisodes(List<Episode> episodes) {
 }
 
 class HttpRepository {
+  final app = dotenv.env['APP'];
+
   String getBaseUrl() {
-    final app = dotenv.env['APP'];
     var baseUrl = "";
 
     if (app == APP.thinkerview.name) {
@@ -32,12 +33,25 @@ class HttpRepository {
     return baseUrl;
   }
 
+  String getEndingOptionPath() {
+    var endingOptionPath = "";
+
+    if (app == APP.thinkerview.name) {
+      endingOptionPath = "posts?";
+    } else if (app == APP.causecommune.name) {
+      endingOptionPath = "podcast?";
+    }
+
+    return endingOptionPath;
+  }
+
   Future<List<Episode>> getEpisodesFromCategory({
     int page = 1,
     int? categories,
   }) async {
     final baseUrl = getBaseUrl();
-    final String url = "https://$baseUrl/$apiPath/posts?";
+    final endingOptionPath = getEndingOptionPath();
+    final String url = "https://$baseUrl/$apiPath/$endingOptionPath";
 
     final String pageURL = "page=$page";
     final String categoriesURL =
@@ -64,8 +78,9 @@ class HttpRepository {
 
   Future<List<Episode>> getEpisodes({int page = 1}) async {
     final baseUrl = getBaseUrl();
+    final endingOptionPath = getEndingOptionPath();
 
-    final String url = "https://$baseUrl/$apiPath/podcast?";
+    final String url = "https://$baseUrl/$apiPath/$endingOptionPath";
     final String pageURL = "page=$page";
     final Response response = await get(Uri.parse(url + pageURL));
 
@@ -105,13 +120,14 @@ class HttpRepository {
 
   Future<List<Episode>> getEpisodesByIds(List<int> ids) async {
     final baseUrl = getBaseUrl();
+    final endingOptionPath = getEndingOptionPath();
     var query = "";
 
     if (ids.isNotEmpty) {
       ids.map((item) => query = "$query$item,").toList();
     }
 
-    final String url = "https://$baseUrl/$apiPath/posts?include=";
+    final String url = "https://$baseUrl/$apiPath/${endingOptionPath}include=";
     final Response response = await get(Uri.parse(url + query));
 
     if (response.statusCode == 200) {
