@@ -2,6 +2,26 @@
 
 Liste des recommandations lecture des invités de ThinkerView (3 livres pour la communauté) avec titre de l'oeuvre et auteur.
 
+### L'effondrement : le point critique ? Aurore Stéphant
+
+> 25 janvier 2022
+> [youtube](https://youtu.be/xx3PsG2mr-Y)
+
+- Germinal - Emile Zola
+- Minerais de sang - Christophe Boltanski
+- La Fin de la mégamachine: Sur les traces d'une civilisation en voie d'effondrement - Fabian Scheidler
+
+### L'art de la guerre et du commandement ? Loïc Finaz
+
+> 11 janvier 2022
+> [youtube](https://youtu.be/7LHX_hMsFcA)
+
+- L'Usage du monde - Nicolas Bouvier
+- Guerre et Paix - Léon Tolstoï
+- Les Enfants Jéromine - Ernst Wiechert
+- Qu'est-ce qu'une nation ? - Ernest Renan (durant l'interview)
+- Histoire de la guerre du Péloponnèse - Thucydide (pour le dialogue mélien)
+
 ### Science et société, où va-t-on ? Étienne Klein
 
 > 8 décembre 2021
@@ -73,6 +93,16 @@ Raphaël Rossello
 - Sur le controle de nos vies - Noam Chomsky
 - La Guerre hors limites - Qiao Liang
 - L'âge productiviste. Hégémonie prométhéenne, brèches et alternatives écologiques - Serge Audier
+
+### Où va la France ? Eric Zemmour
+
+> 20 octobre 2021
+> [youtube](https://www.youtube.com/watch?v=61AN7Vf4RSs)
+
+- Mémoires d'Outre-Tombe - François-René de Chateaubriand
+- Illusions perdues - Honoré de Balzac
+- Les origines de la France contemporaine - Hippolyte Taine
+- La Semaine Sainte - Louis Aragon
 
 ### Journaliste sous les balles ? Régis Le Sommier
 
