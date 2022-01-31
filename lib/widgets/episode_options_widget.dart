@@ -35,7 +35,15 @@ class EpisodeOptions extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 30),
-        GestureDetector(
+        ListTile(
+          title: Text(
+            "Copier lien article",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          leading: Icon(
+            Icons.copy,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           onTap: () {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.articleUrl))
@@ -47,26 +55,17 @@ class EpisodeOptions extends StatelessWidget {
               );
             });
           },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: paddingItems),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.copy,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const Padding(padding: EdgeInsets.all(4)),
-                Text(
-                  "Copier lien article",
-                  style: Theme.of(context).textTheme.headline6,
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-          ),
         ),
-        const SizedBox(height: 30),
-        GestureDetector(
+        ListTile(
+          title: Text(
+            "Copier lien fichier audio",
+            style: Theme.of(context).textTheme.headline6,
+            textAlign: TextAlign.left,
+          ),
+          leading: Icon(
+            Icons.copy,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           onTap: () {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
@@ -78,26 +77,16 @@ class EpisodeOptions extends StatelessWidget {
               );
             });
           },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: paddingItems),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.copy,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const Padding(padding: EdgeInsets.all(4)),
-                Text(
-                  "Copier lien fichier audio",
-                  style: Theme.of(context).textTheme.headline6,
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-          ),
         ),
-        const SizedBox(height: 30),
-        GestureDetector(
+        ListTile(
+          title: Text(
+            "Lire l'épisode",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          leading: Icon(
+            Icons.play_arrow_rounded,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           onTap: () async {
             try {
               playerManager.playEpisode(episode);
@@ -111,22 +100,6 @@ class EpisodeOptions extends StatelessWidget {
               );
             }
           },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: paddingItems),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.play_arrow_rounded,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const Padding(padding: EdgeInsets.all(4)),
-                Text(
-                  "Lire l'épisode",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ],
-            ),
-          ),
         ),
         const SizedBox(height: 50),
       ],
