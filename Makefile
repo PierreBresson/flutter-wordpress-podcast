@@ -13,6 +13,12 @@ run-android-thinkerview: ## run android thinkerview
 	flutter clean
 	flutter run --flavor thinkerview
 
+run-ios-thinkerview: ## run ios thinkerview
+	flutter run --flavor Thinkerview
+
+run-ios-causecommune: ## run ios causecommune
+	flutter run --flavor "Cause Commune"
+
 run-android-causecommune: ## run android causecommune
 	flutter clean
 	flutter run --flavor causecommune

@@ -60,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -100,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           separatorBuilder: (context, index) => const SizedBox(
-            height: 16,
+            height: 2,
           ),
         ),
       ),

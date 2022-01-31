@@ -60,6 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final isDarkMode = brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

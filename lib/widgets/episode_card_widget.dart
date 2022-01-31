@@ -5,7 +5,7 @@ import './app_image.dart';
 
 double imageHeigth = 200;
 double circularProgressIndicatorSize = 20;
-double verticalPadding = 14;
+double verticalPadding = 18;
 Radius circularRadius = const Radius.circular(14);
 BorderRadius borderRadius = BorderRadius.only(
   topLeft: circularRadius,
@@ -38,21 +38,30 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     if (title == "" || imageUrl == "" || audioFileUrl == "") {
       return const SizedBox.shrink();
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: verticalPadding, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: verticalPadding, vertical: 12),
       child: Center(
         child: Container(
           constraints: getConstraints(context),
           decoration: BoxDecoration(
+            color: isDarkMode ? const Color(0xFF1C1C1E) : Colors.white,
             borderRadius: BorderRadius.all(circularRadius),
-            border: Border.all(
-              width: 1.5,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-            ),
+            boxShadow: isDarkMode
+                ? null
+                : [
+                    const BoxShadow(
+                      color: Colors.black12,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 16.0,
+                    ),
+                  ],
           ),
           child: InkWell(
             onTap: onPressed,
@@ -110,11 +119,14 @@ class EpisodeCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: verticalPadding,
+                    horizontal: 20,
+                  ),
                   constraints: getConstraints(context),
                   child: Text(
                     title,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
               ],
