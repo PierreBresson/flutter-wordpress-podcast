@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
 
@@ -29,6 +31,33 @@ class _PlayerScreenState extends State<PlayerScreen> {
     super.dispose();
   }
 
+  Widget displayLiveButton() {
+    final app = dotenv.env['APP'];
+
+    if (app == APP.causecommune.name) {
+      return Center(
+        child: InkWell(
+          onTap: () async {
+            //play direct
+            final results = await httpRepository.getLiveBroadcastInfo();
+            //https://icecast.libre-a-toi.org:8444/voixdulat_ssl
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+            child: Text(
+              "Direct",
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+          ),
+        ),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,26 +69,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
           "Lecteur",
           style: Theme.of(context).textTheme.headline6,
         ),
-        actions: [
-          Center(
-            child: InkWell(
-              onTap: () async {
-                //play direct
-                final results = await httpRepository.getLiveBroadcastInfo();
-                //https://icecast.libre-a-toi.org:8444/voixdulat_ssl
-              },
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                child: Text(
-                  "Direct",
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                ),
-              ),
-            ),
-          )
-        ],
+        actions: [displayLiveButton()],
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
