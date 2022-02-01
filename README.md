@@ -6,13 +6,13 @@ Podcast white label app based on Wordpress API using Flutter framework.
 
 ## Preview
 
-![screenshot1](https://github.com/PierreBresson/flutter-wordpress-podcast/blob/main/preview/thinkerview-1.jpg)
+![screenshot](https://github.com/PierreBresson/flutter-wordpress-podcast/blob/main/preview.jpg)
 
 ## Apps
 
-Thinkerview - [Android](https://play.google.com/store/apps/details?id=com.thinkerview&hl=fr) - [iOS](https://apps.apple.com/us/app/thinkerview/id1406076265?ls=1)
+[Thinkerview](https://www.thinkerview.com/) - [Android](https://play.google.com/store/apps/details?id=com.thinkerview&hl=fr) - [iOS](https://apps.apple.com/us/app/thinkerview/id1406076265?ls=1)
 
-Cause Commune - [Android](https://play.google.com/store/apps/details?id=com.cause.commune) - [iOS](https://apps.apple.com/us/app/cause-commune/id1458650964?ls=1)
+[Cause Commune](https://cause-commune.fm/) - [Android](https://play.google.com/store/apps/details?id=com.cause.commune) - [iOS](https://apps.apple.com/us/app/cause-commune/id1458650964?ls=1)
 
 ## Roadmap
 
@@ -25,12 +25,11 @@ Already existing and planned features.
 - [x] Audio playback when leaving app
 - [x] Search
 - [x] Env config / scripts - white label apps
+- [x] Log crash/bugs to Firebase Crashlytics
+- [x] Image caching
 - [ ] Stream live radio
 - [ ] Refactor into smaller widgets
 - [ ] Tests
-- [ ] Log crash/bugs to Firebase Crashlytics WIP: missing iOS on cause commune
-- [ ] Improved design
-- [ ] Image caching
 - [ ] localization - i18
 - [ ] Categories screen
 - [ ] Details when clicking on a podcast item
