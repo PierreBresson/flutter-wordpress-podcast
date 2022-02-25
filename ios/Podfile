@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '11.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -34,7 +34,7 @@ target 'Thinkerview' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
-target 'Cause Commune' do
+target 'CauseCommune' do
   use_frameworks!
   use_modular_headers!
 
@@ -51,6 +51,6 @@ post_install do |installer|
         'AUDIO_SESSION_MICROPHONE=0'
       ]
     end
-    
+
   end
 end

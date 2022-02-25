@@ -1,0 +1,8 @@
+#include "../../Flutter/Flutter-Debug.xcconfig"
+#include "Warnings.xcconfig"
+
+PRODUCT_NAME = Thinkerview
+PRODUCT_BUNDLE_IDENTIFIER = com.thinkerview
+PRODUCT_COPYRIGHT = Copyright © All rights reserved.
+PRODUCT_APP_ICON = thinkerview
+

@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sentry/sentry.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const causeCommuneDescription =
@@ -57,6 +58,17 @@ class _AboutScreenState extends State<AboutScreen> {
     });
   }
 
+  Future<void> crashApp() async {
+    try {
+      throw Exception("This is a developer crash!");
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(
+        exception,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -106,23 +118,29 @@ class _AboutScreenState extends State<AboutScreen> {
               ),
               if (tapped > 10)
                 ElevatedButton(
-                  onPressed: () => FirebaseCrashlytics.instance.crash(),
+                  onPressed: crashApp,
                   child: const Text("Crash app"),
                 )
               else
                 const SizedBox.shrink(),
               const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () => launch(
-                  "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: ElevatedButton(
+                  onPressed: () => launch(
+                    "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
+                  ),
+                  child: const Text("Ko-fi Pierre Bresson"),
                 ),
-                child: const Text("Ko-fi Pierre Bresson"),
               ),
-              ElevatedButton(
-                onPressed: () => launch(
-                  "https://github.com/PierreBresson/flutter-wordpress-podcast",
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: ElevatedButton(
+                  onPressed: () => launch(
+                    "https://github.com/PierreBresson/flutter-wordpress-podcast",
+                  ),
+                  child: const Text("Github"),
                 ),
-                child: const Text("Github"),
               ),
               renderPodcastDescription(),
               ElevatedButton(
@@ -135,9 +153,12 @@ class _AboutScreenState extends State<AboutScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ElevatedButton(
-                child: Text(linksItems[index].title as String),
-                onPressed: () => launch(linksItems[index].link as String),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: ElevatedButton(
+                  child: Text(linksItems[index].title as String),
+                  onPressed: () => launch(linksItems[index].link as String),
+                ),
               ),
               const SizedBox(height: 20),
               Row(
@@ -163,9 +184,12 @@ class _AboutScreenState extends State<AboutScreen> {
             ],
           );
         } else {
-          return ElevatedButton(
-            child: Text(linksItems[index].title as String),
-            onPressed: () => launch(linksItems[index].link as String),
+          return Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: ElevatedButton(
+              child: Text(linksItems[index].title as String),
+              onPressed: () => launch(linksItems[index].link as String),
+            ),
           );
         }
       },

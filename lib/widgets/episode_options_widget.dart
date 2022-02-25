@@ -1,16 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/screens/screens.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const paddingItems = 18.0;
 
 class EpisodeOptions extends StatelessWidget {
   final Episode episode;
+  final app = dotenv.env['APP'];
 
-  const EpisodeOptions({
+  EpisodeOptions({
     Key? key,
     required this.episode,
   }) : super(key: key);
@@ -35,6 +40,20 @@ class EpisodeOptions extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 30),
+        ListTile(
+          title: Text(
+            "Ouvrir article dans navigateur",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          leading: Icon(
+            Icons.link,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          onTap: () {
+            Navigator.pop(context);
+            launch(episode.articleUrl);
+          },
+        ),
         ListTile(
           title: Text(
             "Copier lien article",
@@ -78,6 +97,39 @@ class EpisodeOptions extends StatelessWidget {
             });
           },
         ),
+        if (kDebugMode)
+          ListTile(
+            title: Text(
+              "Plus d'info sur l'épisode",
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            leading: Icon(
+              Icons.info_sharp,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onTap: () async {
+              Navigator.pop(context);
+              if (app == APP.thinkerview.name) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EpisodeDetailsCaptainFact(
+                      episode: episode,
+                    ),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EpisodeDetails(
+                      episode: episode,
+                    ),
+                  ),
+                );
+              }
+            },
+          ),
         ListTile(
           title: Text(
             "Lire l'épisode",

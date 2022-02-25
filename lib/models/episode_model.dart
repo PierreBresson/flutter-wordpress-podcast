@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -9,6 +10,8 @@ class Episode {
   final String audioFileUrl;
   final String imageUrl;
   final String articleUrl;
+  final String? youtubeUrl;
+  final String description;
 
   Episode({
     required this.id,
@@ -17,6 +20,8 @@ class Episode {
     required this.date,
     required this.title,
     required this.imageUrl,
+    required this.description,
+    this.youtubeUrl,
   });
 
   factory Episode.fromJson(Map<String, dynamic> json) {
@@ -24,28 +29,42 @@ class Episode {
     final unescape = HtmlUnescape();
 
     try {
+      final int id = json['id'] as int;
+      final String title =
+          unescape.convert(json['title']['rendered'] as String);
+      final String date = json['date'] as String;
+      final String audioFileUrl = json['meta']['audio_file'] as String;
+      final String articleUrl = json['link'] as String;
+      final String description = json["content"]["rendered"] as String;
+      String imageUrl = "";
+      String? youtubeUrl;
+
       if (APP.thinkerview.name == app) {
-        return Episode(
-          id: json['id'] as int,
-          title: unescape.convert(json['title']['rendered'] as String),
-          date: json['date'] as String,
-          audioFileUrl: json['meta']['audio_file'] as String,
-          articleUrl: json['link'] as String,
-          imageUrl: json['episode_featured_image'] as String,
-        );
+        imageUrl = json['episode_featured_image'] as String;
+        /* in case acf plugin isn't working */
+        try {
+          youtubeUrl = json['acf']['youtube'] as String;
+        } catch (error) {
+          //
+        }
       } else if (APP.causecommune.name == app) {
-        return Episode(
-          id: json['id'] as int,
-          title: unescape.convert(json['title']['rendered'] as String),
-          date: json['date'] as String,
-          audioFileUrl: json['meta']['audio_file'] as String,
-          articleUrl: json['link'] as String,
-          imageUrl: json['episode_player_image'] as String,
-        );
-      } else {
-        throw "Incorrect app env variable";
+        imageUrl = json['episode_player_image'] as String;
       }
-    } catch (e) {
+
+      return Episode(
+        id: id,
+        title: title,
+        date: date,
+        audioFileUrl: audioFileUrl,
+        articleUrl: articleUrl,
+        imageUrl: imageUrl,
+        youtubeUrl: youtubeUrl,
+        description: description,
+      );
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
       return Episode(
         id: 0,
         date: "",
@@ -53,13 +72,14 @@ class Episode {
         audioFileUrl: "",
         articleUrl: "",
         imageUrl: "",
+        description: "",
       );
     }
   }
 
   @override
   String toString() {
-    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, articleUrl $articleUrl}';
+    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, articleUrl $articleUrl, description $description}';
   }
 }
 
@@ -75,6 +95,7 @@ class EpisodePlayable extends Episode {
     required String title,
     required String imageUrl,
     required String articleUrl,
+    required String description,
   }) : super(
           id: id,
           date: date,
@@ -82,6 +103,7 @@ class EpisodePlayable extends Episode {
           articleUrl: articleUrl,
           imageUrl: imageUrl,
           title: title,
+          description: description,
         );
 
   Map<String, dynamic> toMap() {
@@ -92,12 +114,13 @@ class EpisodePlayable extends Episode {
       'articleUrl': articleUrl,
       'imageUrl': imageUrl,
       'title': title,
+      'description': description,
       'positionInSeconds': positionInSeconds,
     };
   }
 
   @override
   String toString() {
-    return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl}';
+    return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl, description $description}';
   }
 }

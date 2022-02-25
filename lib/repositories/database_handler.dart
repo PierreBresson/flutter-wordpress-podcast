@@ -7,7 +7,7 @@ const tablename = 'episodeplayable';
 
 const id = 0;
 const databaseName = 'database.db';
-const databaseVersion = 4;
+const databaseVersion = 5;
 
 class DatabaseHandler {
   late Database database;
@@ -20,7 +20,7 @@ class DatabaseHandler {
       onUpgrade: onUpgrade,
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE $tablename(id INTEGER PRIMARY KEY, audioFileUrl TEXT, articleUrl TEXT, date TEXT, title TEXT, imageUrl TEXT, positionInSeconds INTEGER)',
+          'CREATE TABLE $tablename(id INTEGER PRIMARY KEY, audioFileUrl TEXT, articleUrl TEXT, date TEXT, title TEXT, imageUrl TEXT, description TEXT, positionInSeconds INTEGER)',
         );
       },
       version: databaseVersion,
@@ -29,12 +29,27 @@ class DatabaseHandler {
 
   void onUpgrade(Database db, int oldVersion, int newVersion) {
     if (oldVersion < newVersion) {
-      try {
-        db.execute("ALTER TABLE $tablename ADD COLUMN articleUrl TEXT;");
-      } catch (error) {
-        if (kDebugMode) {
-          print(error);
-        }
+      switch (oldVersion) {
+        case 3:
+          try {
+            db.execute(
+                "ALTER TABLE $tablename ADD COLUMN articleUrl TEXT description TEXT;");
+          } catch (error) {
+            if (kDebugMode) {
+              print(error);
+            }
+          }
+          break;
+        case 4:
+          try {
+            db.execute("ALTER TABLE $tablename ADD COLUMN description TEXT;");
+          } catch (error) {
+            if (kDebugMode) {
+              print(error);
+            }
+          }
+          break;
+        default:
       }
     }
   }
@@ -59,6 +74,7 @@ class DatabaseHandler {
           articleUrl: episodePlayable.articleUrl,
           imageUrl: episodePlayable.imageUrl,
           positionInSeconds: episodePlayable.positionInSeconds,
+          description: episodePlayable.description,
         ).toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
@@ -84,6 +100,9 @@ class DatabaseHandler {
     final articleUrl = episodePlayable.articleUrl.isNotEmpty
         ? episodePlayable.articleUrl
         : currentEpisodePlayable.articleUrl;
+    final description = episodePlayable.description.isNotEmpty
+        ? episodePlayable.description
+        : currentEpisodePlayable.description;
     final imageUrl = episodePlayable.imageUrl.isNotEmpty
         ? episodePlayable.imageUrl
         : currentEpisodePlayable.imageUrl;
@@ -100,6 +119,7 @@ class DatabaseHandler {
       articleUrl: articleUrl,
       imageUrl: imageUrl,
       positionInSeconds: positionInSeconds,
+      description: description,
     );
 
     try {
@@ -130,6 +150,7 @@ class DatabaseHandler {
           articleUrl: maps[i]['articleUrl'] as String,
           imageUrl: maps[i]['imageUrl'] as String,
           positionInSeconds: maps[i]['positionInSeconds'] as int,
+          description: maps[i]['description'] as String,
         );
       } catch (e) {
         episode = EpisodePlayable(
@@ -139,6 +160,7 @@ class DatabaseHandler {
           audioFileUrl: "",
           articleUrl: "",
           imageUrl: "",
+          description: "",
           positionInSeconds: 0,
         );
       }
@@ -159,6 +181,7 @@ class DatabaseHandler {
         audioFileUrl: "",
         articleUrl: "",
         imageUrl: "",
+        description: "",
         positionInSeconds: 0,
       );
     }
