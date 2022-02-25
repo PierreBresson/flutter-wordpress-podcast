@@ -87,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               audioFileUrl: episode.audioFileUrl,
               onPressed: () {
                 showModalBottomSheet<void>(
+                  isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),

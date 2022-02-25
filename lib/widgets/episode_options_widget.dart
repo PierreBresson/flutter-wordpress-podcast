@@ -2,12 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const paddingItems = 18.0;
 
@@ -97,7 +97,7 @@ class EpisodeOptions extends StatelessWidget {
             });
           },
         ),
-        if (kDebugMode)
+        if (kDebugMode || app == APP.causecommune.name)
           ListTile(
             title: Text(
               "Plus d'info sur l'épisode",

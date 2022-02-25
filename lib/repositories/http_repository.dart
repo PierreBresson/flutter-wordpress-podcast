@@ -110,6 +110,7 @@ class HttpRepository {
     if (response.statusCode == 200) {
       final List<dynamic> body = jsonDecode(response.body) as List<dynamic>;
 
+      // ignore: avoid_dynamic_calls
       final List<int> ids = body.map((post) => post['id'] as int).toList();
 
       return ids;

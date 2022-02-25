@@ -5,7 +5,7 @@ import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
-import 'package:fwp/styles/themes.dart';
+import 'package:fwp/styles/styles.dart';
 
 class FwpApp extends StatefulWidget {
   const FwpApp({

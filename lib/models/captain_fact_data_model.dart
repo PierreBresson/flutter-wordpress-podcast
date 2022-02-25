@@ -1,7 +1,5 @@
 // https://javiercbk.github.io/json_to_dart/
-// ignore_for_file: unnecessary_
-// ignore_for_file: argument_type_not_assignable
-// ignore_for_file: invalid_assignment
+// ignore_for_file: unnecessary_, avoid_dynamic_calls, unnecessary_this, prefer_collection_literals, argument_type_not_assignable, invalid_assignment
 
 class CaptainFactData {
   Video? video;

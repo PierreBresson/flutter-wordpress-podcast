@@ -13,15 +13,17 @@ class EpisodeDetails extends StatelessWidget {
     Intl.defaultLocale = 'fr';
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: isDarkMode ? Colors.white : Colors.black,
             size: 30,
           ),
           onPressed: () {

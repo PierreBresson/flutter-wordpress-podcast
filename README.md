@@ -10,9 +10,9 @@ Podcast white label app based on Wordpress API using Flutter framework.
 
 ## Apps
 
-[Thinkerview](https://www.thinkerview.com/) - [Android](https://play.google.com/store/apps/details?id=com.thinkerview&hl=fr) - [iOS](https://apps.apple.com/us/app/thinkerview/id1406076265?ls=1)
+[Thinkerview](https://www.thinkerview.com/) - [Android](https://play.google.com/store/apps/details?id=com.thinkerview&hl=fr) - [iOS & macOS](https://apps.apple.com/us/app/thinkerview/id1406076265?ls=1)
 
-[Cause Commune](https://cause-commune.fm/) - [Android](https://play.google.com/store/apps/details?id=com.cause.commune) - [iOS](https://apps.apple.com/us/app/cause-commune/id1458650964?ls=1)
+[Cause Commune](https://cause-commune.fm/) - [Android](https://play.google.com/store/apps/details?id=com.cause.commune) - [iOS & macOS](https://apps.apple.com/us/app/cause-commune/id1458650964?ls=1)
 
 ## Roadmap
 
@@ -42,9 +42,10 @@ App tested and working on :
 
 - [x] iOS
 - [x] Android
-- [ ] Web
-- [ ] MacOS - in progress
+- [x] macOS
 - [ ] Linux
+- [ ] Windows
+- [ ] Web
 
 ### Getting started
 
@@ -66,11 +67,11 @@ iOS :
 
 `flutter run --flavor Thinkerview`
 
-MacOS :
+macOS :
 
-Since flavors aren't supported by Flutter on MacOS, there are some manual tasks in order to run and archive the app.
+Since flavors aren't supported by Flutter on macOS, there are some manual tasks in order to run and archive the app.
 
-In `Project` -> `Runner` -> `Info` -> `Configurations` select for both Debug & Release either `Cause Commune` or `Thinkerview` in the Runner configuration set. Then `Clean Build Folder` inside `Product` menu of Xcode, run `pod install`. Don't forget to change the `Bundle Identifer` and the `Provisioning Profile` plus `APP` in env file.
+In `Project` -> `Runner` -> `Info` -> `Configurations` select for both Debug & Release either `Cause Commune` or `Thinkerview` in the Runner configuration set. Then `Clean Build Folder` inside `Product` menu of Xcode.
 
 ### Build app
 
@@ -80,7 +81,7 @@ Android:
 
 `flutter build appbundle --flavor causecommune`
 
-iOS and MacOS:
+iOS and macOS:
 
 Select project and archive on Xcode or :
 
