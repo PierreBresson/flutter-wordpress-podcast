@@ -25,7 +25,7 @@ Already existing and planned features.
 - [x] Audio playback when leaving app
 - [x] Search
 - [x] Env config / scripts - white label apps
-- [x] Log crash/bugs to Firebase Crashlytics
+- [x] Log crash/bugs to Sentry
 - [x] Image caching
 - [ ] Stream live radio
 - [ ] Refactor into smaller widgets
@@ -48,8 +48,7 @@ App tested and working on :
 
 ### Getting started
 
-Create `.env` file with `APP=causecommune` or `APP=thinkerview` inside.
-Create `firebase_options.dart` thanks to [firebase cli](https://codewithandrea.com/articles/firebase-flutterfire-cli-flavors/) `flutterfire config` and put it in `/lib/firebase/`.
+Create `.env` file with `APP=causecommune` or `APP=thinkerview` inside and `DSN=yourSecretDSNfromSentry`.
 
 ### Run the app
 
@@ -63,13 +62,15 @@ Android :
 
 iOS :
 
-`flutter run --flavor "Cause Commune"`
+`flutter run --flavor CauseCommune`
 
 `flutter run --flavor Thinkerview`
 
-MacOS (experimental) :
+MacOS :
 
-`flutter run -d macos`
+Since flavors aren't supported by Flutter on MacOS, there are some manual tasks in order to run and archive the app.
+
+In `Project` -> `Runner` -> `Info` -> `Configurations` select for both Debug & Release either `Cause Commune` or `Thinkerview` in the Runner configuration set. Then `Clean Build Folder` inside `Product` menu of Xcode, run `pod install`. Don't forget to change the `Bundle Identifer` and the `Provisioning Profile` plus `APP` in env file.
 
 ### Build app
 
@@ -79,22 +80,10 @@ Android:
 
 `flutter build appbundle --flavor causecommune`
 
-iOS:
-Select project and archive on Xcode
+iOS and MacOS:
 
-MacOS (experimental) :
-`flutter build macos`
+Select project and archive on Xcode or :
 
-### Upload dSYMs
+`flutter build ios --flavor=Thinkerview`
 
-Put dSYMs.zip in Flutter Wordpress Podcast app folder and then in the terminal, run the following :
-
-```
-ios/Pods/FirebaseCrashlytics/upload-symbols -gsp lib/firebase/cause-commune-GoogleService-Info.plist -p ios dSYMs.zip
-```
-
-And :
-
-```
-ios/Pods/FirebaseCrashlytics/upload-symbols -gsp lib/firebase/thinkerview-GoogleService-Info.plist -p ios dSYMs.zip
-```
+`flutter build ios --flavor=CauseCommune`

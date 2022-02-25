@@ -35,6 +35,7 @@ class PlayerManager {
     final artUri = Uri.parse(imageUrl);
     final audioFileUrl = episode?.audioFileUrl ?? "";
     final articleUrl = episode?.articleUrl ?? "";
+    final description = episode?.description ?? "";
 
     final mediaItem = MediaItem(
       id: title,
@@ -44,6 +45,7 @@ class PlayerManager {
       extras: {
         'url': audioFileUrl,
         'articleUrl': articleUrl,
+        'description': description,
       },
     );
 
@@ -55,6 +57,7 @@ class PlayerManager {
         articleUrl: articleUrl,
         title: title,
         imageUrl: imageUrl,
+        description: description,
         positionInSeconds: 0,
       ),
     );
@@ -105,6 +108,7 @@ class PlayerManager {
           articleUrl: "",
           title: "",
           imageUrl: "",
+          description: "",
           positionInSeconds: position.inSeconds,
         ),
       );
@@ -157,6 +161,12 @@ class PlayerManager {
         articleUrlProcessed = mediaItem?.extras?['articleUrl'] as String;
       }
 
+      final description = mediaItem?.extras?['description'];
+      String descriptionProcessed = '';
+      if (description != null) {
+        descriptionProcessed = mediaItem?.extras?['description'] as String;
+      }
+
       final imageUrl = mediaItem?.artUri.toString() ?? '';
 
       metaDataAudioNotifier.value = MetaDataAudioState(
@@ -170,6 +180,7 @@ class PlayerManager {
           id: 0,
           audioFileUrl: audioFileUrlProcessed,
           articleUrl: articleUrlProcessed,
+          description: descriptionProcessed,
           title: title,
           imageUrl: imageUrl,
           positionInSeconds: 0,

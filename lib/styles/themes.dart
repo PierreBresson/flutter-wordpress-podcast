@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import './fonts.dart';
+import 'package:fwp/styles/fonts.dart';
 
 const backgroundColor = Color(0xFFFAFAFA);
 
