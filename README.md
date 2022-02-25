@@ -55,13 +55,7 @@ Create `.env` file with `APP=causecommune` or `APP=thinkerview` inside and `DSN=
 
 `flutter pub get`
 
-Android :
-
-`flutter clean && flutter run --flavor thinkerview`
-
-`flutter clean && flutter run --flavor causecommune`
-
-iOS :
+Android & iOS :
 
 `flutter run --flavor CauseCommune`
 
