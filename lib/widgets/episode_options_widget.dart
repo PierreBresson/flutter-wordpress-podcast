@@ -97,39 +97,38 @@ class EpisodeOptions extends StatelessWidget {
             });
           },
         ),
-        if (kDebugMode || app == APP.causecommune.name)
-          ListTile(
-            title: Text(
-              "Plus d'info sur l'épisode",
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            leading: Icon(
-              Icons.info_sharp,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            onTap: () async {
-              Navigator.pop(context);
-              if (app == APP.thinkerview.name) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EpisodeDetailsCaptainFact(
-                      episode: episode,
-                    ),
-                  ),
-                );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EpisodeDetails(
-                      episode: episode,
-                    ),
-                  ),
-                );
-              }
-            },
+        ListTile(
+          title: Text(
+            "Plus d'info sur l'épisode",
+            style: Theme.of(context).textTheme.headline6,
           ),
+          leading: Icon(
+            Icons.info_sharp,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          onTap: () async {
+            Navigator.pop(context);
+            if (app == APP.thinkerview.name) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EpisodeDetailsCaptainFact(
+                    episode: episode,
+                  ),
+                ),
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EpisodeDetails(
+                    episode: episode,
+                  ),
+                ),
+              );
+            }
+          },
+        ),
         ListTile(
           title: Text(
             "Lire l'épisode",
