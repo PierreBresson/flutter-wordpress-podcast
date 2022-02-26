@@ -6,6 +6,7 @@ import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
 import 'package:fwp/styles/styles.dart';
+import 'package:layout/layout.dart';
 
 class FwpApp extends StatefulWidget {
   const FwpApp({
@@ -122,22 +123,31 @@ class _FwpAppState extends State<FwpApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightThemeData,
-      darkTheme: darkThemeData,
-      home: BlocBuilder<BottomBarNavigationCubit, int>(
-        builder: (_, index) => Scaffold(
-          body: IndexedStack(
-            index: index,
-            children: screens,
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: bottomNavigationBarItems,
-            currentIndex: index,
-            onTap: (index) =>
-                context.read<BottomBarNavigationCubit>().update(index),
+    return Layout(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: lightThemeData,
+        darkTheme: darkThemeData,
+        home: BlocBuilder<BottomBarNavigationCubit, int>(
+          builder: (_, index) => Scaffold(
+            body: Row(
+              children: [
+                if (context.layout.breakpoint > LayoutBreakpoint.sm) ...[
+                  Text("crashing")
+                ],
+                IndexedStack(
+                  index: index,
+                  children: screens,
+                ),
+              ],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              items: bottomNavigationBarItems,
+              currentIndex: index,
+              onTap: (index) =>
+                  context.read<BottomBarNavigationCubit>().update(index),
+            ),
           ),
         ),
       ),

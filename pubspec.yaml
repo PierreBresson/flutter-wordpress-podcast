@@ -51,6 +51,7 @@ dependencies:
   intl: ^0.17.0
   graphql: ^5.0.1
   flutter_widget_from_html: ^0.8.5
+  layout: ^1.0.2
 
 dev_dependencies:
   flutter_test:
