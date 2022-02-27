@@ -47,7 +47,8 @@ class Episode {
         try {
           final rendered = json['content']['rendered'] as String;
           final regexp = RegExp(
-              r'((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube-nocookie\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?');
+            r'((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube-nocookie\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?',
+          );
           final match = regexp.firstMatch(rendered);
           final matchedText = match?.group(0);
           if (matchedText != null) {

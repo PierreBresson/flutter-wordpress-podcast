@@ -27,12 +27,12 @@ Already existing and planned features.
 - [x] Env config / scripts - white label apps
 - [x] Log crash/bugs to Sentry
 - [x] Image caching
+- [x] Episode detail - Fact checking for Thinkerview
 - [ ] Stream live radio
 - [ ] Refactor into smaller widgets
 - [ ] Tests
 - [ ] localization - i18
 - [ ] Categories screen
-- [ ] Details when clicking on a podcast item
 - [ ] Chromecast / Airplay
 - [ ] Download podcast / offline mode
 - [ ] share episode with friend / deep-linking to open a specific episode
