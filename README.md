@@ -63,6 +63,8 @@ Android & iOS :
 
 macOS :
 
+`flutter build macos`
+
 Since flavors aren't supported by Flutter on macOS, there are some manual tasks in order to run and archive the app.
 
 In `Project` -> `Runner` -> `Info` -> `Configurations` select for both Debug & Release either `Cause Commune` or `Thinkerview` in the Runner configuration set. Then `Clean Build Folder` inside `Product` menu of Xcode.

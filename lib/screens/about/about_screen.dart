@@ -61,14 +61,7 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   Future<void> crashApp() async {
-    try {
-      throw Exception("This is a developer crash!");
-    } catch (exception, stackTrace) {
-      await Sentry.captureException(
-        exception,
-        stackTrace: stackTrace,
-      );
-    }
+    throw Exception("This is a developer crash!");
   }
 
   @override
