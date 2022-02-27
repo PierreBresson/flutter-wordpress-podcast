@@ -18,7 +18,10 @@ class AudioMetaData extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              renderImage(value.artUri, screenWidth > 350 ? 300 : 200),
+              EpisodeImage(
+                audioUri: value.artUri,
+                imageMaxWidth: screenWidth > 350 ? 300 : 200,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Text(
@@ -34,8 +37,22 @@ class AudioMetaData extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget renderImage(Uri audioUri, double imageMaxWidth) {
+class EpisodeImage extends StatelessWidget {
+  final Uri audioUri;
+  final double imageMaxWidth;
+  const EpisodeImage({
+    Key? key,
+    required this.audioUri,
+    required this.imageMaxWidth,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     if (audioUri.toString().isEmpty) {
       return ConstrainedBox(
         constraints: BoxConstraints(maxWidth: imageMaxWidth),
@@ -49,16 +66,18 @@ class AudioMetaData extends StatelessWidget {
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: imageMaxWidth),
           child: Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.35),
-                  spreadRadius: 8,
-                  blurRadius: 12,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
+            decoration: isDarkMode
+                ? null
+                : BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.35),
+                        spreadRadius: 8,
+                        blurRadius: 12,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
             child: Image(
               fit: BoxFit.contain,
               image: NetworkImage(

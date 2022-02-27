@@ -39,10 +39,12 @@ class CaptainFactGrades extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
-            color: Colors.green,
-          ),
+          decoration: sumOfApprovals! > 0
+              ? BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: Colors.green,
+                )
+              : null,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,
@@ -50,15 +52,18 @@ class CaptainFactGrades extends StatelessWidget {
             ),
             child: Text(
               "Confirme: $sumOfApprovals",
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(
+                  color: sumOfApprovals > 0 ? Colors.white : Colors.black),
             ),
           ),
         ),
         Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
-            color: Colors.red,
-          ),
+          decoration: sumOfDisapprovals! > 0
+              ? BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: Colors.red,
+                )
+              : null,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,
@@ -66,7 +71,8 @@ class CaptainFactGrades extends StatelessWidget {
             ),
             child: Text(
               "Réfute: $sumOfDisapprovals",
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(
+                  color: sumOfDisapprovals > 0 ? Colors.white : Colors.black),
             ),
           ),
         ),

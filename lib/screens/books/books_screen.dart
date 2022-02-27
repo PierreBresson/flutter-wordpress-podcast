@@ -8,6 +8,9 @@ class BooksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -22,7 +25,10 @@ class BooksScreen extends StatelessWidget {
             onPressed: () => launch(
               "https://github.com/Killkitten/Thinkerview-Recommandations-lecture",
             ),
-            icon: const Icon(Icons.link),
+            icon: Icon(
+              Icons.link,
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
           )
         ],
       ),
