@@ -53,7 +53,8 @@ class CaptainFactGrades extends StatelessWidget {
             child: Text(
               "Confirme: $sumOfApprovals",
               style: TextStyle(
-                  color: sumOfApprovals > 0 ? Colors.white : Colors.black),
+                color: sumOfApprovals > 0 ? Colors.white : Colors.black,
+              ),
             ),
           ),
         ),
@@ -72,7 +73,8 @@ class CaptainFactGrades extends StatelessWidget {
             child: Text(
               "Réfute: $sumOfDisapprovals",
               style: TextStyle(
-                  color: sumOfDisapprovals > 0 ? Colors.white : Colors.black),
+                color: sumOfDisapprovals > 0 ? Colors.white : Colors.black,
+              ),
             ),
           ),
         ),

@@ -16,7 +16,7 @@ Podcast white label app based on Wordpress API using Flutter framework.
 
 ## Roadmap
 
-Already existing and planned features.
+Already existing and planned features
 
 - [x] Dark mode support
 - [x] Test widgets and cubits
@@ -71,15 +71,13 @@ In `Project` -> `Runner` -> `Info` -> `Configurations` select for both Debug & R
 
 ### Build app
 
-Android:
+Android :
 
 `flutter build appbundle --flavor thinkerview`
 
 `flutter build appbundle --flavor causecommune`
 
-iOS and macOS:
-
-Select project and archive on Xcode or :
+iOS and macOS, select project and archive on Xcode or :
 
 `flutter build ios --flavor=Thinkerview`
 

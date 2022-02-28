@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:sentry/sentry.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const causeCommuneDescription =
