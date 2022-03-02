@@ -47,7 +47,7 @@ Future<void> setupApp() async {
       MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => BottomBarNavigationCubit(),
+            create: (_) => NavigationCubit(),
           ),
         ],
         child: const FwpApp(),

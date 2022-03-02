@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fwp/styles/fonts.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 const backgroundColor = Color(0xFFFAFAFA);
 
@@ -75,3 +76,82 @@ final darkThemeDataCauseCommune = ThemeData(
     systemOverlayStyle: SystemUiOverlayStyle.light,
   ),
 );
+
+final darkThemeDataMacOSCauseCommune = MacosThemeData(
+  brightness: Brightness.dark,
+  primaryColor: primaryCauseCommune,
+  canvasColor: Colors.red,
+  pushButtonTheme: const PushButtonThemeData(
+    color: primaryCauseCommune,
+    disabledColor: Colors.grey,
+    secondaryColor: Colors.amber,
+  ),
+  dividerColor: Colors.grey,
+  macosIconButtonThemeData: const MacosIconButtonThemeData(
+    backgroundColor: primaryCauseCommune,
+    disabledColor: Colors.grey,
+  ),
+  iconTheme: const MacosIconThemeData(
+    color: Colors.white,
+  ),
+);
+
+final lightThemeDataMacOSCauseCommune = MacosThemeData(
+  brightness: Brightness.dark,
+  primaryColor: primaryCauseCommune,
+  canvasColor: Colors.red,
+  pushButtonTheme: const PushButtonThemeData(
+    color: primaryCauseCommune,
+    disabledColor: Colors.grey,
+    secondaryColor: Colors.amber,
+  ),
+  dividerColor: Colors.grey,
+  macosIconButtonThemeData: const MacosIconButtonThemeData(
+    backgroundColor: primaryCauseCommune,
+    disabledColor: Colors.grey,
+  ),
+  iconTheme: const MacosIconThemeData(
+    color: Colors.white,
+  ),
+);
+
+final lightThemeDataMacOSThinkerview = MacosThemeData(
+  brightness: Brightness.dark,
+  primaryColor: Colors.teal,
+  canvasColor: Colors.red,
+  pushButtonTheme: const PushButtonThemeData(
+    color: Colors.teal,
+    disabledColor: Colors.grey,
+    secondaryColor: Colors.amber,
+  ),
+  dividerColor: Colors.grey,
+  macosIconButtonThemeData: const MacosIconButtonThemeData(
+    backgroundColor: Colors.teal,
+    disabledColor: Colors.grey,
+  ),
+);
+
+final darkThemeDataMacOSThinkerview = MacosThemeData(
+  brightness: Brightness.dark,
+  primaryColor: Colors.teal,
+  canvasColor: Colors.red,
+  pushButtonTheme: const PushButtonThemeData(
+    color: Colors.teal,
+    disabledColor: Colors.grey,
+    secondaryColor: Colors.amber,
+  ),
+  dividerColor: Colors.grey,
+  macosIconButtonThemeData: const MacosIconButtonThemeData(
+    backgroundColor: Colors.teal,
+    disabledColor: Colors.grey,
+  ),
+);
+
+class AppTheme extends ChangeNotifier {
+  ThemeMode _mode = ThemeMode.system;
+  ThemeMode get mode => _mode;
+  set mode(ThemeMode mode) {
+    _mode = mode;
+    notifyListeners();
+  }
+}

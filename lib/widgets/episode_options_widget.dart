@@ -141,7 +141,7 @@ class EpisodeOptions extends StatelessWidget {
             try {
               playerManager.playEpisode(episode);
               Navigator.pop(context);
-              context.read<BottomBarNavigationCubit>().update(1);
+              context.read<NavigationCubit>().update(1);
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
