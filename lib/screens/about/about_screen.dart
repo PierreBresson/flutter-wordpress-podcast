@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -125,6 +126,18 @@ class _AboutScreenState extends State<AboutScreen> {
                     "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
                   ),
                   child: const Text("Ko-fi Pierre Bresson"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.brown),
+                  onPressed: () => launch(
+                    Platform.isIOS
+                        ? "https://ee9j8fvy45x.typeform.com/to/ZpH0Jcp6"
+                        : "https://ee9j8fvy45x.typeform.com/to/Cgxdt6j3",
+                  ),
+                  child: const Text("Votre feedback sur l'app!"),
                 ),
               ),
               Padding(
