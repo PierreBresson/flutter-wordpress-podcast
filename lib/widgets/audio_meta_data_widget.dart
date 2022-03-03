@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/notifiers/notifiers.dart';
 import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/app_image.dart';
 
 class AudioMetaData extends StatelessWidget {
@@ -50,8 +51,7 @@ class EpisodeImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
     if (audioUri.toString().isEmpty) {
       return ConstrainedBox(

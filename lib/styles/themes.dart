@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fwp/styles/fonts.dart';
 
+bool isAppInDarkMode(BuildContext context) {
+  final brightness = MediaQuery.of(context).platformBrightness;
+  return brightness == Brightness.dark;
+}
+
 const backgroundColor = Color(0xFFFAFAFA);
 
 final ligthThemeDataThinkerview = ThemeData(

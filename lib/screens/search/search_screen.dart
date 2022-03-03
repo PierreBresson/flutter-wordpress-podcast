@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/styles/themes.dart';
 import 'package:fwp/widgets/widgets.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -56,8 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,

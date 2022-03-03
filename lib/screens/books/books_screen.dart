@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BooksScreen extends StatelessWidget {
@@ -8,8 +9,7 @@ class BooksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,

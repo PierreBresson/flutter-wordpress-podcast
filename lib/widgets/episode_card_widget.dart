@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/app_image.dart';
 
 double imageHeigth = 200;
@@ -38,8 +39,7 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
     if (title == "" || imageUrl == "" || audioFileUrl == "") {
       return const SizedBox.shrink();
