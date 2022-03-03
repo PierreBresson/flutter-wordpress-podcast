@@ -40,6 +40,7 @@ class _AboutScreenState extends State<AboutScreen> {
   String buildNumber = "";
   List linksItems = [];
   int tapped = 0;
+  final app = dotenv.env['APP'];
 
   Future<void> getInfoPackage() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -128,18 +129,19 @@ class _AboutScreenState extends State<AboutScreen> {
                   child: const Text("Ko-fi Pierre Bresson"),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.brown),
-                  onPressed: () => launch(
-                    Platform.isIOS
-                        ? "https://ee9j8fvy45x.typeform.com/to/ZpH0Jcp6"
-                        : "https://ee9j8fvy45x.typeform.com/to/Cgxdt6j3",
+              if (app == APP.thinkerview.name)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.brown),
+                    onPressed: () => launch(
+                      Platform.isIOS
+                          ? "https://docs.google.com/forms/d/e/1FAIpQLSfTR0BczGWN9WIeXfnK6BogAUW1ZP9WV-WDlPB7rLkwJSFPSg/viewform?usp=sf_link"
+                          : "https://docs.google.com/forms/d/e/1FAIpQLSc0S2evuA0Klqoqyo5WNRcjUxm2J5asb0ASf5d0pRKBccwqOw/viewform?usp=sf_link",
+                    ),
+                    child: const Text("Votre feedback sur l'app!"),
                   ),
-                  child: const Text("Votre feedback sur l'app!"),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
@@ -205,7 +207,6 @@ class _AboutScreenState extends State<AboutScreen> {
 
   Widget renderPodcastDescription() {
     var podcastDescription = "";
-    final app = dotenv.env['APP'];
 
     if (app == APP.causecommune.name) {
       podcastDescription = causeCommuneDescription;
