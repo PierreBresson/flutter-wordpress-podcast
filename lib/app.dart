@@ -113,46 +113,46 @@ class _FwpAppState extends State<FwpApp> {
         AboutScreen(),
       ];
 
-      if (Platform.isMacOS) {
-        sidebarItems = [
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.home),
-            label: Text(screensTitle[0]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.music_note),
-            label: Text(screensTitle[1]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.search),
-            label: Text(screensTitle[2]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.info),
-            label: Text(screensTitle[3]),
-          ),
-        ];
-      } else {
-        bottomNavigationBarItems = [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.house),
-            label: screensTitle[0],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.music_note),
-            label: screensTitle[1],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.search),
-            label: screensTitle[2],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.info),
-            label: screensTitle[3],
-          )
-        ];
-      }
+      // if (Platform.isMacOS) {
+      //   sidebarItems = [
+      //     SidebarItem(
+      //       leading: const MacosIcon(CupertinoIcons.home),
+      //       label: Text(screensTitle[0]),
+      //     ),
+      //     SidebarItem(
+      //       leading: const MacosIcon(CupertinoIcons.music_note),
+      //       label: Text(screensTitle[1]),
+      //     ),
+      //     SidebarItem(
+      //       leading: const MacosIcon(CupertinoIcons.search),
+      //       label: Text(screensTitle[2]),
+      //     ),
+      //     SidebarItem(
+      //       leading: const MacosIcon(CupertinoIcons.info),
+      //       label: Text(screensTitle[3]),
+      //     ),
+      //   ];
+      // } else {
+      bottomNavigationBarItems = [
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.house),
+          label: screensTitle[0],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.music_note),
+          label: screensTitle[1],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.search),
+          label: screensTitle[2],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.info),
+          label: screensTitle[3],
+        )
+      ];
     }
+    // }
 
     initPlayback();
   }
@@ -189,41 +189,41 @@ class _FwpAppState extends State<FwpApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isMacOS) {
-      return ChangeNotifierProvider(
-        create: (_) => AppTheme(),
-        builder: (context, _) {
-          final appTheme = context.watch<AppTheme>();
-          return MacosApp(
-            title: getTitle(),
-            theme: lightThemeDataMacOS,
-            darkTheme: darkThemeDataMacOS,
-            themeMode: appTheme.mode,
-            debugShowCheckedModeBanner: false,
-            home: BlocBuilder<NavigationCubit, int>(
-              builder: (_, index) => MacosWindow(
-                sidebar: Sidebar(
-                  minWidth: 200,
-                  builder: (context, controller) {
-                    return SidebarItems(
-                      currentIndex: index,
-                      onChanged: (index) =>
-                          context.read<NavigationCubit>().update(index),
-                      scrollController: controller,
-                      items: sidebarItems,
-                    );
-                  },
-                ),
-                child: IndexedStack(
-                  index: index,
-                  children: screens,
-                ),
-              ),
-            ),
-          );
-        },
-      );
-    }
+    // if (Platform.isMacOS) {
+    //   return ChangeNotifierProvider(
+    //     create: (_) => AppTheme(),
+    //     builder: (context, _) {
+    //       final appTheme = context.watch<AppTheme>();
+    //       return MacosApp(
+    //         title: getTitle(),
+    //         theme: lightThemeDataMacOS,
+    //         darkTheme: darkThemeDataMacOS,
+    //         themeMode: appTheme.mode,
+    //         debugShowCheckedModeBanner: false,
+    //         home: BlocBuilder<NavigationCubit, int>(
+    //           builder: (_, index) => MacosWindow(
+    //             sidebar: Sidebar(
+    //               minWidth: 200,
+    //               builder: (context, controller) {
+    //                 return SidebarItems(
+    //                   currentIndex: index,
+    //                   onChanged: (index) =>
+    //                       context.read<NavigationCubit>().update(index),
+    //                   scrollController: controller,
+    //                   items: sidebarItems,
+    //                 );
+    //               },
+    //             ),
+    //             child: IndexedStack(
+    //               index: index,
+    //               children: screens,
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     },
+    //   );
+    // }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
