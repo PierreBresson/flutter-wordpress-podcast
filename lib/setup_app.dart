@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -8,6 +10,15 @@ import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 Future<SentryEvent?> beforeSend(SentryEvent event, {dynamic hint}) async {
   final exceptions = event.exceptions;
@@ -35,6 +46,8 @@ Future<void> setupApp() async {
   await setupServiceLocator();
 
   final dsn = dotenv.env['DSN'];
+
+  HttpOverrides.global = MyHttpOverrides();
 
   await SentryFlutter.init(
     (options) {

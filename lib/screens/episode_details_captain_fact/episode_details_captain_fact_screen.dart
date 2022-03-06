@@ -57,8 +57,7 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
     Intl.defaultLocale = 'fr';
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
     if (episode.youtubeUrl == null) {
       return AdaptiveScaffold(

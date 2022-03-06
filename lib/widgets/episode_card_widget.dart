@@ -48,8 +48,7 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
     if (title == "" || imageUrl == "" || audioFileUrl == "") {
       return const SizedBox.shrink();

@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/styles/styles.dart';
 
 class CaptainFactGrades extends StatelessWidget {
   final List<Comments>? comments;
   const CaptainFactGrades({Key? key, required this.comments}) : super(key: key);
+
+  Color getTextColor(BuildContext context, int? grade) {
+    if (isAppInDarkMode(context)) {
+      if (grade! > 0) {
+        return Colors.white;
+      } else {
+        return Colors.white;
+      }
+    } else {
+      if (grade! > 0) {
+        return Colors.white;
+      } else {
+        return Colors.black;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +70,7 @@ class CaptainFactGrades extends StatelessWidget {
             child: Text(
               "Confirme: $sumOfApprovals",
               style: TextStyle(
-                color: sumOfApprovals > 0 ? Colors.white : Colors.black,
+                color: getTextColor(context, sumOfApprovals),
               ),
             ),
           ),
@@ -73,7 +90,7 @@ class CaptainFactGrades extends StatelessWidget {
             child: Text(
               "Réfute: $sumOfDisapprovals",
               style: TextStyle(
-                color: sumOfDisapprovals > 0 ? Colors.white : Colors.black,
+                color: getTextColor(context, sumOfDisapprovals),
               ),
             ),
           ),
