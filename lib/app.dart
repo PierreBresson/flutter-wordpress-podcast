@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/blocs/blocs.dart';
@@ -52,53 +53,28 @@ class _FwpAppState extends State<FwpApp> {
         AboutScreen()
       ];
 
-      if (Platform.isMacOS) {
-        sidebarItems = [
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.home),
-            label: Text(screensTitle[0]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.music_note),
-            label: Text(screensTitle[1]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.search),
-            label: Text(screensTitle[2]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.book),
-            label: Text(screensTitle[3]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.info),
-            label: Text(screensTitle[4]),
-          ),
-        ];
-      } else {
-        bottomNavigationBarItems = [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.house),
-            label: screensTitle[0],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.music_note),
-            label: screensTitle[1],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.search),
-            label: screensTitle[2],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.book),
-            label: screensTitle[3],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.info),
-            label: screensTitle[4],
-          )
-        ];
-      }
+      bottomNavigationBarItems = [
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.house),
+          label: screensTitle[0],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.music_note),
+          label: screensTitle[1],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.search),
+          label: screensTitle[2],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.book),
+          label: screensTitle[3],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.info),
+          label: screensTitle[4],
+        )
+      ];
     } else if (app == APP.causecommune.name) {
       lightThemeData = ligthThemeDataCauseCommune;
       darkThemeData = darkThemeDataCauseCommune;
@@ -113,48 +89,99 @@ class _FwpAppState extends State<FwpApp> {
         AboutScreen(),
       ];
 
-      if (Platform.isMacOS) {
-        sidebarItems = [
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.home),
-            label: Text(screensTitle[0]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.music_note),
-            label: Text(screensTitle[1]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.search),
-            label: Text(screensTitle[2]),
-          ),
-          SidebarItem(
-            leading: const MacosIcon(CupertinoIcons.info),
-            label: Text(screensTitle[3]),
-          ),
-        ];
-      } else {
-        bottomNavigationBarItems = [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.house),
-            label: screensTitle[0],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.music_note),
-            label: screensTitle[1],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.search),
-            label: screensTitle[2],
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.info),
-            label: screensTitle[3],
-          )
-        ];
-      }
+      bottomNavigationBarItems = [
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.house),
+          label: screensTitle[0],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.music_note),
+          label: screensTitle[1],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.search),
+          label: screensTitle[2],
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.info),
+          label: screensTitle[3],
+        )
+      ];
     }
 
     initPlayback();
+  }
+
+  List<SidebarItem> getSidebar({required bool isDarkMode}) {
+    if (app == APP.thinkerview.name) {
+      return [
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.home,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(screensTitle[0]),
+        ),
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.music_note,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(screensTitle[1]),
+        ),
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.search,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(screensTitle[2]),
+        ),
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.book,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(screensTitle[3]),
+        ),
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.info,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(screensTitle[4]),
+        ),
+      ];
+    }
+    return [
+      SidebarItem(
+        leading: MacosIcon(
+          CupertinoIcons.home,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        label: Text(screensTitle[0]),
+      ),
+      SidebarItem(
+        leading: MacosIcon(
+          CupertinoIcons.music_note,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        label: Text(screensTitle[1]),
+      ),
+      SidebarItem(
+        leading: MacosIcon(
+          CupertinoIcons.search,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        label: Text(screensTitle[2]),
+      ),
+      SidebarItem(
+        leading: MacosIcon(
+          CupertinoIcons.info,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        label: Text(screensTitle[3]),
+      ),
+    ];
   }
 
   Future<void> initPlayback() async {
@@ -189,6 +216,9 @@ class _FwpAppState extends State<FwpApp> {
 
   @override
   Widget build(BuildContext context) {
+    var brightness = SchedulerBinding.instance!.window.platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     if (Platform.isMacOS) {
       return ChangeNotifierProvider(
         create: (_) => AppTheme(),
@@ -210,7 +240,7 @@ class _FwpAppState extends State<FwpApp> {
                       onChanged: (index) =>
                           context.read<NavigationCubit>().update(index),
                       scrollController: controller,
-                      items: sidebarItems,
+                      items: getSidebar(isDarkMode: isDarkMode),
                     );
                   },
                 ),
