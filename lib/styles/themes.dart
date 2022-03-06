@@ -13,34 +13,6 @@ bool isAppInDarkMode(BuildContext context) {
 
 const backgroundColor = Color(0xFFFAFAFA);
 
-final ligthThemeDataThinkerview = ThemeData(
-  primarySwatch: Colors.teal,
-  primaryColor: Colors.white,
-  brightness: Brightness.light,
-  backgroundColor: backgroundColor,
-  secondaryHeaderColor: Colors.black,
-  dividerColor: Colors.white54,
-  scaffoldBackgroundColor: Colors.white,
-  textTheme: Fonts.textLightTheme,
-  appBarTheme: const AppBarTheme(
-    systemOverlayStyle: SystemUiOverlayStyle.dark,
-  ),
-);
-
-final darkThemeDataThinkerview = ThemeData(
-  primarySwatch: Colors.teal,
-  primaryColor: Colors.black,
-  brightness: Brightness.dark,
-  backgroundColor: Colors.black,
-  secondaryHeaderColor: Colors.white,
-  dividerColor: Colors.black12,
-  scaffoldBackgroundColor: Colors.black87,
-  textTheme: Fonts.textDarkTheme,
-  appBarTheme: const AppBarTheme(
-    systemOverlayStyle: SystemUiOverlayStyle.light,
-  ),
-);
-
 /* generated thanks to http://mcg.mbitson.com */
 const MaterialColor primaryCauseCommune =
     MaterialColor(_primaryPrimaryValueCauseCommune, <int, Color>{
@@ -58,6 +30,7 @@ const MaterialColor primaryCauseCommune =
 const int _primaryPrimaryValueCauseCommune = 0xFFE63059;
 
 // CAUSE COMMUNE
+// iOS & Android
 
 final ligthThemeDataCauseCommune = ThemeData(
   primarySwatch: primaryCauseCommune,
@@ -86,6 +59,9 @@ final darkThemeDataCauseCommune = ThemeData(
     systemOverlayStyle: SystemUiOverlayStyle.light,
   ),
 );
+
+// CAUSE COMMUNE
+// macOS
 
 final darkThemeDataMacOSCauseCommune = MacosThemeData(
   brightness: Brightness.dark,
@@ -126,6 +102,38 @@ final lightThemeDataMacOSCauseCommune = MacosThemeData(
 );
 
 // THINKERVIEW
+// iOS & Android
+
+final ligthThemeDataThinkerview = ThemeData(
+  primarySwatch: Colors.teal,
+  primaryColor: Colors.white,
+  brightness: Brightness.light,
+  backgroundColor: backgroundColor,
+  secondaryHeaderColor: Colors.black,
+  dividerColor: Colors.white54,
+  scaffoldBackgroundColor: Colors.white,
+  textTheme: Fonts.textLightTheme,
+  appBarTheme: const AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle.dark,
+  ),
+);
+
+final darkThemeDataThinkerview = ThemeData(
+  primarySwatch: Colors.teal,
+  primaryColor: Colors.black,
+  brightness: Brightness.dark,
+  backgroundColor: Colors.black,
+  secondaryHeaderColor: Colors.white,
+  dividerColor: Colors.black12,
+  scaffoldBackgroundColor: Colors.black87,
+  textTheme: Fonts.textDarkTheme,
+  appBarTheme: const AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle.light,
+  ),
+);
+
+// THINKERVIEW
+// macOS
 
 final lightThemeDataMacOSThinkerview = MacosThemeData(
   brightness: Brightness.light,
