@@ -52,33 +52,6 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
     return client.query(options);
   }
 
-  // Widget? backIcon({
-  //   required BuildContext context,
-  //   required bool isDarkMode,
-  //   required bool isLeadingIcon,
-  // }) {
-  //   final icon = IconButton(
-  //     icon: Icon(
-  //       Icons.arrow_back,
-  //       color: isDarkMode ? Colors.white : Colors.black,
-  //       size: 30,
-  //     ),
-  //     onPressed: () {
-  //       Navigator.maybePop(context);
-  //     },
-  //   );
-
-  //   if (Platform.isMacOS && !isLeadingIcon) {
-  //     return icon;
-  //   }
-
-  //   if (Platform.isIOS || Platform.isAndroid && isLeadingIcon) {
-  //     return icon;
-  //   }
-
-  //   return null;
-  // }
-
   @override
   Widget build(BuildContext context) {
     Intl.defaultLocale = 'fr';
@@ -165,9 +138,13 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
                             children: [
                               Text(
                                 "À ${Duration(seconds: statements[index - 1].time!).inHours}:${Duration(seconds: statements[index - 1].time!).inMinutes.remainder(60)}:${Duration(seconds: statements[index - 1].time!).inSeconds.remainder(60)}",
+                                style: FWPTypography(context).body1(),
                               ),
                               const SizedBox(height: 10),
-                              Text(statements[index - 1].text!),
+                              Text(
+                                statements[index - 1].text!,
+                                style: FWPTypography(context).body1(),
+                              ),
                               const SizedBox(height: 20),
                               CaptainFactGrades(
                                 comments: statements[index - 1].comments,
@@ -294,7 +271,10 @@ class ErrorMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(message),
+      child: Text(
+        message,
+        style: FWPTypography(context).body1(),
+      ),
     );
   }
 }
