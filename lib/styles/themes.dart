@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fwp/styles/fonts.dart';
@@ -80,7 +81,7 @@ final darkThemeDataCauseCommune = ThemeData(
 final darkThemeDataMacOSCauseCommune = MacosThemeData(
   brightness: Brightness.dark,
   primaryColor: primaryCauseCommune,
-  canvasColor: Colors.red,
+  canvasColor: Colors.black,
   pushButtonTheme: const PushButtonThemeData(
     color: primaryCauseCommune,
     disabledColor: Colors.grey,
@@ -99,7 +100,7 @@ final darkThemeDataMacOSCauseCommune = MacosThemeData(
 final lightThemeDataMacOSCauseCommune = MacosThemeData(
   brightness: Brightness.dark,
   primaryColor: primaryCauseCommune,
-  canvasColor: Colors.red,
+  canvasColor: Colors.white,
   pushButtonTheme: const PushButtonThemeData(
     color: primaryCauseCommune,
     disabledColor: Colors.grey,
@@ -118,7 +119,7 @@ final lightThemeDataMacOSCauseCommune = MacosThemeData(
 final lightThemeDataMacOSThinkerview = MacosThemeData(
   brightness: Brightness.dark,
   primaryColor: Colors.teal,
-  canvasColor: Colors.red,
+  canvasColor: Colors.white,
   pushButtonTheme: const PushButtonThemeData(
     color: Colors.teal,
     disabledColor: Colors.grey,
@@ -134,7 +135,7 @@ final lightThemeDataMacOSThinkerview = MacosThemeData(
 final darkThemeDataMacOSThinkerview = MacosThemeData(
   brightness: Brightness.dark,
   primaryColor: Colors.teal,
-  canvasColor: Colors.red,
+  canvasColor: CupertinoColors.systemBackground.elevatedColor,
   pushButtonTheme: const PushButtonThemeData(
     color: Colors.teal,
     disabledColor: Colors.grey,

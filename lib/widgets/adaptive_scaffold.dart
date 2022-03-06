@@ -7,10 +7,12 @@ class AdaptiveScaffold extends StatelessWidget {
   final Widget body;
   final AppBar appBar;
   final TitleBar? titleBar;
+  final FloatingActionButton? floatingActionButton;
   const AdaptiveScaffold({
     Key? key,
     required this.appBar,
     required this.body,
+    this.floatingActionButton,
     this.titleBar,
   }) : super(key: key);
 
@@ -18,11 +20,15 @@ class AdaptiveScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Platform.isMacOS) {
       return MacosScaffold(
-        // backgroundColor: Theme.of(context).backgroundColor,
         titleBar: titleBar,
         children: [
           ContentArea(
-            builder: (context, scrollController) => body,
+            builder: (context, scrollController) => Scaffold(
+              backgroundColor: MacosTheme.of(context).canvasColor,
+              appBar: appBar,
+              body: body,
+              floatingActionButton: floatingActionButton,
+            ),
           )
         ],
       );

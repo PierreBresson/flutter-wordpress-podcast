@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fwp/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BooksScreen extends StatelessWidget {
@@ -11,8 +12,7 @@ class BooksScreen extends StatelessWidget {
     final brightness = MediaQuery.of(context).platformBrightness;
     final isDarkMode = brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+    return AdaptiveScaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

@@ -30,8 +30,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+    return AdaptiveScaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
