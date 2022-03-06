@@ -128,7 +128,7 @@ final lightThemeDataMacOSCauseCommune = MacosThemeData(
 // THINKERVIEW
 
 final lightThemeDataMacOSThinkerview = MacosThemeData(
-  brightness: Brightness.dark,
+  brightness: Brightness.light,
   primaryColor: Colors.teal,
   canvasColor: CupertinoColors.systemBackground,
   pushButtonTheme: const PushButtonThemeData(

@@ -216,7 +216,7 @@ class _FwpAppState extends State<FwpApp> {
 
   @override
   Widget build(BuildContext context) {
-    var brightness = SchedulerBinding.instance!.window.platformBrightness;
+    final brightness = SchedulerBinding.instance!.window.platformBrightness;
     final isDarkMode = brightness == Brightness.dark;
 
     if (Platform.isMacOS) {
