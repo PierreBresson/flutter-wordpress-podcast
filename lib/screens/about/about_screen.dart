@@ -138,6 +138,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       Platform.isIOS
                           ? "https://docs.google.com/forms/d/e/1FAIpQLSfTR0BczGWN9WIeXfnK6BogAUW1ZP9WV-WDlPB7rLkwJSFPSg/viewform?usp=sf_link"
                           : "https://docs.google.com/forms/d/e/1FAIpQLSc0S2evuA0Klqoqyo5WNRcjUxm2J5asb0ASf5d0pRKBccwqOw/viewform?usp=sf_link",
+                      forceSafariVC: false,
                     ),
                     child: const Text("Votre feedback sur l'app!"),
                   ),
