@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:intl/intl.dart';
 
 class EpisodeDetails extends StatelessWidget {
@@ -48,7 +49,7 @@ class EpisodeDetails extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Text(
                   dateformat,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: FWPTypography(context).h6(),
                 ),
               ),
               const SizedBox(height: 20),

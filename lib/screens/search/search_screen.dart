@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -60,6 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final isDarkMode = brightness == Brightness.dark;
 
     return AdaptiveScaffold(
+      titleBar: const TitleBar(title: Text("Recherche")),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -103,13 +106,13 @@ class _SearchScreenState extends State<SearchScreen> {
       if (query.isEmpty) {
         return Text(
           'Résultats',
-          style: Theme.of(context).textTheme.headline6,
+          style: FWPTypography(context).h6(),
         );
       }
 
       return Text(
         'Résultats pour "$query"',
-        style: Theme.of(context).textTheme.headline6,
+        style: FWPTypography(context).h6(),
       );
     }
 
@@ -144,7 +147,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Text(
       "Chercher un épisode",
-      style: Theme.of(context).textTheme.headline6,
+      style: FWPTypography(context).h6(),
     );
   }
 

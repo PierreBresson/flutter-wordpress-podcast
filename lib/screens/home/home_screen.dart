@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -59,13 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     return AdaptiveScaffold(
+      titleBar: const TitleBar(title: Text("Derniers épisodes")),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
           "Derniers épisodes",
-          style: Theme.of(context).textTheme.headline6,
+          style: FWPTypography(context).h6(),
         ),
       ),
       body: RefreshIndicator(
@@ -86,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
               audioFileUrl: episode.audioFileUrl,
               onPressed: () {
                 showModalBottomSheet<void>(
+                  backgroundColor: isDarkMode ? Colors.black : Colors.white,
                   isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(

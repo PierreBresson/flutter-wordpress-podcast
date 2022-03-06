@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +52,8 @@ const MaterialColor primaryCauseCommune =
 });
 const int _primaryPrimaryValueCauseCommune = 0xFFE63059;
 
+// CAUSE COMMUNE
+
 final ligthThemeDataCauseCommune = ThemeData(
   primarySwatch: primaryCauseCommune,
   primaryColor: Colors.white,
@@ -66,7 +70,7 @@ final ligthThemeDataCauseCommune = ThemeData(
 
 final darkThemeDataCauseCommune = ThemeData(
   primarySwatch: primaryCauseCommune,
-  primaryColor: Colors.black,
+  primaryColor: Colors.white,
   brightness: Brightness.dark,
   backgroundColor: Colors.black,
   secondaryHeaderColor: Colors.white,
@@ -81,13 +85,13 @@ final darkThemeDataCauseCommune = ThemeData(
 final darkThemeDataMacOSCauseCommune = MacosThemeData(
   brightness: Brightness.dark,
   primaryColor: primaryCauseCommune,
-  canvasColor: Colors.black,
+  canvasColor: CupertinoColors.systemBackground.darkElevatedColor,
   pushButtonTheme: const PushButtonThemeData(
     color: primaryCauseCommune,
     disabledColor: Colors.grey,
     secondaryColor: Colors.amber,
   ),
-  dividerColor: Colors.grey,
+  dividerColor: Colors.black,
   macosIconButtonThemeData: const MacosIconButtonThemeData(
     backgroundColor: primaryCauseCommune,
     disabledColor: Colors.grey,
@@ -100,13 +104,13 @@ final darkThemeDataMacOSCauseCommune = MacosThemeData(
 final lightThemeDataMacOSCauseCommune = MacosThemeData(
   brightness: Brightness.dark,
   primaryColor: primaryCauseCommune,
-  canvasColor: Colors.white,
+  canvasColor: CupertinoColors.systemBackground,
   pushButtonTheme: const PushButtonThemeData(
     color: primaryCauseCommune,
     disabledColor: Colors.grey,
     secondaryColor: Colors.amber,
   ),
-  dividerColor: Colors.grey,
+  dividerColor: Colors.white,
   macosIconButtonThemeData: const MacosIconButtonThemeData(
     backgroundColor: primaryCauseCommune,
     disabledColor: Colors.grey,
@@ -116,16 +120,18 @@ final lightThemeDataMacOSCauseCommune = MacosThemeData(
   ),
 );
 
+// THINKERVIEW
+
 final lightThemeDataMacOSThinkerview = MacosThemeData(
   brightness: Brightness.dark,
   primaryColor: Colors.teal,
-  canvasColor: Colors.white,
+  canvasColor: CupertinoColors.systemBackground,
   pushButtonTheme: const PushButtonThemeData(
     color: Colors.teal,
     disabledColor: Colors.grey,
     secondaryColor: Colors.amber,
   ),
-  dividerColor: Colors.grey,
+  dividerColor: Colors.white,
   macosIconButtonThemeData: const MacosIconButtonThemeData(
     backgroundColor: Colors.teal,
     disabledColor: Colors.grey,
@@ -135,13 +141,13 @@ final lightThemeDataMacOSThinkerview = MacosThemeData(
 final darkThemeDataMacOSThinkerview = MacosThemeData(
   brightness: Brightness.dark,
   primaryColor: Colors.teal,
-  canvasColor: CupertinoColors.systemBackground.elevatedColor,
+  canvasColor: CupertinoColors.systemBackground.darkElevatedColor,
   pushButtonTheme: const PushButtonThemeData(
     color: Colors.teal,
     disabledColor: Colors.grey,
     secondaryColor: Colors.amber,
   ),
-  dividerColor: Colors.grey,
+  dividerColor: Colors.black,
   macosIconButtonThemeData: const MacosIconButtonThemeData(
     backgroundColor: Colors.teal,
     disabledColor: Colors.grey,
@@ -154,5 +160,66 @@ class AppTheme extends ChangeNotifier {
   set mode(ThemeMode mode) {
     _mode = mode;
     notifyListeners();
+  }
+}
+
+class FWPTypography {
+  final BuildContext context;
+  FWPTypography(this.context);
+
+  TextStyle h1() {
+    if (Platform.isMacOS) {
+      return MacosTheme.of(context).typography.title1;
+    }
+    return Theme.of(context).textTheme.headline1!;
+  }
+
+  TextStyle h2() {
+    if (Platform.isMacOS) {
+      return MacosTheme.of(context).typography.title1;
+    }
+    return Theme.of(context).textTheme.headline2!;
+  }
+
+  TextStyle h3() {
+    if (Platform.isMacOS) {
+      return MacosTheme.of(context).typography.title2;
+    }
+    return Theme.of(context).textTheme.headline3!;
+  }
+
+  TextStyle h4() {
+    if (Platform.isMacOS) {
+      return MacosTheme.of(context).typography.title2;
+    }
+    return Theme.of(context).textTheme.headline4!;
+  }
+
+  TextStyle h5() {
+    if (Platform.isMacOS) {
+      return MacosTheme.of(context).typography.title3;
+    }
+    return Theme.of(context).textTheme.headline5!;
+  }
+
+  TextStyle h6() {
+    if (Platform.isMacOS) {
+      return MacosTheme.of(context).typography.title1;
+    }
+    return Theme.of(context).textTheme.headline6!;
+  }
+
+  TextStyle body1() {
+    if (Platform.isMacOS) {
+      return MacosTheme.of(context).typography.body;
+    }
+    return Theme.of(context).textTheme.bodyText1!;
+  }
+
+  TextStyle body2() {
+    if (Platform.isMacOS) {
+      return MacosTheme.of(context).typography.body;
+    }
+    return Theme.of(context).textTheme.bodyText2!;
   }
 }

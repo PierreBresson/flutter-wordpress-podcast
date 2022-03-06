@@ -6,6 +6,7 @@ import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const paddingItems = 18.0;
@@ -22,6 +23,8 @@ class EpisodeOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -32,9 +35,9 @@ class EpisodeOptions extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              height: 6,
-              width: 38,
-              color: Colors.black38,
+              height: 5,
+              width: 42,
+              color: isDarkMode ? Colors.grey : Colors.black38,
             ),
           ),
         ),
@@ -42,7 +45,7 @@ class EpisodeOptions extends StatelessWidget {
         ListTile(
           title: Text(
             "Ouvrir article dans navigateur",
-            style: Theme.of(context).textTheme.headline6,
+            style: FWPTypography(context).h6(),
           ),
           leading: Icon(
             Icons.link,
@@ -56,7 +59,7 @@ class EpisodeOptions extends StatelessWidget {
         ListTile(
           title: Text(
             "Copier lien article",
-            style: Theme.of(context).textTheme.headline6,
+            style: FWPTypography(context).h6(),
           ),
           leading: Icon(
             Icons.copy,
@@ -77,7 +80,7 @@ class EpisodeOptions extends StatelessWidget {
         ListTile(
           title: Text(
             "Copier lien fichier audio",
-            style: Theme.of(context).textTheme.headline6,
+            style: FWPTypography(context).h6(),
             textAlign: TextAlign.left,
           ),
           leading: Icon(
@@ -99,7 +102,7 @@ class EpisodeOptions extends StatelessWidget {
         ListTile(
           title: Text(
             "Plus d'info sur l'épisode",
-            style: Theme.of(context).textTheme.headline6,
+            style: FWPTypography(context).h6(),
           ),
           leading: Icon(
             Icons.info_sharp,
@@ -131,7 +134,7 @@ class EpisodeOptions extends StatelessWidget {
         ListTile(
           title: Text(
             "Lire l'épisode",
-            style: Theme.of(context).textTheme.headline6,
+            style: FWPTypography(context).h6(),
           ),
           leading: Icon(
             Icons.play_arrow_rounded,

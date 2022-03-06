@@ -5,12 +5,12 @@ import 'package:macos_ui/macos_ui.dart';
 
 class AdaptiveScaffold extends StatelessWidget {
   final Widget body;
-  final AppBar appBar;
+  final AppBar? appBar;
   final TitleBar? titleBar;
   final FloatingActionButton? floatingActionButton;
   const AdaptiveScaffold({
     Key? key,
-    required this.appBar,
+    this.appBar,
     required this.body,
     this.floatingActionButton,
     this.titleBar,
@@ -25,7 +25,6 @@ class AdaptiveScaffold extends StatelessWidget {
           ContentArea(
             builder: (context, scrollController) => Scaffold(
               backgroundColor: MacosTheme.of(context).canvasColor,
-              appBar: appBar,
               body: body,
               floatingActionButton: floatingActionButton,
             ),

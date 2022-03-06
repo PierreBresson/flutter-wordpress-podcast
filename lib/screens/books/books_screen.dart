@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BooksScreen extends StatelessWidget {
@@ -13,12 +15,13 @@ class BooksScreen extends StatelessWidget {
     final isDarkMode = brightness == Brightness.dark;
 
     return AdaptiveScaffold(
+      titleBar: const TitleBar(title: Text("Livres")),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
           "Livres",
-          style: Theme.of(context).textTheme.headline6,
+          style: FWPTypography(context).h6(),
         ),
         actions: [
           IconButton(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:graphql/client.dart';
 import 'package:intl/intl.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final _httpLink = HttpLink('https://graphql.captainfact.io/');
@@ -50,6 +52,33 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
     return client.query(options);
   }
 
+  // Widget? backIcon({
+  //   required BuildContext context,
+  //   required bool isDarkMode,
+  //   required bool isLeadingIcon,
+  // }) {
+  //   final icon = IconButton(
+  //     icon: Icon(
+  //       Icons.arrow_back,
+  //       color: isDarkMode ? Colors.white : Colors.black,
+  //       size: 30,
+  //     ),
+  //     onPressed: () {
+  //       Navigator.maybePop(context);
+  //     },
+  //   );
+
+  //   if (Platform.isMacOS && !isLeadingIcon) {
+  //     return icon;
+  //   }
+
+  //   if (Platform.isIOS || Platform.isAndroid && isLeadingIcon) {
+  //     return icon;
+  //   }
+
+  //   return null;
+  // }
+
   @override
   Widget build(BuildContext context) {
     Intl.defaultLocale = 'fr';
@@ -59,7 +88,8 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
     final isDarkMode = brightness == Brightness.dark;
 
     if (episode.youtubeUrl == null) {
-      return Scaffold(
+      return AdaptiveScaffold(
+        titleBar: const TitleBar(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -90,7 +120,8 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
         ),
       );
     } else {
-      return Scaffold(
+      return AdaptiveScaffold(
+        titleBar: const TitleBar(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -201,7 +232,7 @@ class Header extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Text(
             episode.title,
-            style: Theme.of(context).textTheme.headline4,
+            style: FWPTypography(context).h4(),
           ),
         ),
         const SizedBox(height: 20),
@@ -209,7 +240,7 @@ class Header extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Text(
             dateformat,
-            style: Theme.of(context).textTheme.headline5,
+            style: FWPTypography(context).h5(),
           ),
         ),
         const SizedBox(height: 20),
@@ -222,11 +253,11 @@ class Header extends StatelessWidget {
                   children: [
                     Text(
                       "Fact Checking - ",
-                      style: Theme.of(context).textTheme.headline6,
+                      style: FWPTypography(context).h6(),
                     ),
                     Text(
                       "captainfact.io",
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                      style: FWPTypography(context).h6().copyWith(
                             color: Theme.of(context).colorScheme.primary,
                           ),
                     ),

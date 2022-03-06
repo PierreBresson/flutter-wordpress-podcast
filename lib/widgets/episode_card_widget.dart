@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/app_image.dart';
 
 double imageHeigth = 200;
@@ -36,6 +39,13 @@ class EpisodeCard extends StatelessWidget {
     );
   }
 
+  Color getBackgroundColor({bool isDarkMode = false}) {
+    if (Platform.isMacOS) {
+      return isDarkMode ? Colors.black : Colors.white;
+    }
+    return isDarkMode ? const Color(0xFF1C1C1E) : Colors.white;
+  }
+
   @override
   Widget build(BuildContext context) {
     final brightness = MediaQuery.of(context).platformBrightness;
@@ -51,7 +61,7 @@ class EpisodeCard extends StatelessWidget {
         child: Container(
           constraints: getConstraints(context),
           decoration: BoxDecoration(
-            color: isDarkMode ? const Color(0xFF1C1C1E) : Colors.white,
+            color: getBackgroundColor(isDarkMode: isDarkMode),
             borderRadius: BorderRadius.all(circularRadius),
             boxShadow: isDarkMode
                 ? null
@@ -126,7 +136,7 @@ class EpisodeCard extends StatelessWidget {
                   constraints: getConstraints(context),
                   child: Text(
                     title,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: FWPTypography(context).h6(),
                   ),
                 ),
               ],

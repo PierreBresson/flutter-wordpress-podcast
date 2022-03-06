@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -73,12 +75,13 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
+      titleBar: const TitleBar(title: Text("A propos")),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
           "A propos",
-          style: Theme.of(context).textTheme.headline6,
+          style: FWPTypography(context).h6(),
         ),
       ),
       body: Padding(
@@ -101,8 +104,9 @@ class _AboutScreenState extends State<AboutScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               InkWell(
-                child: const Text(
+                child: Text(
                   "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à m'aider sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
+                  style: FWPTypography(context).body1(),
                 ),
                 onTap: () {
                   setState(() {
@@ -113,7 +117,10 @@ class _AboutScreenState extends State<AboutScreen> {
               if (tapped > 10)
                 ElevatedButton(
                   onPressed: crashApp,
-                  child: const Text("Crash app"),
+                  child: Text(
+                    "Crash app",
+                    style: FWPTypography(context).body1(),
+                  ),
                 )
               else
                 const SizedBox.shrink(),
@@ -124,7 +131,10 @@ class _AboutScreenState extends State<AboutScreen> {
                   onPressed: () => launch(
                     "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
                   ),
-                  child: const Text("Ko-fi Pierre Bresson"),
+                  child: Text(
+                    "Ko-fi Pierre Bresson",
+                    style: FWPTypography(context).body1(),
+                  ),
                 ),
               ),
               Padding(
@@ -133,12 +143,18 @@ class _AboutScreenState extends State<AboutScreen> {
                   onPressed: () => launch(
                     "https://github.com/PierreBresson/flutter-wordpress-podcast",
                   ),
-                  child: const Text("Github"),
+                  child: Text(
+                    "Github",
+                    style: FWPTypography(context).body1(),
+                  ),
                 ),
               ),
               renderPodcastDescription(),
               ElevatedButton(
-                child: Text(linksItems[index].title as String),
+                child: Text(
+                  linksItems[index].title as String,
+                  style: FWPTypography(context).body1(),
+                ),
                 onPressed: () => launch(linksItems[index].link as String),
               ),
             ],
@@ -150,7 +166,10 @@ class _AboutScreenState extends State<AboutScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
-                  child: Text(linksItems[index].title as String),
+                  child: Text(
+                    linksItems[index].title as String,
+                    style: FWPTypography(context).body1(),
+                  ),
                   onPressed: () => launch(linksItems[index].link as String),
                 ),
               ),
@@ -158,9 +177,18 @@ class _AboutScreenState extends State<AboutScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(apptitle),
-                  const Text(" - "),
-                  Text(packageName),
+                  Text(
+                    apptitle,
+                    style: FWPTypography(context).body1(),
+                  ),
+                  Text(
+                    " - ",
+                    style: FWPTypography(context).body1(),
+                  ),
+                  Text(
+                    packageName,
+                    style: FWPTypography(context).body1(),
+                  ),
                 ],
               ),
               Padding(
@@ -168,10 +196,22 @@ class _AboutScreenState extends State<AboutScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Version "),
-                    Text(version),
-                    const Text(" - "),
-                    Text(buildNumber),
+                    Text(
+                      "Version ",
+                      style: FWPTypography(context).body1(),
+                    ),
+                    Text(
+                      version,
+                      style: FWPTypography(context).body1(),
+                    ),
+                    Text(
+                      " - ",
+                      style: FWPTypography(context).body1(),
+                    ),
+                    Text(
+                      buildNumber,
+                      style: FWPTypography(context).body1(),
+                    ),
                   ],
                 ),
               ),
@@ -181,7 +221,10 @@ class _AboutScreenState extends State<AboutScreen> {
           return Padding(
             padding: const EdgeInsets.only(top: 10),
             child: ElevatedButton(
-              child: Text(linksItems[index].title as String),
+              child: Text(
+                linksItems[index].title as String,
+                style: FWPTypography(context).body1(),
+              ),
               onPressed: () => launch(linksItems[index].link as String),
             ),
           );
@@ -203,7 +246,10 @@ class _AboutScreenState extends State<AboutScreen> {
     return Column(
       children: [
         const SizedBox(height: 30),
-        Text(podcastDescription),
+        Text(
+          podcastDescription,
+          style: FWPTypography(context).body1(),
+        ),
         const SizedBox(height: 10),
       ],
     );

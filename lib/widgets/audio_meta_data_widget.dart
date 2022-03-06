@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/notifiers/notifiers.dart';
 import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/app_image.dart';
 
 class AudioMetaData extends StatelessWidget {
@@ -27,7 +28,7 @@ class AudioMetaData extends StatelessWidget {
                 child: Text(
                   value.title,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: FWPTypography(context).h6(),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

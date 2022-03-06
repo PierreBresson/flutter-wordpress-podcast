@@ -196,8 +196,8 @@ class _FwpAppState extends State<FwpApp> {
           final appTheme = context.watch<AppTheme>();
           return MacosApp(
             title: getTitle(),
-            theme: MacosThemeData.light(),
-            darkTheme: MacosThemeData.dark(),
+            theme: lightThemeDataMacOS,
+            darkTheme: darkThemeDataMacOS,
             themeMode: appTheme.mode,
             debugShowCheckedModeBanner: false,
             home: BlocBuilder<NavigationCubit, int>(
