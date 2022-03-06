@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
@@ -61,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final isDarkMode = isAppInDarkMode(context);
 
     return AdaptiveScaffold(
-      titleBar: const TitleBar(title: Text("Recherche")),
+      titleBar: TitleBar(title: renderTitle()),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -112,6 +114,21 @@ class _SearchScreenState extends State<SearchScreen> {
       return Text(
         'Résultats pour "$query"',
         style: FWPTypography(context).h6(),
+      );
+    }
+
+    if (Platform.isMacOS) {
+      return MacosTextField(
+        autofocus: true,
+        textInputAction: TextInputAction.search,
+        focusNode: focusNode,
+        onSubmitted: (value) {
+          isSearchViewClicked = false;
+          setState(() {
+            query = value;
+          });
+          search(value);
+        },
       );
     }
 
