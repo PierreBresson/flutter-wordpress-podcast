@@ -28,7 +28,7 @@ class AudioMetaData extends StatelessWidget {
                 child: Text(
                   value.title,
                   textAlign: TextAlign.center,
-                  style: FWPTypography(context).h6(),
+                  style: Theme.of(context).textTheme.headline6,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

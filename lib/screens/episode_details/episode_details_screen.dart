@@ -48,7 +48,7 @@ class EpisodeDetails extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Text(
                   dateformat,
-                  style: FWPTypography(context).h6(),
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               const SizedBox(height: 20),

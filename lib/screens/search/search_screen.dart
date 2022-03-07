@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
@@ -63,11 +64,11 @@ class _SearchScreenState extends State<SearchScreen> {
     final isDarkMode = isAppInDarkMode(context);
 
     return AdaptiveScaffold(
-      titleBar: TitleBar(title: renderTitle()),
+      titleBar: TitleBar(title: renderTitle(isDarkMode: isDarkMode)),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: renderTitle(),
+        title: renderTitle(isDarkMode: isDarkMode),
         actions: <Widget>[
           IconButton(
             icon: isSearchViewClicked
@@ -100,25 +101,36 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget renderTitle() {
+  Widget renderTitle({required bool isDarkMode}) {
     if (!isSearchViewClicked &&
         episodes.isNotEmpty &&
         hasUserStartedSearching) {
       if (query.isEmpty) {
         return Text(
           'Résultats',
-          style: FWPTypography(context).h6(),
+          style: Theme.of(context).textTheme.headline6,
         );
       }
 
       return Text(
         'Résultats pour "$query"',
-        style: FWPTypography(context).h6(),
+        style: Theme.of(context).textTheme.headline6,
       );
     }
 
     if (Platform.isMacOS) {
       return MacosTextField(
+        prefix: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 4.0),
+          child: Icon(
+            Icons.search,
+          ),
+        ),
+        placeholder: "Chercher ici",
+        decoration: BoxDecoration(
+          color: isDarkMode ? Colors.black : Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(6)),
+        ),
         autofocus: true,
         textInputAction: TextInputAction.search,
         focusNode: focusNode,
@@ -163,7 +175,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Text(
       "Chercher un épisode",
-      style: FWPTypography(context).h6(),
+      style: Theme.of(context).textTheme.headline6,
     );
   }
 

@@ -120,35 +120,65 @@ class _FwpAppState extends State<FwpApp> {
             CupertinoIcons.home,
             color: isDarkMode ? Colors.white : Colors.black,
           ),
-          label: Text(screensTitle[0]),
+          label: Text(
+            screensTitle[0],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
         ),
         SidebarItem(
           leading: MacosIcon(
             CupertinoIcons.music_note,
             color: isDarkMode ? Colors.white : Colors.black,
           ),
-          label: Text(screensTitle[1]),
+          label: Text(
+            screensTitle[1],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
         ),
         SidebarItem(
           leading: MacosIcon(
             CupertinoIcons.search,
             color: isDarkMode ? Colors.white : Colors.black,
           ),
-          label: Text(screensTitle[2]),
+          label: Text(
+            screensTitle[2],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
         ),
         SidebarItem(
           leading: MacosIcon(
             CupertinoIcons.book,
             color: isDarkMode ? Colors.white : Colors.black,
           ),
-          label: Text(screensTitle[3]),
+          label: Text(
+            screensTitle[3],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
         ),
         SidebarItem(
           leading: MacosIcon(
             CupertinoIcons.info,
             color: isDarkMode ? Colors.white : Colors.black,
           ),
-          label: Text(screensTitle[4]),
+          label: Text(
+            screensTitle[4],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
         ),
       ];
     }
@@ -158,28 +188,49 @@ class _FwpAppState extends State<FwpApp> {
           CupertinoIcons.home,
           color: isDarkMode ? Colors.white : Colors.black,
         ),
-        label: Text(screensTitle[0]),
+        label: Text(
+          screensTitle[0],
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+        ),
       ),
       SidebarItem(
         leading: MacosIcon(
           CupertinoIcons.music_note,
           color: isDarkMode ? Colors.white : Colors.black,
         ),
-        label: Text(screensTitle[1]),
+        label: Text(
+          screensTitle[1],
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
       ),
       SidebarItem(
         leading: MacosIcon(
           CupertinoIcons.search,
           color: isDarkMode ? Colors.white : Colors.black,
         ),
-        label: Text(screensTitle[2]),
+        label: Text(
+          screensTitle[2],
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+        ),
       ),
       SidebarItem(
         leading: MacosIcon(
           CupertinoIcons.info,
           color: isDarkMode ? Colors.white : Colors.black,
         ),
-        label: Text(screensTitle[3]),
+        label: Text(
+          screensTitle[3],
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+        ),
       ),
     ];
   }
@@ -245,9 +296,13 @@ class _FwpAppState extends State<FwpApp> {
                     );
                   },
                 ),
-                child: IndexedStack(
-                  index: index,
-                  children: screens,
+                child: MaterialApp(
+                  theme: lightThemeData,
+                  darkTheme: darkThemeData,
+                  home: IndexedStack(
+                    index: index,
+                    children: screens,
+                  ),
                 ),
               ),
             ),

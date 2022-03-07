@@ -6,10 +6,36 @@ import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
-import 'package:fwp/styles/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const paddingItems = 18.0;
+
+class ListItem extends StatelessWidget {
+  final VoidCallback onTap;
+  final IconData iconData;
+  final String text;
+  const ListItem({
+    Key? key,
+    required this.iconData,
+    required this.text,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        text,
+        style: Theme.of(context).textTheme.headline6,
+      ),
+      leading: Icon(
+        iconData,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      onTap: onTap,
+    );
+  }
+}
 
 class EpisodeOptions extends StatelessWidget {
   final Episode episode;
@@ -42,29 +68,17 @@ class EpisodeOptions extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 30),
-        ListTile(
-          title: Text(
-            "Ouvrir article dans navigateur",
-            style: FWPTypography(context).h6(),
-          ),
-          leading: Icon(
-            Icons.link,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.link,
+          text: "Ouvrir article dans navigateur",
           onTap: () {
             Navigator.pop(context);
             launch(episode.articleUrl);
           },
         ),
-        ListTile(
-          title: Text(
-            "Copier lien article",
-            style: FWPTypography(context).h6(),
-          ),
-          leading: Icon(
-            Icons.copy,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.copy,
+          text: "Copier lien article",
           onTap: () {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.articleUrl))
@@ -77,16 +91,9 @@ class EpisodeOptions extends StatelessWidget {
             });
           },
         ),
-        ListTile(
-          title: Text(
-            "Copier lien fichier audio",
-            style: FWPTypography(context).h6(),
-            textAlign: TextAlign.left,
-          ),
-          leading: Icon(
-            Icons.copy,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.copy,
+          text: "Copier lien fichier audio",
           onTap: () {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
@@ -99,15 +106,9 @@ class EpisodeOptions extends StatelessWidget {
             });
           },
         ),
-        ListTile(
-          title: Text(
-            "Plus d'info sur l'épisode",
-            style: FWPTypography(context).h6(),
-          ),
-          leading: Icon(
-            Icons.info_sharp,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.info_sharp,
+          text: "Plus d'info sur l'épisode",
           onTap: () async {
             Navigator.pop(context);
             if (app == APP.thinkerview.name) {
@@ -131,15 +132,9 @@ class EpisodeOptions extends StatelessWidget {
             }
           },
         ),
-        ListTile(
-          title: Text(
-            "Lire l'épisode",
-            style: FWPTypography(context).h6(),
-          ),
-          leading: Icon(
-            Icons.play_arrow_rounded,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.play_arrow_rounded,
+          text: "Lire l'épisode",
           onTap: () async {
             try {
               playerManager.playEpisode(episode);

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
-import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -83,7 +82,7 @@ class _AboutScreenState extends State<AboutScreen> {
         backgroundColor: Colors.transparent,
         title: Text(
           "A propos",
-          style: FWPTypography(context).h6(),
+          style: Theme.of(context).textTheme.headline6,
         ),
       ),
       body: Padding(
@@ -108,7 +107,7 @@ class _AboutScreenState extends State<AboutScreen> {
               InkWell(
                 child: Text(
                   "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à m'aider sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
-                  style: FWPTypography(context).body1(),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onTap: () {
                   setState(() {
@@ -121,7 +120,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   onPressed: crashApp,
                   child: Text(
                     "Crash app",
-                    style: FWPTypography(context).body1(),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 )
               else
@@ -135,11 +134,11 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   child: Text(
                     "Ko-fi Pierre Bresson",
-                    style: FWPTypography(context).body1(),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
               ),
-              if (app == APP.thinkerview.name)
+              if (app == APP.thinkerview.name && !Platform.isMacOS)
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
@@ -161,7 +160,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   child: Text(
                     "Github",
-                    style: FWPTypography(context).body1(),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
               ),
@@ -169,7 +168,7 @@ class _AboutScreenState extends State<AboutScreen> {
               ElevatedButton(
                 child: Text(
                   linksItems[index].title as String,
-                  style: FWPTypography(context).body1(),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onPressed: () => launch(linksItems[index].link as String),
               ),
@@ -184,7 +183,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 child: ElevatedButton(
                   child: Text(
                     linksItems[index].title as String,
-                    style: FWPTypography(context).body1(),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   onPressed: () => launch(linksItems[index].link as String),
                 ),
@@ -195,15 +194,15 @@ class _AboutScreenState extends State<AboutScreen> {
                 children: [
                   Text(
                     apptitle,
-                    style: FWPTypography(context).body1(),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     " - ",
-                    style: FWPTypography(context).body1(),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     packageName,
-                    style: FWPTypography(context).body1(),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
               ),
@@ -214,19 +213,19 @@ class _AboutScreenState extends State<AboutScreen> {
                   children: [
                     Text(
                       "Version ",
-                      style: FWPTypography(context).body1(),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
                       version,
-                      style: FWPTypography(context).body1(),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
                       " - ",
-                      style: FWPTypography(context).body1(),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
                       buildNumber,
-                      style: FWPTypography(context).body1(),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ],
                 ),
@@ -239,7 +238,7 @@ class _AboutScreenState extends State<AboutScreen> {
             child: ElevatedButton(
               child: Text(
                 linksItems[index].title as String,
-                style: FWPTypography(context).body1(),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               onPressed: () => launch(linksItems[index].link as String),
             ),
@@ -263,7 +262,7 @@ class _AboutScreenState extends State<AboutScreen> {
         const SizedBox(height: 30),
         Text(
           podcastDescription,
-          style: FWPTypography(context).body1(),
+          style: Theme.of(context).textTheme.bodyText1,
         ),
         const SizedBox(height: 10),
       ],

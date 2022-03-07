@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/repositories/repositories.dart';
-import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -39,7 +38,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
         backgroundColor: Colors.transparent,
         title: Text(
           "Lecteur",
-          style: FWPTypography(context).h6(),
+          style: Theme.of(context).textTheme.headline6,
         ),
       ),
       body: Padding(

@@ -20,7 +20,7 @@ class BooksScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Text(
           "Livres",
-          style: FWPTypography(context).h6(),
+          style: Theme.of(context).textTheme.headline6,
         ),
         actions: [
           IconButton(

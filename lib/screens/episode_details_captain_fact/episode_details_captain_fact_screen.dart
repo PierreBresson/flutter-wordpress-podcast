@@ -137,12 +137,12 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
                             children: [
                               Text(
                                 "À ${Duration(seconds: statements[index - 1].time!).inHours}:${Duration(seconds: statements[index - 1].time!).inMinutes.remainder(60)}:${Duration(seconds: statements[index - 1].time!).inSeconds.remainder(60)}",
-                                style: FWPTypography(context).body1(),
+                                style: Theme.of(context).textTheme.bodyText1,
                               ),
                               const SizedBox(height: 10),
                               Text(
                                 statements[index - 1].text!,
-                                style: FWPTypography(context).body1(),
+                                style: Theme.of(context).textTheme.bodyText1,
                               ),
                               const SizedBox(height: 20),
                               CaptainFactGrades(
@@ -208,7 +208,7 @@ class Header extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Text(
             episode.title,
-            style: FWPTypography(context).h4(),
+            style: Theme.of(context).textTheme.headline4,
           ),
         ),
         const SizedBox(height: 20),
@@ -216,7 +216,7 @@ class Header extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Text(
             dateformat,
-            style: FWPTypography(context).h5(),
+            style: Theme.of(context).textTheme.headline5,
           ),
         ),
         const SizedBox(height: 20),
@@ -229,11 +229,11 @@ class Header extends StatelessWidget {
                   children: [
                     Text(
                       "Fact Checking - ",
-                      style: FWPTypography(context).h6(),
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     Text(
                       "captainfact.io",
-                      style: FWPTypography(context).h6().copyWith(
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                           ),
                     ),
@@ -272,7 +272,7 @@ class ErrorMessage extends StatelessWidget {
     return Center(
       child: Text(
         message,
-        style: FWPTypography(context).body1(),
+        style: Theme.of(context).textTheme.bodyText1,
       ),
     );
   }

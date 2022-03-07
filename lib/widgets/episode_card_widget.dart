@@ -67,7 +67,7 @@ class EpisodeCard extends StatelessWidget {
                 : [
                     const BoxShadow(
                       color: Colors.black12,
-                      offset: Offset(0.0, 1.0), //(x,y)
+                      offset: Offset(0.0, 1.0),
                       blurRadius: 16.0,
                     ),
                   ],
@@ -135,7 +135,7 @@ class EpisodeCard extends StatelessWidget {
                   constraints: getConstraints(context),
                   child: Text(
                     title,
-                    style: FWPTypography(context).h6(),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
               ],
