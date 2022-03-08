@@ -1,6 +1,49 @@
-# Recommandations de lecture des invités
+## Recommandations de lecture des invités
 
 Liste des recommandations lecture des invités de ThinkerView (3 livres pour la communauté) avec titre de l'oeuvre et auteur.
+
+### L'emprise, la France sous influence ? Marc Endeweld
+
+> 17 février 2022
+> [youtube](https://youtu.be/HHyUr6RPMSk)
+
+- Requiem pour une République - Thomas Cantaloube
+- Mémoires impubliables - Pierre Péan
+- L'enfer numérique: Voyage au bout d'un Like - Guillaume Pitron
+
+Derniers livres de l'invité :
+
+- L'ambigu monsieur Macron - Marc Endeweld
+- Le Grand Manipulateur : Les Réseaux secrets de Macron - Marc Endeweld
+- L'Emprise : La France sous influence - Marc Endeweld
+
+### Éviter l’effondrement ? Jean-Marc Jancovici et Laurent Morel
+
+> 9 février 2022
+> [youtube](https://youtu.be/dmBRwFVQk_M)
+
+- Climat, crises: Le plan de transformation de l'économie française - The Shift Project
+
+Laurent Morel
+
+- L'Argent - Charles Péguy
+- La Société de consommation - Jean Baudrillard
+- La Chartreuse de Parme - Roman de Stendhal
+
+Jean-Marc Jancovici
+
+- The Limits to Growth (1972) - Meadows
+- De la démocratie en Amérique - Alexis de Tocqueville
+- Malevil - Robert Merle
+
+### La France face à la nouvelle mondialisation ? Geoffroy Roux de Bézieux
+
+> 27 janvier 2022
+> [youtube](https://youtu.be/x6qsHdJNn1E)
+
+- L'Intendance suivra ! De Gaulle et l'Économie - Geoffroy Roux de Bézieux
+- Capitalisme et liberté - Milton Friedman
+- La Flotte fantôme: Le troisième conflit mondial est déjà là - Peter W. Singer
 
 ### L'effondrement : le point critique ? Aurore Stéphant
 

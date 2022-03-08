@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/styles/styles.dart';
 
 class CaptainFactGrades extends StatelessWidget {
   final List<Comments>? comments;
   const CaptainFactGrades({Key? key, required this.comments}) : super(key: key);
+
+  Color getTextColor(BuildContext context, int? grade) {
+    if (isAppInDarkMode(context)) {
+      if (grade! > 0) {
+        return Colors.white;
+      } else {
+        return Colors.white;
+      }
+    } else {
+      if (grade! > 0) {
+        return Colors.white;
+      } else {
+        return Colors.black;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +56,12 @@ class CaptainFactGrades extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
-            color: Colors.green,
-          ),
+          decoration: sumOfApprovals! > 0
+              ? BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: Colors.green,
+                )
+              : null,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,
@@ -50,15 +69,19 @@ class CaptainFactGrades extends StatelessWidget {
             ),
             child: Text(
               "Confirme: $sumOfApprovals",
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: getTextColor(context, sumOfApprovals),
+              ),
             ),
           ),
         ),
         Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
-            color: Colors.red,
-          ),
+          decoration: sumOfDisapprovals! > 0
+              ? BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: Colors.red,
+                )
+              : null,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,
@@ -66,7 +89,9 @@ class CaptainFactGrades extends StatelessWidget {
             ),
             child: Text(
               "Réfute: $sumOfDisapprovals",
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: getTextColor(context, sumOfDisapprovals),
+              ),
             ),
           ),
         ),

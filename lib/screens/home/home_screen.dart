@@ -4,6 +4,7 @@ import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -59,8 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
+    return AdaptiveScaffold(
+      titleBar: const TitleBar(title: Text("Derniers épisodes")),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -87,6 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
               audioFileUrl: episode.audioFileUrl,
               onPressed: () {
                 showModalBottomSheet<void>(
+                  backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
+                  isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),

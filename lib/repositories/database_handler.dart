@@ -33,7 +33,8 @@ class DatabaseHandler {
         case 3:
           try {
             db.execute(
-                "ALTER TABLE $tablename ADD COLUMN articleUrl TEXT description TEXT;");
+              "ALTER TABLE $tablename ADD COLUMN articleUrl TEXT description TEXT;",
+            );
           } catch (error) {
             if (kDebugMode) {
               print(error);

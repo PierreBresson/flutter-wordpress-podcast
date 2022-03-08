@@ -1,11 +1,15 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/widgets/widgets.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:sentry/sentry.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const causeCommuneDescription =
@@ -38,6 +42,7 @@ class _AboutScreenState extends State<AboutScreen> {
   String buildNumber = "";
   List linksItems = [];
   int tapped = 0;
+  final app = dotenv.env['APP'];
 
   Future<void> getInfoPackage() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -59,14 +64,7 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   Future<void> crashApp() async {
-    try {
-      throw Exception("This is a developer crash!");
-    } catch (exception, stackTrace) {
-      await Sentry.captureException(
-        exception,
-        stackTrace: stackTrace,
-      );
-    }
+    throw Exception("This is a developer crash!");
   }
 
   @override
@@ -77,8 +75,8 @@ class _AboutScreenState extends State<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+    return AdaptiveScaffold(
+      titleBar: const TitleBar(title: Text("A propos")),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -107,8 +105,9 @@ class _AboutScreenState extends State<AboutScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               InkWell(
-                child: const Text(
+                child: Text(
                   "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à m'aider sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onTap: () {
                   setState(() {
@@ -119,7 +118,10 @@ class _AboutScreenState extends State<AboutScreen> {
               if (tapped > 10)
                 ElevatedButton(
                   onPressed: crashApp,
-                  child: const Text("Crash app"),
+                  child: Text(
+                    "Crash app",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                 )
               else
                 const SizedBox.shrink(),
@@ -130,21 +132,44 @@ class _AboutScreenState extends State<AboutScreen> {
                   onPressed: () => launch(
                     "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
                   ),
-                  child: const Text("Ko-fi Pierre Bresson"),
+                  child: Text(
+                    "Ko-fi Pierre Bresson",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                 ),
               ),
+              if (app == APP.thinkerview.name && !Platform.isMacOS)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.brown),
+                    onPressed: () => launch(
+                      Platform.isIOS
+                          ? "https://docs.google.com/forms/d/e/1FAIpQLSfTR0BczGWN9WIeXfnK6BogAUW1ZP9WV-WDlPB7rLkwJSFPSg/viewform?usp=sf_link"
+                          : "https://docs.google.com/forms/d/e/1FAIpQLSc0S2evuA0Klqoqyo5WNRcjUxm2J5asb0ASf5d0pRKBccwqOw/viewform?usp=sf_link",
+                      forceSafariVC: false,
+                    ),
+                    child: const Text("Votre feedback sur l'app!"),
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
                   onPressed: () => launch(
                     "https://github.com/PierreBresson/flutter-wordpress-podcast",
                   ),
-                  child: const Text("Github"),
+                  child: Text(
+                    "Github",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                 ),
               ),
               renderPodcastDescription(),
               ElevatedButton(
-                child: Text(linksItems[index].title as String),
+                child: Text(
+                  linksItems[index].title as String,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
                 onPressed: () => launch(linksItems[index].link as String),
               ),
             ],
@@ -156,7 +181,10 @@ class _AboutScreenState extends State<AboutScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
-                  child: Text(linksItems[index].title as String),
+                  child: Text(
+                    linksItems[index].title as String,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                   onPressed: () => launch(linksItems[index].link as String),
                 ),
               ),
@@ -164,9 +192,18 @@ class _AboutScreenState extends State<AboutScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(apptitle),
-                  const Text(" - "),
-                  Text(packageName),
+                  Text(
+                    apptitle,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Text(
+                    " - ",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Text(
+                    packageName,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                 ],
               ),
               Padding(
@@ -174,10 +211,22 @@ class _AboutScreenState extends State<AboutScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Version "),
-                    Text(version),
-                    const Text(" - "),
-                    Text(buildNumber),
+                    Text(
+                      "Version ",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      version,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      " - ",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      buildNumber,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ],
                 ),
               ),
@@ -187,7 +236,10 @@ class _AboutScreenState extends State<AboutScreen> {
           return Padding(
             padding: const EdgeInsets.only(top: 10),
             child: ElevatedButton(
-              child: Text(linksItems[index].title as String),
+              child: Text(
+                linksItems[index].title as String,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
               onPressed: () => launch(linksItems[index].link as String),
             ),
           );
@@ -198,7 +250,6 @@ class _AboutScreenState extends State<AboutScreen> {
 
   Widget renderPodcastDescription() {
     var podcastDescription = "";
-    final app = dotenv.env['APP'];
 
     if (app == APP.causecommune.name) {
       podcastDescription = causeCommuneDescription;
@@ -209,7 +260,10 @@ class _AboutScreenState extends State<AboutScreen> {
     return Column(
       children: [
         const SizedBox(height: 30),
-        Text(podcastDescription),
+        Text(
+          podcastDescription,
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
         const SizedBox(height: 10),
       ],
     );

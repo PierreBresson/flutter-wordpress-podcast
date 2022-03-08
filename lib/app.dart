@@ -1,11 +1,17 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
-import 'package:fwp/styles/themes.dart';
+import 'package:fwp/styles/styles.dart';
+import 'package:macos_ui/macos_ui.dart';
+import 'package:provider/provider.dart';
 
 class FwpApp extends StatefulWidget {
   const FwpApp({
@@ -20,8 +26,11 @@ class _FwpAppState extends State<FwpApp> {
   List<String> screensTitle = ["Accueil", "Lecteur", "Livres", "A propos"];
   List<Widget> screens = [];
   List<BottomNavigationBarItem> bottomNavigationBarItems = [];
+  List<SidebarItem> sidebarItems = [];
   ThemeData lightThemeData = ThemeData();
   ThemeData darkThemeData = ThemeData();
+  MacosThemeData darkThemeDataMacOS = MacosThemeData();
+  MacosThemeData lightThemeDataMacOS = MacosThemeData();
 
   final app = dotenv.env['APP'];
 
@@ -32,6 +41,8 @@ class _FwpAppState extends State<FwpApp> {
     if (app == APP.thinkerview.name) {
       lightThemeData = ligthThemeDataThinkerview;
       darkThemeData = darkThemeDataThinkerview;
+      lightThemeDataMacOS = lightThemeDataMacOSThinkerview;
+      darkThemeDataMacOS = darkThemeDataMacOSThinkerview;
       screensTitle = ["Accueil", "Lecteur", "Recherche", "Livres", "A propos"];
 
       screens = const [
@@ -67,6 +78,8 @@ class _FwpAppState extends State<FwpApp> {
     } else if (app == APP.causecommune.name) {
       lightThemeData = ligthThemeDataCauseCommune;
       darkThemeData = darkThemeDataCauseCommune;
+      lightThemeDataMacOS = lightThemeDataMacOSCauseCommune;
+      darkThemeDataMacOS = darkThemeDataMacOSCauseCommune;
       screensTitle = ["Accueil", "Lecteur", "Recherche", "A propos"];
 
       screens = const [
@@ -99,6 +112,132 @@ class _FwpAppState extends State<FwpApp> {
     initPlayback();
   }
 
+  List<SidebarItem> getSidebar({required bool isDarkMode}) {
+    if (app == APP.thinkerview.name) {
+      return [
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.home,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(
+            screensTitle[0],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
+        ),
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.music_note,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(
+            screensTitle[1],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
+        ),
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.search,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(
+            screensTitle[2],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
+        ),
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.book,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(
+            screensTitle[3],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
+        ),
+        SidebarItem(
+          leading: MacosIcon(
+            CupertinoIcons.info,
+            color: isDarkMode ? Colors.white : Colors.black,
+          ),
+          label: Text(
+            screensTitle[4],
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+          ),
+        ),
+      ];
+    }
+    return [
+      SidebarItem(
+        leading: MacosIcon(
+          CupertinoIcons.home,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        label: Text(
+          screensTitle[0],
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+        ),
+      ),
+      SidebarItem(
+        leading: MacosIcon(
+          CupertinoIcons.music_note,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        label: Text(
+          screensTitle[1],
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+        ),
+      ),
+      SidebarItem(
+        leading: MacosIcon(
+          CupertinoIcons.search,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        label: Text(
+          screensTitle[2],
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+        ),
+      ),
+      SidebarItem(
+        leading: MacosIcon(
+          CupertinoIcons.info,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
+        label: Text(
+          screensTitle[3],
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: isDarkMode ? Colors.white : Colors.black),
+        ),
+      ),
+    ];
+  }
+
   Future<void> initPlayback() async {
     await getIt<DatabaseHandler>().init();
     await getIt<PlayerManager>().init();
@@ -120,13 +259,66 @@ class _FwpAppState extends State<FwpApp> {
     super.dispose();
   }
 
+  String getTitle() {
+    if (app == APP.thinkerview.name) {
+      return "Thinkerview";
+    } else if (app == APP.causecommune.name) {
+      return "Cause Commune";
+    }
+    return "";
+  }
+
   @override
   Widget build(BuildContext context) {
+    final brightness = SchedulerBinding.instance!.window.platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
+    if (Platform.isMacOS) {
+      return ChangeNotifierProvider(
+        create: (_) => AppTheme(),
+        builder: (context, _) {
+          final appTheme = context.watch<AppTheme>();
+          return MacosApp(
+            title: getTitle(),
+            color: Colors.red,
+            theme: lightThemeDataMacOS,
+            darkTheme: darkThemeDataMacOS,
+            themeMode: appTheme.mode,
+            debugShowCheckedModeBanner: false,
+            home: BlocBuilder<NavigationCubit, int>(
+              builder: (_, index) => MacosWindow(
+                sidebar: Sidebar(
+                  minWidth: 200,
+                  builder: (context, controller) {
+                    return SidebarItems(
+                      currentIndex: index,
+                      onChanged: (index) =>
+                          context.read<NavigationCubit>().update(index),
+                      scrollController: controller,
+                      items: getSidebar(isDarkMode: isDarkMode),
+                    );
+                  },
+                ),
+                child: MaterialApp(
+                  theme: lightThemeData,
+                  darkTheme: darkThemeData,
+                  home: IndexedStack(
+                    index: index,
+                    children: screens,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: lightThemeData,
       darkTheme: darkThemeData,
-      home: BlocBuilder<BottomBarNavigationCubit, int>(
+      home: BlocBuilder<NavigationCubit, int>(
         builder: (_, index) => Scaffold(
           body: IndexedStack(
             index: index,
@@ -136,8 +328,7 @@ class _FwpAppState extends State<FwpApp> {
             type: BottomNavigationBarType.fixed,
             items: bottomNavigationBarItems,
             currentIndex: index,
-            onTap: (index) =>
-                context.read<BottomBarNavigationCubit>().update(index),
+            onTap: (index) => context.read<NavigationCubit>().update(index),
           ),
         ),
       ),

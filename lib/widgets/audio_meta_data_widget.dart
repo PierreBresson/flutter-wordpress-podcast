@@ -1,30 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/notifiers/notifiers.dart';
 import 'package:fwp/repositories/repositories.dart';
-import './app_image.dart';
+import 'package:fwp/styles/styles.dart';
+import 'package:fwp/widgets/app_image.dart';
 
 class AudioMetaData extends StatelessWidget {
   const AudioMetaData({Key? key}) : super(key: key);
-
-  double getImageWidth(double screenWidth) {
-    var imageWidth = 180.0;
-
-    if (screenWidth > 340.0) {
-      imageWidth = 220.0;
-    }
-    if (screenWidth > 370) {
-      imageWidth = 260.0;
-    }
-    if (screenWidth >= 390) {
-      imageWidth = 300.0;
-    }
-
-    if (screenWidth > 500) {
-      imageWidth = 400.0;
-    }
-
-    return imageWidth;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +19,17 @@ class AudioMetaData extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: getImageWidth(screenWidth),
-                child: renderImage(value.artUri),
+              EpisodeImage(
+                audioUri: value.artUri,
+                imageMaxWidth: screenWidth > 350 ? 300 : 200,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Text(
                   value.title,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline6,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -56,12 +38,55 @@ class AudioMetaData extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget renderImage(Uri audioUri) {
+class EpisodeImage extends StatelessWidget {
+  final Uri audioUri;
+  final double imageMaxWidth;
+  const EpisodeImage({
+    Key? key,
+    required this.audioUri,
+    required this.imageMaxWidth,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final isDarkMode = isAppInDarkMode(context);
+
     if (audioUri.toString().isEmpty) {
-      return const AppImage();
+      return ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: imageMaxWidth),
+        child: const AppImage(),
+      );
     }
 
-    return Image(image: NetworkImage(audioUri.toString()));
+    return Flex(
+      direction: Axis.vertical,
+      children: [
+        ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: imageMaxWidth),
+          child: Container(
+            decoration: isDarkMode
+                ? null
+                : BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.35),
+                        spreadRadius: 8,
+                        blurRadius: 12,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+            child: Image(
+              fit: BoxFit.contain,
+              image: NetworkImage(
+                audioUri.toString(),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
   }
 }

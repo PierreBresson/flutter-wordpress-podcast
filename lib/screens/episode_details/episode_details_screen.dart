@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:intl/intl.dart';
 
 class EpisodeDetails extends StatelessWidget {
@@ -13,15 +14,16 @@ class EpisodeDetails extends StatelessWidget {
     Intl.defaultLocale = 'fr';
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
+    final isDarkMode = isAppInDarkMode(context);
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: isDarkMode ? Colors.white : Colors.black,
             size: 30,
           ),
           onPressed: () {

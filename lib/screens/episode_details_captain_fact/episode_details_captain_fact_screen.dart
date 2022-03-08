@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:graphql/client.dart';
 import 'package:intl/intl.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final _httpLink = HttpLink('https://graphql.captainfact.io/');
@@ -50,27 +52,23 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
     return client.query(options);
   }
 
-  Widget renderError() {
-    return const Center(
-      child: Text("Une erreur est survenue lors du chargement."),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Intl.defaultLocale = 'fr';
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
+    final isDarkMode = isAppInDarkMode(context);
 
     if (episode.youtubeUrl == null) {
-      return Scaffold(
+      return AdaptiveScaffold(
+        titleBar: const TitleBar(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
           leading: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: isDarkMode ? Colors.white : Colors.black,
               size: 30,
             ),
             onPressed: () {
@@ -78,20 +76,31 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
             },
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: renderHeader(context, dateformat),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Header(
+                dateformat: dateformat,
+                episode: episode,
+              ),
+            ),
+            const ErrorMessage(
+              message: "Impossible de récupérer l'url youtube",
+            )
+          ],
         ),
       );
     } else {
-      return Scaffold(
+      return AdaptiveScaffold(
+        titleBar: const TitleBar(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
           leading: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: isDarkMode ? Colors.white : Colors.black,
               size: 30,
             ),
             onPressed: () {
@@ -114,15 +123,28 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
                       itemCount: statements.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {
-                          return renderHeader(context, dateformat);
+                          return Header(
+                            dateformat: dateformat,
+                            episode: episode,
+                            statements: statements,
+                          );
                         }
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 30.0),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(statements[index - 1].text!),
+                              Text(
+                                "À ${Duration(seconds: statements[index - 1].time!).inHours}:${Duration(seconds: statements[index - 1].time!).inMinutes.remainder(60)}:${Duration(seconds: statements[index - 1].time!).inSeconds.remainder(60)}",
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
                               const SizedBox(height: 10),
+                              Text(
+                                statements[index - 1].text!,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                              const SizedBox(height: 20),
                               CaptainFactGrades(
                                 comments: statements[index - 1].comments,
                               ),
@@ -145,15 +167,15 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return renderError();
+                  return const ErrorMessage();
                 }
               } else {
-                return renderError();
+                return const ErrorMessage();
               }
             }
 
             if (snapshot.hasError) {
-              return renderError();
+              return const ErrorMessage();
             }
 
             return const Center(
@@ -164,8 +186,22 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
       );
     }
   }
+}
 
-  Column renderHeader(BuildContext context, String dateformat) {
+class Header extends StatelessWidget {
+  final String dateformat;
+  final Episode episode;
+  final List<Statements>? statements;
+  const Header({
+    Key? key,
+    required this.episode,
+    required this.dateformat,
+    this.statements,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final hasStatements = statements != null && statements!.isNotEmpty;
     return Column(
       children: [
         Align(
@@ -180,26 +216,64 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Text(
             dateformat,
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.headline5,
           ),
         ),
         const SizedBox(height: 20),
         if (episode.youtubeUrl != null)
           Column(
             children: [
-              Text(
-                "Fact Checking - Captain Fact",
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              const SizedBox(height: 6),
-              ElevatedButton(
-                onPressed: () => launch("https://captainfact.io"),
-                child: const Text("Site Captain Fact"),
+              GestureDetector(
+                onTap: () => launch("https://captainfact.io"),
+                child: Row(
+                  children: [
+                    Text(
+                      "Fact Checking - ",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Text(
+                      "captainfact.io",
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(
+                      Icons.link,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 30,
+                    )
+                  ],
+                ),
               ),
               const SizedBox(height: 30),
+              if (hasStatements)
+                const SizedBox.shrink()
+              else
+                const ErrorMessage(
+                  message: "Aucun Fact Checking pour cet épisode",
+                ),
             ],
           ),
       ],
+    );
+  }
+}
+
+class ErrorMessage extends StatelessWidget {
+  final String message;
+  const ErrorMessage({
+    Key? key,
+    this.message = "Une erreur est survenue, essayer de nouveau plus tard",
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        message,
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
     );
   }
 }

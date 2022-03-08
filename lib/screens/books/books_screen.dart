@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fwp/styles/styles.dart';
+import 'package:fwp/widgets/widgets.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BooksScreen extends StatelessWidget {
@@ -8,8 +11,10 @@ class BooksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+    final isDarkMode = isAppInDarkMode(context);
+
+    return AdaptiveScaffold(
+      titleBar: const TitleBar(title: Text("Livres")),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -22,7 +27,10 @@ class BooksScreen extends StatelessWidget {
             onPressed: () => launch(
               "https://github.com/Killkitten/Thinkerview-Recommandations-lecture",
             ),
-            icon: const Icon(Icons.link),
+            icon: Icon(
+              Icons.link,
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
           )
         ],
       ),

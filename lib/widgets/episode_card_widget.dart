@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/app_image.dart';
 
 double imageHeigth = 200;
@@ -36,10 +39,16 @@ class EpisodeCard extends StatelessWidget {
     );
   }
 
+  Color getBackgroundColor({bool isDarkMode = false}) {
+    if (Platform.isMacOS) {
+      return isDarkMode ? Colors.black : Colors.white;
+    }
+    return isDarkMode ? const Color(0xFF1C1C1E) : Colors.white;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
     if (title == "" || imageUrl == "" || audioFileUrl == "") {
       return const SizedBox.shrink();
@@ -51,14 +60,14 @@ class EpisodeCard extends StatelessWidget {
         child: Container(
           constraints: getConstraints(context),
           decoration: BoxDecoration(
-            color: isDarkMode ? const Color(0xFF1C1C1E) : Colors.white,
+            color: getBackgroundColor(isDarkMode: isDarkMode),
             borderRadius: BorderRadius.all(circularRadius),
             boxShadow: isDarkMode
                 ? null
                 : [
                     const BoxShadow(
                       color: Colors.black12,
-                      offset: Offset(0.0, 1.0), //(x,y)
+                      offset: Offset(0.0, 1.0),
                       blurRadius: 16.0,
                     ),
                   ],

@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -56,15 +60,14 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+    return AdaptiveScaffold(
+      titleBar: TitleBar(title: renderTitle(isDarkMode: isDarkMode)),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: renderTitle(),
+        title: renderTitle(isDarkMode: isDarkMode),
         actions: <Widget>[
           IconButton(
             icon: isSearchViewClicked
@@ -97,7 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget renderTitle() {
+  Widget renderTitle({required bool isDarkMode}) {
     if (!isSearchViewClicked &&
         episodes.isNotEmpty &&
         hasUserStartedSearching) {
@@ -111,6 +114,30 @@ class _SearchScreenState extends State<SearchScreen> {
       return Text(
         'Résultats pour "$query"',
         style: Theme.of(context).textTheme.headline6,
+      );
+    }
+
+    if (Platform.isMacOS) {
+      return MacosTextField(
+        prefix: const Icon(
+          Icons.search,
+          size: 20,
+        ),
+        placeholder: "Chercher ici",
+        decoration: BoxDecoration(
+          color: isDarkMode ? Colors.black : Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(6)),
+        ),
+        autofocus: true,
+        textInputAction: TextInputAction.search,
+        focusNode: focusNode,
+        onSubmitted: (value) {
+          isSearchViewClicked = false;
+          setState(() {
+            query = value;
+          });
+          search(value);
+        },
       );
     }
 

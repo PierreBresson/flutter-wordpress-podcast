@@ -16,16 +16,28 @@ class AudioControlButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             iconSize: iconSize,
-            onPressed: () => playerManager.goBackward30Seconds(),
+            onPressed: () {
+              if (playerManager.currentSongTitleNotifier.value.isNotEmpty) {
+                playerManager.goBackward30Seconds();
+              }
+            },
             icon: const Icon(
               Icons.replay_30,
             ),
           ),
           const PlayButton(),
           IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             iconSize: iconSize,
-            onPressed: () => playerManager.goForward30Seconds(),
+            onPressed: () {
+              if (playerManager.currentSongTitleNotifier.value.isNotEmpty) {
+                playerManager.goForward30Seconds();
+              }
+            },
             icon: const Icon(
               Icons.forward_30,
             ),
@@ -41,6 +53,7 @@ class PlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();
+
     return ValueListenableBuilder<ButtonState>(
       valueListenable: playerManager.playButtonNotifier,
       builder: (_, value, __) {
@@ -54,12 +67,20 @@ class PlayButton extends StatelessWidget {
             );
           case ButtonState.paused:
             return IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: const Icon(Icons.play_arrow),
               iconSize: iconSize,
-              onPressed: playerManager.play,
+              onPressed: () {
+                if (playerManager.currentSongTitleNotifier.value.isNotEmpty) {
+                  playerManager.play();
+                }
+              },
             );
           case ButtonState.playing:
             return IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: const Icon(Icons.pause),
               iconSize: iconSize,
               onPressed: playerManager.pause,
