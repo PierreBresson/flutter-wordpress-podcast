@@ -10,6 +10,33 @@ import 'package:url_launcher/url_launcher.dart';
 
 const paddingItems = 18.0;
 
+class ListItem extends StatelessWidget {
+  final VoidCallback onTap;
+  final IconData iconData;
+  final String text;
+  const ListItem({
+    Key? key,
+    required this.iconData,
+    required this.text,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        text,
+        style: Theme.of(context).textTheme.headline6,
+      ),
+      leading: Icon(
+        iconData,
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      onTap: onTap,
+    );
+  }
+}
+
 class EpisodeOptions extends StatelessWidget {
   final Episode episode;
   final app = dotenv.env['APP'];
@@ -22,6 +49,8 @@ class EpisodeOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -32,36 +61,24 @@ class EpisodeOptions extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              height: 6,
-              width: 38,
-              color: Colors.black38,
+              height: 5,
+              width: 42,
+              color: isDarkMode ? Colors.grey : Colors.black38,
             ),
           ),
         ),
         const SizedBox(height: 30),
-        ListTile(
-          title: Text(
-            "Ouvrir article dans navigateur",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          leading: Icon(
-            Icons.link,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.link,
+          text: "Ouvrir article dans navigateur",
           onTap: () {
             Navigator.pop(context);
             launch(episode.articleUrl);
           },
         ),
-        ListTile(
-          title: Text(
-            "Copier lien article",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          leading: Icon(
-            Icons.copy,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.copy,
+          text: "Copier lien article",
           onTap: () {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.articleUrl))
@@ -74,16 +91,9 @@ class EpisodeOptions extends StatelessWidget {
             });
           },
         ),
-        ListTile(
-          title: Text(
-            "Copier lien fichier audio",
-            style: Theme.of(context).textTheme.headline6,
-            textAlign: TextAlign.left,
-          ),
-          leading: Icon(
-            Icons.copy,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.copy,
+          text: "Copier lien fichier audio",
           onTap: () {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
@@ -96,15 +106,9 @@ class EpisodeOptions extends StatelessWidget {
             });
           },
         ),
-        ListTile(
-          title: Text(
-            "Plus d'info sur l'épisode",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          leading: Icon(
-            Icons.info_sharp,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.info_sharp,
+          text: "Plus d'info sur l'épisode",
           onTap: () async {
             Navigator.pop(context);
             if (app == APP.thinkerview.name) {
@@ -128,20 +132,14 @@ class EpisodeOptions extends StatelessWidget {
             }
           },
         ),
-        ListTile(
-          title: Text(
-            "Lire l'épisode",
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          leading: Icon(
-            Icons.play_arrow_rounded,
-            color: Theme.of(context).colorScheme.primary,
-          ),
+        ListItem(
+          iconData: Icons.play_arrow_rounded,
+          text: "Lire l'épisode",
           onTap: () async {
             try {
               playerManager.playEpisode(episode);
               Navigator.pop(context);
-              context.read<BottomBarNavigationCubit>().update(1);
+              context.read<NavigationCubit>().update(1);
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 const iconPlaySize = 60.0;
 
@@ -30,8 +31,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+    return AdaptiveScaffold(
+      titleBar: const TitleBar(title: Text("Lecteur")),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

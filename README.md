@@ -63,7 +63,7 @@ Android & iOS :
 
 macOS :
 
-`flutter build macos`
+`flutter run -d macos`
 
 Since flavors aren't supported by Flutter on macOS, there are some manual tasks in order to run and archive the app.
 

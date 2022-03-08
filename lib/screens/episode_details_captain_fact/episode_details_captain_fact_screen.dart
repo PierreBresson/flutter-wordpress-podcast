@@ -4,6 +4,7 @@ import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:graphql/client.dart';
 import 'package:intl/intl.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final _httpLink = HttpLink('https://graphql.captainfact.io/');
@@ -59,7 +60,8 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
     final isDarkMode = isAppInDarkMode(context);
 
     if (episode.youtubeUrl == null) {
-      return Scaffold(
+      return AdaptiveScaffold(
+        titleBar: const TitleBar(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -90,7 +92,8 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
         ),
       );
     } else {
-      return Scaffold(
+      return AdaptiveScaffold(
+        titleBar: const TitleBar(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -134,9 +137,13 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
                             children: [
                               Text(
                                 "À ${Duration(seconds: statements[index - 1].time!).inHours}:${Duration(seconds: statements[index - 1].time!).inMinutes.remainder(60)}:${Duration(seconds: statements[index - 1].time!).inSeconds.remainder(60)}",
+                                style: Theme.of(context).textTheme.bodyText1,
                               ),
                               const SizedBox(height: 10),
-                              Text(statements[index - 1].text!),
+                              Text(
+                                statements[index - 1].text!,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
                               const SizedBox(height: 20),
                               CaptainFactGrades(
                                 comments: statements[index - 1].comments,
@@ -226,7 +233,7 @@ class Header extends StatelessWidget {
                     ),
                     Text(
                       "captainfact.io",
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                           ),
                     ),
@@ -263,7 +270,10 @@ class ErrorMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(message),
+      child: Text(
+        message,
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
     );
   }
 }

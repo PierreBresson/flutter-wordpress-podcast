@@ -30,7 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.3
   http: ^0.13.4
   just_audio: ^0.9.18
   audio_service: ^0.18.3
@@ -51,6 +51,7 @@ dependencies:
   intl: ^0.17.0
   graphql: ^5.0.1
   flutter_widget_from_html: ^0.8.5
+  macos_ui: ^0.10.0+1
 
 dev_dependencies:
   flutter_test:
