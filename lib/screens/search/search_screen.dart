@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
@@ -120,11 +119,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
     if (Platform.isMacOS) {
       return MacosTextField(
-        prefix: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.0),
-          child: Icon(
-            Icons.search,
-          ),
+        prefix: const Icon(
+          Icons.search,
+          size: 20,
         ),
         placeholder: "Chercher ici",
         decoration: BoxDecoration(

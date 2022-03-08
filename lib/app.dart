@@ -203,7 +203,10 @@ class _FwpAppState extends State<FwpApp> {
         ),
         label: Text(
           screensTitle[1],
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: isDarkMode ? Colors.white : Colors.black),
         ),
       ),
       SidebarItem(

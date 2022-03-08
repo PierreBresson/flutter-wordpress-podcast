@@ -34,9 +34,10 @@ class AdaptiveScaffold extends StatelessWidget {
     }
 
     return Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        appBar: appBar,
-        body: body,
-        floatingActionButton: floatingActionButton);
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar: appBar,
+      body: body,
+      floatingActionButton: floatingActionButton,
+    );
   }
 }
