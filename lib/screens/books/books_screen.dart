@@ -14,7 +14,12 @@ class BooksScreen extends StatelessWidget {
     final isDarkMode = isAppInDarkMode(context);
 
     return AdaptiveScaffold(
-      titleBar: const TitleBar(title: Text("Livres")),
+      titleBar: TitleBar(
+        title: Text(
+          "Livres",
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

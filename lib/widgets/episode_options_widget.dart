@@ -6,6 +6,7 @@ import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
+import 'package:fwp/styles/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const paddingItems = 18.0;
@@ -49,8 +50,7 @@ class EpisodeOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();
-    final brightness = MediaQuery.of(context).platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
+    final isDarkMode = isAppInDarkMode(context);
 
     return Column(
       mainAxisSize: MainAxisSize.min,

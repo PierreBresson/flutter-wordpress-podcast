@@ -124,10 +124,12 @@ class _SearchScreenState extends State<SearchScreen> {
           size: 20,
         ),
         placeholder: "Chercher ici",
+        placeholderStyle: TextStyle(color: Colors.grey[500]),
         decoration: BoxDecoration(
-          color: isDarkMode ? Colors.black : Colors.white,
+          color: isDarkMode ? Colors.black : Colors.grey[200],
           borderRadius: const BorderRadius.all(Radius.circular(6)),
         ),
+        style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
         autofocus: true,
         textInputAction: TextInputAction.search,
         focusNode: focusNode,

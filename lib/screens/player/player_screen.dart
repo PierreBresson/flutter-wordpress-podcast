@@ -32,7 +32,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
-      titleBar: const TitleBar(title: Text("Lecteur")),
+      titleBar: TitleBar(
+        title: Text(
+          "Lecteur",
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

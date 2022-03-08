@@ -81,7 +81,7 @@ final darkThemeDataMacOSCauseCommune = MacosThemeData(
 );
 
 final lightThemeDataMacOSCauseCommune = MacosThemeData(
-  brightness: Brightness.dark,
+  brightness: Brightness.light,
   primaryColor: primaryCauseCommune,
   canvasColor: CupertinoColors.systemBackground,
   pushButtonTheme: const PushButtonThemeData(

@@ -280,7 +280,6 @@ class _FwpAppState extends State<FwpApp> {
           final appTheme = context.watch<AppTheme>();
           return MacosApp(
             title: getTitle(),
-            color: Colors.red,
             theme: lightThemeDataMacOS,
             darkTheme: darkThemeDataMacOS,
             themeMode: appTheme.mode,
@@ -300,6 +299,7 @@ class _FwpAppState extends State<FwpApp> {
                   },
                 ),
                 child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
                   theme: lightThemeData,
                   darkTheme: darkThemeData,
                   home: IndexedStack(

@@ -63,10 +63,6 @@ class _AboutScreenState extends State<AboutScreen> {
     });
   }
 
-  Future<void> crashApp() async {
-    throw Exception("This is a developer crash!");
-  }
-
   @override
   void initState() {
     super.initState();
@@ -76,7 +72,12 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
-      titleBar: const TitleBar(title: Text("A propos")),
+      titleBar: TitleBar(
+        title: Text(
+          "A propos",
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -104,27 +105,9 @@ class _AboutScreenState extends State<AboutScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              InkWell(
-                child: Text(
-                  "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à m'aider sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                onTap: () {
-                  setState(() {
-                    tapped = tapped + 1;
-                  });
-                },
+              Text(
+                "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à m'aider sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
               ),
-              if (tapped > 10)
-                ElevatedButton(
-                  onPressed: crashApp,
-                  child: Text(
-                    "Crash app",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                )
-              else
-                const SizedBox.shrink(),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
@@ -134,7 +117,6 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   child: Text(
                     "Ko-fi Pierre Bresson",
-                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
               ),
@@ -158,17 +140,13 @@ class _AboutScreenState extends State<AboutScreen> {
                   onPressed: () => launch(
                     "https://github.com/PierreBresson/flutter-wordpress-podcast",
                   ),
-                  child: Text(
-                    "Github",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
+                  child: Text("Github"),
                 ),
               ),
               renderPodcastDescription(),
               ElevatedButton(
                 child: Text(
                   linksItems[index].title as String,
-                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onPressed: () => launch(linksItems[index].link as String),
               ),
@@ -183,7 +161,6 @@ class _AboutScreenState extends State<AboutScreen> {
                 child: ElevatedButton(
                   child: Text(
                     linksItems[index].title as String,
-                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   onPressed: () => launch(linksItems[index].link as String),
                 ),
@@ -238,7 +215,6 @@ class _AboutScreenState extends State<AboutScreen> {
             child: ElevatedButton(
               child: Text(
                 linksItems[index].title as String,
-                style: Theme.of(context).textTheme.bodyText1,
               ),
               onPressed: () => launch(linksItems[index].link as String),
             ),
