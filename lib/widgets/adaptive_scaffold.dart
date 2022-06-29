@@ -20,7 +20,7 @@ class AdaptiveScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Platform.isMacOS) {
       return MacosScaffold(
-        titleBar: titleBar,
+        // titleBar: titleBar,
         children: [
           ContentArea(
             builder: (context, scrollController) => Scaffold(

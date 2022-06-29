@@ -105,17 +105,19 @@ class _AboutScreenState extends State<AboutScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
+              const Text(
                 "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à m'aider sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
-                  onPressed: () => launch(
-                    "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
+                  onPressed: () => launchUrl(
+                    Uri.parse(
+                      "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
+                    ),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Ko-fi Pierre Bresson",
                   ),
                 ),
@@ -125,11 +127,14 @@ class _AboutScreenState extends State<AboutScreen> {
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: Colors.brown),
-                    onPressed: () => launch(
+                    onPressed: () => launchUrl(
                       Platform.isIOS
-                          ? "https://docs.google.com/forms/d/e/1FAIpQLSfTR0BczGWN9WIeXfnK6BogAUW1ZP9WV-WDlPB7rLkwJSFPSg/viewform?usp=sf_link"
-                          : "https://docs.google.com/forms/d/e/1FAIpQLSc0S2evuA0Klqoqyo5WNRcjUxm2J5asb0ASf5d0pRKBccwqOw/viewform?usp=sf_link",
-                      forceSafariVC: false,
+                          ? Uri.parse(
+                              "https://docs.google.com/forms/d/e/1FAIpQLSfTR0BczGWN9WIeXfnK6BogAUW1ZP9WV-WDlPB7rLkwJSFPSg/viewform?usp=sf_link",
+                            )
+                          : Uri.parse(
+                              "https://docs.google.com/forms/d/e/1FAIpQLSc0S2evuA0Klqoqyo5WNRcjUxm2J5asb0ASf5d0pRKBccwqOw/viewform?usp=sf_link",
+                            ),
                     ),
                     child: const Text("Votre feedback sur l'app!"),
                   ),
@@ -137,10 +142,12 @@ class _AboutScreenState extends State<AboutScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
-                  onPressed: () => launch(
-                    "https://github.com/PierreBresson/flutter-wordpress-podcast",
+                  onPressed: () => launchUrl(
+                    Uri.parse(
+                      "https://github.com/PierreBresson/flutter-wordpress-podcast",
+                    ),
                   ),
-                  child: Text("Github"),
+                  child: const Text("Github"),
                 ),
               ),
               renderPodcastDescription(),
@@ -148,7 +155,8 @@ class _AboutScreenState extends State<AboutScreen> {
                 child: Text(
                   linksItems[index].title as String,
                 ),
-                onPressed: () => launch(linksItems[index].link as String),
+                onPressed: () =>
+                    launchUrl(Uri.parse(linksItems[index].link as String)),
               ),
             ],
           );
@@ -162,7 +170,8 @@ class _AboutScreenState extends State<AboutScreen> {
                   child: Text(
                     linksItems[index].title as String,
                   ),
-                  onPressed: () => launch(linksItems[index].link as String),
+                  onPressed: () =>
+                      launchUrl(Uri.parse(linksItems[index].link as String)),
                 ),
               ),
               const SizedBox(height: 20),
@@ -216,7 +225,8 @@ class _AboutScreenState extends State<AboutScreen> {
               child: Text(
                 linksItems[index].title as String,
               ),
-              onPressed: () => launch(linksItems[index].link as String),
+              onPressed: () =>
+                  launchUrl(Uri.parse(linksItems[index].link as String)),
             ),
           );
         }

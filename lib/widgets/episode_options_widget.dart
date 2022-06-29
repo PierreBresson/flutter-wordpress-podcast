@@ -73,7 +73,9 @@ class EpisodeOptions extends StatelessWidget {
           text: "Ouvrir article dans navigateur",
           onTap: () {
             Navigator.pop(context);
-            launch(episode.articleUrl);
+            launchUrl(
+              Uri.parse(episode.articleUrl),
+            );
           },
         ),
         ListItem(

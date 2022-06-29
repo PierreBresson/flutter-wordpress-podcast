@@ -71,7 +71,7 @@ final darkThemeDataMacOSCauseCommune = MacosThemeData(
     secondaryColor: Colors.amber,
   ),
   dividerColor: Colors.black,
-  macosIconButtonThemeData: const MacosIconButtonThemeData(
+  macosIconButtonTheme: const MacosIconButtonThemeData(
     backgroundColor: primaryCauseCommune,
     disabledColor: Colors.grey,
   ),
@@ -90,7 +90,7 @@ final lightThemeDataMacOSCauseCommune = MacosThemeData(
     secondaryColor: Colors.amber,
   ),
   dividerColor: Colors.white,
-  macosIconButtonThemeData: const MacosIconButtonThemeData(
+  macosIconButtonTheme: const MacosIconButtonThemeData(
     backgroundColor: primaryCauseCommune,
     disabledColor: Colors.grey,
   ),
@@ -143,7 +143,7 @@ final lightThemeDataMacOSThinkerview = MacosThemeData(
     secondaryColor: Colors.amber,
   ),
   dividerColor: Colors.white,
-  macosIconButtonThemeData: const MacosIconButtonThemeData(
+  macosIconButtonTheme: const MacosIconButtonThemeData(
     backgroundColor: Colors.teal,
     disabledColor: Colors.grey,
   ),
@@ -159,7 +159,7 @@ final darkThemeDataMacOSThinkerview = MacosThemeData(
     secondaryColor: Colors.amber,
   ),
   dividerColor: Colors.black,
-  macosIconButtonThemeData: const MacosIconButtonThemeData(
+  macosIconButtonTheme: const MacosIconButtonThemeData(
     backgroundColor: Colors.teal,
     disabledColor: Colors.grey,
   ),

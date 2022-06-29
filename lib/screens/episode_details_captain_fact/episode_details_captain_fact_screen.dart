@@ -224,7 +224,9 @@ class Header extends StatelessWidget {
           Column(
             children: [
               GestureDetector(
-                onTap: () => launch("https://captainfact.io"),
+                onTap: () => launchUrl(
+                  Uri.parse("https://captainfact.io"),
+                ),
                 child: Row(
                   children: [
                     Text(

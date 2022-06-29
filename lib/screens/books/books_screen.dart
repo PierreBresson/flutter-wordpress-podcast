@@ -29,8 +29,10 @@ class BooksScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () => launch(
-              "https://github.com/Killkitten/Thinkerview-Recommandations-lecture",
+            onPressed: () => launchUrl(
+              Uri.parse(
+                "https://github.com/Killkitten/Thinkerview-Recommandations-lecture",
+              ),
             ),
             icon: Icon(
               Icons.link,

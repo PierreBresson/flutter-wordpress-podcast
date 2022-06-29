@@ -1,6 +1,6 @@
 # Flutter Wordpress Podcast
 
-Podcast white label app based on Wordpress API using Flutter framework.
+White label podcast app based on Wordpress API using Flutter framework.
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P813IQT)
 
