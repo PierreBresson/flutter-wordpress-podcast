@@ -1,13 +1,80 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class BooksScreen extends StatelessWidget {
+const bookUrl =
+    'https://raw.githubusercontent.com/Killkitten/Thinkerview-Recommandations-lecture/master/README.md';
+
+class BooksScreen extends StatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
+
+  @override
+  State<BooksScreen> createState() => _BooksScreenState();
+}
+
+class _BooksScreenState extends State<BooksScreen> {
+  final _streamController = StreamController<String>();
+  bool isLoading = false;
+  final httpClient = HttpClient();
+
+  @override
+  void initState() {
+    super.initState();
+    httpClient.connectionTimeout = const Duration(seconds: 5);
+    _fetchBooks();
+  }
+
+  @override
+  void dispose() {
+    _streamController.close();
+    super.dispose();
+  }
+
+  Future<void> _fetchBooks() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final request = await httpClient.getUrl(Uri.parse(bookUrl));
+      await request
+          .close()
+          .timeout(const Duration(seconds: 5))
+          .then((HttpClientResponse response) {
+        String markdown = "";
+
+        if (response.statusCode != 200) {
+          _streamController.sink.addError("Une erreur est survenue");
+          setState(() {
+            isLoading = false;
+          });
+          return;
+        }
+
+        final markdownStream = response.transform(const Utf8Decoder());
+
+        markdownStream.listen((strings) {
+          markdown = markdown + strings;
+        }).onDone(() {
+          _streamController.sink.add(markdown);
+          setState(() {
+            isLoading = false;
+          });
+        });
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      _streamController.sink.addError("Error while loading data");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +108,29 @@ class BooksScreen extends StatelessWidget {
           )
         ],
       ),
-      body: FutureBuilder(
-        future: rootBundle.loadString("assets/markdown/thinkerview.md"),
+      body: StreamBuilder(
+        stream: _streamController.stream,
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: ErrorIndicator(
+                onTryAgain: _fetchBooks,
+              ),
+            );
+          }
+
           if (snapshot.hasData) {
             return Markdown(data: snapshot.data ?? "");
           }
 
           return const Center(
-            child: CircularProgressIndicator(),
+            child: Text("Une erreur est survenue"),
           );
         },
       ),

@@ -75,6 +75,12 @@ class MyAudioHandler extends BaseAudioHandler {
   }
 
   @override
+  Future<void> onNotificationDeleted() async {
+    super.stop();
+    await _player.dispose();
+  }
+
+  @override
   Future<void> playMediaItem(MediaItem newMediaItem) async {
     final url = newMediaItem.extras?.entries.first.value as String;
     queue.add([newMediaItem]);

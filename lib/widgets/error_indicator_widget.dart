@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ErrorIndicator extends StatelessWidget {
-  final String error;
   final VoidCallback onTryAgain;
 
-  const ErrorIndicator({required this.error, required this.onTryAgain, Key? key}) : super(key: key);
+  const ErrorIndicator({required this.onTryAgain, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +12,8 @@ class ErrorIndicator extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            error,
+          const Text(
+            "Une erreur est survenue lors du chargement",
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),

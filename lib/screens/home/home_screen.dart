@@ -87,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
           builderDelegate: PagedChildBuilderDelegate<Episode>(
             animateTransitions: true,
             firstPageErrorIndicatorBuilder: (_) => ErrorIndicator(
-              error: _pagingController.error.toString(),
               onTryAgain: _pagingController.refresh,
             ),
             itemBuilder: (context, episode, index) => EpisodeCard(

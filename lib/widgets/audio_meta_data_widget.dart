@@ -78,10 +78,13 @@ class EpisodeImage extends StatelessWidget {
                       ),
                     ],
                   ),
-            child: Image(
-              fit: BoxFit.contain,
-              image: NetworkImage(
-                audioUri.toString(),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(14.0),
+              child: Image(
+                fit: BoxFit.contain,
+                image: NetworkImage(
+                  audioUri.toString(),
+                ),
               ),
             ),
           ),
