@@ -76,6 +76,10 @@ class _BooksScreenState extends State<BooksScreen> {
     }
   }
 
+  Future<void> _handleRefresh() async {
+    await _fetchBooks();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = isAppInDarkMode(context);
@@ -108,31 +112,34 @@ class _BooksScreenState extends State<BooksScreen> {
           )
         ],
       ),
-      body: StreamBuilder(
-        stream: _streamController.stream,
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (isLoading) {
+      body: RefreshIndicator(
+        onRefresh: _handleRefresh,
+        child: StreamBuilder(
+          stream: _streamController.stream,
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (snapshot.hasError) {
+              return Center(
+                child: ErrorIndicator(
+                  onTryAgain: _fetchBooks,
+                ),
+              );
+            }
+
+            if (snapshot.hasData) {
+              return Markdown(data: snapshot.data ?? "");
+            }
+
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Text("Une erreur est survenue"),
             );
-          }
-
-          if (snapshot.hasError) {
-            return Center(
-              child: ErrorIndicator(
-                onTryAgain: _fetchBooks,
-              ),
-            );
-          }
-
-          if (snapshot.hasData) {
-            return Markdown(data: snapshot.data ?? "");
-          }
-
-          return const Center(
-            child: Text("Une erreur est survenue"),
-          );
-        },
+          },
+        ),
       ),
     );
   }
