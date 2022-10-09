@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 const iconPlaySize = 60.0;
 
-class PlayerScreen extends StatefulWidget {
+class PlayerScreen extends ConsumerStatefulWidget {
   const PlayerScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<PlayerScreen> createState() => _PlayerScreenState();
+  ConsumerState<PlayerScreen> createState() => _PlayerScreenState();
 }
 
-class _PlayerScreenState extends State<PlayerScreen> {
+class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   late final PlayerManager _playerManager;
 
   @override
@@ -41,9 +43,17 @@ class _PlayerScreenState extends State<PlayerScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text(
-          "Lecteur",
-          style: Theme.of(context).textTheme.headline6,
+        title: GestureDetector(
+          onTap: () {
+            // ignore: avoid_print
+            print("toto");
+            // ignore: avoid_print
+            print(ref.watch(currentEpisodePlayableProvider)?.positionInSeconds);
+          },
+          child: Text(
+            "Lecteur",
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
       ),
       body: Padding(

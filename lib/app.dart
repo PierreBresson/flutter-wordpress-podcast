@@ -3,26 +3,32 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
 import 'package:fwp/styles/styles.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:provider/provider.dart';
 
-class FwpApp extends StatefulWidget {
+final themeModeProvider = StateProvider<ThemeMode>((ref) => ThemeMode.system);
+
+final updateThemeModeProvider =
+    Provider.autoDispose.family<ThemeMode, ThemeMode>((ref, themeMode) {
+  return ref.read(themeModeProvider.notifier).update((state) => themeMode);
+});
+
+class FwpApp extends ConsumerStatefulWidget {
   const FwpApp({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<FwpApp> createState() => _FwpAppState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _FwpAppState();
 }
 
-class _FwpAppState extends State<FwpApp> {
+class _FwpAppState extends ConsumerState<FwpApp> {
   List<String> screensTitle = ["Accueil", "Lecteur", "Livres", "A propos"];
   List<Widget> screens = [];
   List<BottomNavigationBarItem> bottomNavigationBarItems = [];
@@ -239,24 +245,27 @@ class _FwpAppState extends State<FwpApp> {
   }
 
   Future<void> initPlayback() async {
-    await getIt<DatabaseHandler>().init();
     await getIt<PlayerManager>().init();
+    // await getIt<DatabaseHandler>().init();
 
-    final playerManager = getIt<PlayerManager>();
-    final episodePlayable =
-        await getIt<DatabaseHandler>().getFirstEpisodePlayable();
+    // final playerManager = getIt<PlayerManager>();
+    // final episodePlayable =
+    //     await getIt<DatabaseHandler>().getFirstEpisodePlayable();
 
-    if (episodePlayable.audioFileUrl.isNotEmpty) {
-      playerManager.loadEpisodePlayable(episodePlayable);
-    }
+    // if (episodePlayable.audioFileUrl.isNotEmpty) {
+    //   playerManager.loadEpisodePlayable(episodePlayable);
+    // }
   }
 
   @override
   Future<void> dispose() async {
     await getIt<PlayerManager>().dispose();
-    await getIt<DatabaseHandler>().dispose();
 
     super.dispose();
+  }
+
+  void updateTabIndexProvider(int tabIndex) {
+    ref.read(tabIndexProvider.notifier).update((state) => tabIndex);
   }
 
   String getTitle() {
@@ -272,45 +281,37 @@ class _FwpAppState extends State<FwpApp> {
   Widget build(BuildContext context) {
     final brightness = SchedulerBinding.instance.window.platformBrightness;
     final isDarkMode = brightness == Brightness.dark;
+    getIt<PlayerManager>().ref = ref;
 
     if (Platform.isMacOS) {
-      return ChangeNotifierProvider(
-        create: (_) => AppTheme(),
-        builder: (context, _) {
-          final appTheme = context.watch<AppTheme>();
-          return MacosApp(
-            title: getTitle(),
-            theme: lightThemeDataMacOS,
-            darkTheme: darkThemeDataMacOS,
-            themeMode: appTheme.mode,
+      return MacosApp(
+        title: getTitle(),
+        theme: lightThemeDataMacOS,
+        darkTheme: darkThemeDataMacOS,
+        themeMode: ref.watch(themeModeProvider),
+        debugShowCheckedModeBanner: false,
+        home: MacosWindow(
+          sidebar: Sidebar(
+            minWidth: 200,
+            builder: (context, controller) {
+              return SidebarItems(
+                currentIndex: ref.watch(tabIndexProvider),
+                onChanged: (index) => updateTabIndexProvider(index),
+                scrollController: controller,
+                items: getSidebar(isDarkMode: isDarkMode),
+              );
+            },
+          ),
+          child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: BlocBuilder<NavigationCubit, int>(
-              builder: (_, index) => MacosWindow(
-                sidebar: Sidebar(
-                  minWidth: 200,
-                  builder: (context, controller) {
-                    return SidebarItems(
-                      currentIndex: index,
-                      onChanged: (index) =>
-                          context.read<NavigationCubit>().update(index),
-                      scrollController: controller,
-                      items: getSidebar(isDarkMode: isDarkMode),
-                    );
-                  },
-                ),
-                child: MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  theme: lightThemeData,
-                  darkTheme: darkThemeData,
-                  home: IndexedStack(
-                    index: index,
-                    children: screens,
-                  ),
-                ),
-              ),
+            theme: lightThemeData,
+            darkTheme: darkThemeData,
+            home: IndexedStack(
+              index: ref.watch(tabIndexProvider),
+              children: screens,
             ),
-          );
-        },
+          ),
+        ),
       );
     }
 
@@ -318,18 +319,16 @@ class _FwpAppState extends State<FwpApp> {
       debugShowCheckedModeBanner: false,
       theme: lightThemeData,
       darkTheme: darkThemeData,
-      home: BlocBuilder<NavigationCubit, int>(
-        builder: (_, index) => Scaffold(
-          body: IndexedStack(
-            index: index,
-            children: screens,
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: bottomNavigationBarItems,
-            currentIndex: index,
-            onTap: (index) => context.read<NavigationCubit>().update(index),
-          ),
+      home: Scaffold(
+        body: IndexedStack(
+          index: ref.watch(tabIndexProvider),
+          children: screens,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: bottomNavigationBarItems,
+          currentIndex: ref.watch(tabIndexProvider),
+          onTap: (index) => updateTabIndexProvider(index),
         ),
       ),
     );

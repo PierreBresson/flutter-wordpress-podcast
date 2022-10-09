@@ -102,16 +102,28 @@ class Episode {
 
 class EpisodePlayable extends Episode {
   int positionInSeconds;
+  bool isPlaying;
+  bool hasBeenFullyPlayed;
+  String? imagePath;
+  String? audioFilePath;
+  String? imageDownloadTaskId;
+  String? audioFileDownloadTaskId;
 
   @override
   EpisodePlayable({
-    required this.positionInSeconds,
+    this.positionInSeconds = 0,
+    this.isPlaying = false,
+    this.hasBeenFullyPlayed = false,
+    this.imageDownloadTaskId,
+    this.imagePath,
+    this.audioFileDownloadTaskId,
+    this.audioFilePath,
     required int id,
-    required String audioFileUrl,
     required String date,
-    required String title,
-    required String imageUrl,
+    required String audioFileUrl,
     required String articleUrl,
+    required String imageUrl,
+    required String title,
     required String description,
   }) : super(
           id: id,
@@ -133,11 +145,17 @@ class EpisodePlayable extends Episode {
       'title': title,
       'description': description,
       'positionInSeconds': positionInSeconds,
+      'isPlaying': isPlaying,
+      'hasBeenFullyPlayed': hasBeenFullyPlayed,
+      'imageDownloadTaskId': imageDownloadTaskId,
+      'audioFileDownloadTaskId': audioFileDownloadTaskId,
+      'imagePath': imagePath,
+      'audioFilePath': audioFilePath,
     };
   }
 
   @override
   String toString() {
-    return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl, description $description}';
+    return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl, description $description, isPlaying: $isPlaying, imageDownloadTaskId: $imageDownloadTaskId, audioFileDownloadTaskId: $audioFileDownloadTaskId, imagePath: $imagePath, audioFilePath: $audioFilePath, hasBeenFullyPlayed: $hasBeenFullyPlayed}';
   }
 }

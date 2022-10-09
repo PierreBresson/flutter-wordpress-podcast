@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fwp/blocs/blocs.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/screens/screens.dart';
 import 'package:fwp/styles/styles.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const paddingItems = 18.0;
@@ -38,7 +38,7 @@ class ListItem extends StatelessWidget {
   }
 }
 
-class EpisodeOptions extends StatelessWidget {
+class EpisodeOptions extends ConsumerWidget {
   final Episode episode;
   final app = dotenv.env['APP'];
 
@@ -48,7 +48,7 @@ class EpisodeOptions extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final playerManager = getIt<PlayerManager>();
     final isDarkMode = isAppInDarkMode(context);
 
@@ -139,9 +139,23 @@ class EpisodeOptions extends StatelessWidget {
           text: "Lire l'épisode",
           onTap: () async {
             try {
-              playerManager.playEpisode(episode);
+              final EpisodePlayable episodePlayable = EpisodePlayable(
+                id: episode.id,
+                articleUrl: episode.articleUrl,
+                audioFileUrl: episode.audioFileUrl,
+                date: episode.date,
+                title: episode.title,
+                description: episode.description,
+                imageUrl: episode.imageUrl,
+              );
+              ref
+                  .read(currentEpisodePlayableProvider.notifier)
+                  .update((state) => episodePlayable);
+
+              ref.read(tabIndexProvider.notifier).update((state) => 1);
+              playerManager.playEpisode(episodePlayable);
+
               Navigator.pop(context);
-              context.read<NavigationCubit>().update(1);
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
