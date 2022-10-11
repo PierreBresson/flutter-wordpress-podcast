@@ -1,7 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart';
+
+final httpRepository = Provider<HttpRepository>((ref) => HttpRepository(ref));
 
 const apiPath = "wp-json/wp/v2";
 const thinkerviewUrl = "thinkerview.com";
@@ -19,6 +23,9 @@ List<Episode> removeEmptyEpisodes(List<Episode> episodes) {
 }
 
 class HttpRepository {
+  final Ref read;
+  HttpRepository(this.read);
+
   final app = dotenv.env['APP'];
 
   String getBaseUrl() {

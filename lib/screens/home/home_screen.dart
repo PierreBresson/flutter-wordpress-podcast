@@ -1,67 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
-import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends HookConsumerWidget {
+  // Future<void> _fetchPage(int pageKey) async {
+  //   try {
+  //     List<Episode> episodes = [];
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  //     final app = dotenv.env['APP'];
 
-class _HomeScreenState extends State<HomeScreen> {
-  final HttpRepository httpRepository = HttpRepository();
-  final _pagingController = PagingController<int, Episode>(
-    firstPageKey: 1,
-  );
+  //     if (app == APP.thinkerview.name) {
+  //       episodes = await httpRepository.getEpisodesFromCategory(
+  //         page: pageKey,
+  //         categories: 9,
+  //       );
+  //     } else if (app == APP.causecommune.name) {
+  //       episodes = await httpRepository.getEpisodes(
+  //         page: pageKey,
+  //       );
+  //     }
 
-  @override
-  void initState() {
-    _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pagingController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _fetchPage(int pageKey) async {
-    try {
-      List<Episode> episodes = [];
-
-      final app = dotenv.env['APP'];
-
-      if (app == APP.thinkerview.name) {
-        episodes = await httpRepository.getEpisodesFromCategory(
-          page: pageKey,
-          categories: 9,
-        );
-      } else if (app == APP.causecommune.name) {
-        episodes = await httpRepository.getEpisodes(
-          page: pageKey,
-        );
-      }
-
-      final List<Episode> newItems = episodes;
-      final nextPageKey = pageKey + 1;
-      _pagingController.appendPage(newItems, nextPageKey);
-    } catch (error) {
-      _pagingController.error = error;
-    }
-  }
+  //     final List<Episode> newItems = episodes;
+  //     final nextPageKey = pageKey + 1;
+  //     _pagingController.appendPage(newItems, nextPageKey);
+  //   } catch (error) {
+  //     _pagingController.error = error;
+  //   }
+  // }
 
   @override
-  Widget build(BuildContext context) {
-    final isDarkMode = isAppInDarkMode(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    // final isDarkMode = isAppInDarkMode(context);
+    final pairs = ref.watch(episodesProvider);
 
     return AdaptiveScaffold(
       titleBar: TitleBar(
@@ -78,43 +53,40 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: () => Future.sync(
-          () => _pagingController.refresh(),
-        ),
-        child: PagedListView.separated(
-          pagingController: _pagingController,
-          builderDelegate: PagedChildBuilderDelegate<Episode>(
-            animateTransitions: true,
-            firstPageErrorIndicatorBuilder: (_) => ErrorIndicator(
-              onTryAgain: _pagingController.refresh,
-            ),
-            itemBuilder: (context, episode, index) => EpisodeCard(
-              imageUrl: episode.imageUrl,
-              title: episode.title,
-              audioFileUrl: episode.audioFileUrl,
-              onPressed: () {
-                showModalBottomSheet<void>(
-                  backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                  context: context,
-                  builder: (BuildContext context) =>
-                      EpisodeOptions(episode: episode),
-                );
-              },
-            ),
-          ),
-          separatorBuilder: (context, index) => const SizedBox(
-            height: 2,
-          ),
-        ),
-      ),
+      body: Text("er"),
     );
   }
 }
+
+
+// PagedListView.separated(
+//         pagingController: _pagingController,
+//         builderDelegate: PagedChildBuilderDelegate<Episode>(
+//           animateTransitions: true,
+//           firstPageErrorIndicatorBuilder: (_) => ErrorIndicator(
+//             onTryAgain: _pagingController.refresh,
+//           ),
+//           itemBuilder: (context, episode, index) => EpisodeCard(
+//             imageUrl: episode.imageUrl,
+//             title: episode.title,
+//             audioFileUrl: episode.audioFileUrl,
+//             onPressed: () {
+//               showModalBottomSheet<void>(
+//                 backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
+//                 isScrollControlled: true,
+//                 shape: const RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.only(
+//                     topLeft: Radius.circular(20),
+//                     topRight: Radius.circular(20),
+//                   ),
+//                 ),
+//                 context: context,
+//                 builder: (BuildContext context) =>
+//                     EpisodeOptions(episode: episode),
+//               );
+//             },
+//           ),
+//         ),
+//         separatorBuilder: (context, index) => const SizedBox(
+//           height: 2,
+//         ),
