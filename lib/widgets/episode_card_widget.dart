@@ -2,9 +2,12 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fwp/models/models.dart';
 import 'package:fwp/styles/styles.dart';
-import 'package:fwp/widgets/app_image.dart';
+import 'package:fwp/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 double imageHeigth = 200;
 double circularProgressIndicatorSize = 20;
@@ -143,6 +146,55 @@ class EpisodeCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+final currentEpisode = Provider<AsyncValue<Episode>>((ref) {
+  throw UnimplementedError();
+});
+
+class EpisodeCardItem extends HookConsumerWidget {
+  void onPressed(BuildContext context, Episode episode) {
+    final isDarkMode = isAppInDarkMode(context);
+
+    showModalBottomSheet<void>(
+      backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) => EpisodeOptions(episode: episode),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final episode = ref.watch(currentEpisode);
+
+    return episode.when(
+      error: (error, stack) {
+        if (kDebugMode) {
+          print("TODO episode $error $stack");
+        }
+        return Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Center(child: Text(error.toString())),
+        );
+      },
+      loading: () => const SizedBox.shrink(),
+      data: (episode) {
+        return EpisodeCard(
+          imageUrl: episode.imageUrl,
+          title: episode.title,
+          audioFileUrl: episode.audioFileUrl,
+          onPressed: () => onPressed(context, episode),
+        );
+      },
     );
   }
 }

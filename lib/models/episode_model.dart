@@ -61,7 +61,7 @@ class Episode {
           }
         } catch (error) {
           if (kDebugMode) {
-            print(error);
+            print("TODO Episode.fromJson error: $error");
           }
         }
       } else if (APP.causecommune.name == app) {
@@ -80,7 +80,7 @@ class Episode {
       );
     } catch (error) {
       if (kDebugMode) {
-        print(error);
+        print("TODO error: $error");
       }
       return Episode(
         id: 0,
@@ -158,4 +158,14 @@ class EpisodePlayable extends Episode {
   String toString() {
     return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl, description $description, isPlaying: $isPlaying, imageDownloadTaskId: $imageDownloadTaskId, audioFileDownloadTaskId: $audioFileDownloadTaskId, imagePath: $imagePath, audioFilePath: $audioFilePath, hasBeenFullyPlayed: $hasBeenFullyPlayed}';
   }
+}
+
+class Episodes {
+  final List<Episode> items;
+  final int total;
+
+  Episodes({
+    required this.items,
+    required this.total,
+  });
 }

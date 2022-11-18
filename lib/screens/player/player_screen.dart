@@ -46,8 +46,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
         title: GestureDetector(
           onTap: () {
             // ignore: avoid_print
-            print("toto");
-            // ignore: avoid_print
             print(ref.watch(currentEpisodePlayableProvider)?.positionInSeconds);
           },
           child: Text(

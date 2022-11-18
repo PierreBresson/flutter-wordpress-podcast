@@ -37,6 +37,7 @@ class _FwpAppState extends ConsumerState<FwpApp> {
   ThemeData darkThemeData = ThemeData();
   MacosThemeData darkThemeDataMacOS = MacosThemeData();
   MacosThemeData lightThemeDataMacOS = MacosThemeData();
+  final ScrollController _homeController = ScrollController();
 
   final app = dotenv.env['APP'];
 
@@ -51,12 +52,14 @@ class _FwpAppState extends ConsumerState<FwpApp> {
       darkThemeDataMacOS = darkThemeDataMacOSThinkerview;
       screensTitle = ["Accueil", "Lecteur", "Recherche", "Livres", "A propos"];
 
-      screens = const [
-        HomeScreen(),
-        PlayerScreen(),
-        SearchScreen(),
-        BooksScreen(),
-        AboutScreen()
+      screens = [
+        HomeScreen(
+          scrollController: _homeController,
+        ),
+        const PlayerScreen(),
+        const SearchScreen(),
+        const BooksScreen(),
+        const AboutScreen()
       ];
 
       bottomNavigationBarItems = [
@@ -88,11 +91,13 @@ class _FwpAppState extends ConsumerState<FwpApp> {
       darkThemeDataMacOS = darkThemeDataMacOSCauseCommune;
       screensTitle = ["Accueil", "Lecteur", "Recherche", "A propos"];
 
-      screens = const [
-        HomeScreen(),
-        PlayerScreen(),
-        SearchScreen(),
-        AboutScreen(),
+      screens = [
+        HomeScreen(
+          scrollController: _homeController,
+        ),
+        const PlayerScreen(),
+        const SearchScreen(),
+        const AboutScreen(),
       ];
 
       bottomNavigationBarItems = [
@@ -266,6 +271,11 @@ class _FwpAppState extends ConsumerState<FwpApp> {
 
   void updateTabIndexProvider(int tabIndex) {
     ref.read(tabIndexProvider.notifier).update((state) => tabIndex);
+    if (tabIndex == 0) {
+      if (_homeController.hasClients) {
+        _homeController.jumpTo(_homeController.position.minScrollExtent);
+      }
+    }
   }
 
   String getTitle() {

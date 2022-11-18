@@ -2,21 +2,14 @@ import 'package:fwp/models/models.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final episodesProvider = FutureProvider<List<EpisodePlayable>>((ref) async {
-  final List<Episode> episodes = await ref.read(httpRepository).getEpisodes();
-  final List<EpisodePlayable> episodePlayables = episodes
-      .map(
-        (episode) => EpisodePlayable(
-          id: episode.id,
-          date: episode.date,
-          audioFileUrl: episode.audioFileUrl,
-          articleUrl: episode.articleUrl,
-          imageUrl: episode.imageUrl,
-          title: episode.title,
-          description: episode.description,
-        ),
-      )
-      .toList();
+final httpProvider = Provider<HttpRepository>((ref) => HttpRepository());
 
-  return episodePlayables;
+final paginatedEpisodesProvider =
+    FutureProvider.autoDispose.family<Episodes, int>((ref, pageIndex) async {
+  final http = ref.watch(httpProvider);
+  return http.getEpisodes(pageIndex: pageIndex + 1);
+});
+
+final episodesCountProvider = Provider.autoDispose((ref) {
+  return ref.watch(paginatedEpisodesProvider(1)).whenData((page) => page.total);
 });

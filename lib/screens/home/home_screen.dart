@@ -1,43 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fwp/models/models.dart';
+import 'package:fwp/models/episode_model.dart';
 import 'package:fwp/providers/providers.dart';
-import 'package:fwp/styles/styles.dart';
+import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
-import 'package:macos_ui/macos_ui.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 class HomeScreen extends HookConsumerWidget {
-  // Future<void> _fetchPage(int pageKey) async {
-  //   try {
-  //     List<Episode> episodes = [];
-
-  //     final app = dotenv.env['APP'];
-
-  //     if (app == APP.thinkerview.name) {
-  //       episodes = await httpRepository.getEpisodesFromCategory(
-  //         page: pageKey,
-  //         categories: 9,
-  //       );
-  //     } else if (app == APP.causecommune.name) {
-  //       episodes = await httpRepository.getEpisodes(
-  //         page: pageKey,
-  //       );
-  //     }
-
-  //     final List<Episode> newItems = episodes;
-  //     final nextPageKey = pageKey + 1;
-  //     _pagingController.appendPage(newItems, nextPageKey);
-  //   } catch (error) {
-  //     _pagingController.error = error;
-  //   }
-  // }
+  final ScrollController scrollController;
+  const HomeScreen({required this.scrollController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final isDarkMode = isAppInDarkMode(context);
-    final pairs = ref.watch(episodesProvider);
-
     return AdaptiveScaffold(
       titleBar: TitleBar(
         title: Text(
@@ -53,40 +28,83 @@ class HomeScreen extends HookConsumerWidget {
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: Text("er"),
+      body: HookConsumer(
+        builder: (context, ref, child) {
+          final count = ref.watch(episodesCountProvider);
+
+          Future<Episodes> refresh() {
+            ref.refresh(paginatedEpisodesProvider(0));
+            return ref.read(paginatedEpisodesProvider(0).future);
+          }
+
+          return count.when(
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            error: (error, stack) {
+              if (kDebugMode) {
+                print("TODO count $error $stack");
+              }
+
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Une erreur est survenue'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton.icon(
+                      icon: const Icon(
+                        Icons.refresh,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      onPressed: refresh,
+                      label: const Text("Essayer à nouveau"),
+                    )
+                  ],
+                ),
+              );
+            },
+            data: (count) {
+              return RefreshIndicator(
+                onRefresh: refresh,
+                child: ListView.separated(
+                  controller: scrollController,
+                  separatorBuilder: (context, _) {
+                    return const SizedBox(
+                      height: 2,
+                    );
+                  },
+                  itemCount: count,
+                  itemBuilder: (context, index) {
+                    final pageIndex = index ~/ nbOfEpisodesPerPage;
+                    final episodeIndex = index % nbOfEpisodesPerPage;
+
+                    return ProviderScope(
+                      overrides: [
+                        currentEpisode.overrideWithValue(
+                          ref
+                              .watch(
+                                paginatedEpisodesProvider(
+                                  pageIndex,
+                                ),
+                              )
+                              .whenData(
+                                (page) => page.items[episodeIndex],
+                              ),
+                        ),
+                      ],
+                      child: EpisodeCardItem(),
+                    );
+                  },
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
-
-
-// PagedListView.separated(
-//         pagingController: _pagingController,
-//         builderDelegate: PagedChildBuilderDelegate<Episode>(
-//           animateTransitions: true,
-//           firstPageErrorIndicatorBuilder: (_) => ErrorIndicator(
-//             onTryAgain: _pagingController.refresh,
-//           ),
-//           itemBuilder: (context, episode, index) => EpisodeCard(
-//             imageUrl: episode.imageUrl,
-//             title: episode.title,
-//             audioFileUrl: episode.audioFileUrl,
-//             onPressed: () {
-//               showModalBottomSheet<void>(
-//                 backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
-//                 isScrollControlled: true,
-//                 shape: const RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.only(
-//                     topLeft: Radius.circular(20),
-//                     topRight: Radius.circular(20),
-//                   ),
-//                 ),
-//                 context: context,
-//                 builder: (BuildContext context) =>
-//                     EpisodeOptions(episode: episode),
-//               );
-//             },
-//           ),
-//         ),
-//         separatorBuilder: (context, index) => const SizedBox(
-//           height: 2,
-//         ),
