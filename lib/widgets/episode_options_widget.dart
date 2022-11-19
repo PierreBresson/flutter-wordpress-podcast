@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -148,6 +149,7 @@ class EpisodeOptions extends ConsumerWidget {
                 description: episode.description,
                 imageUrl: episode.imageUrl,
               );
+
               ref
                   .read(currentEpisodePlayableProvider.notifier)
                   .update((state) => episodePlayable);
@@ -156,7 +158,10 @@ class EpisodeOptions extends ConsumerWidget {
               playerManager.playEpisode(episodePlayable);
 
               Navigator.pop(context);
-            } catch (e) {
+            } catch (error) {
+              if (kDebugMode) {
+                print("TODO error play episode $error");
+              }
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text("Une erreur est survenue"),

@@ -6,12 +6,13 @@ import 'package:fwp/models/models.dart';
 import 'package:http/http.dart';
 
 const nbOfEpisodesPerPage = 10;
+const nbOfEpisodesCategoriesPerPage = 10;
 const _apiPath = "wp-json/wp/v2";
 const _thinkerviewUrl = "thinkerview.com";
 const _causeCommuneUrl = "cause-commune.fm";
-const _episodesPerPagePath = "per_page=";
+const _amountPerPagePath = "per_page=";
 const _pagePath = "page=";
-const _categoriesPath = "categories=";
+const _categoriesPath = "categories";
 
 List<Episode> _removeEmptyEpisodes(List<Episode> episodes) {
   return episodes
@@ -61,7 +62,7 @@ class HttpRepository {
     try {
       response = await get(
         Uri.parse(
-          "$url$_pagePath$pageIndex&$_episodesPerPagePath$nbOfEpisodesPerPage",
+          "$url$_pagePath$pageIndex&$_amountPerPagePath$nbOfEpisodesPerPage",
         ),
       );
     } catch (error) {
@@ -88,7 +89,7 @@ class HttpRepository {
         total = int.parse(response.headers['x-wp-total']!);
       } catch (error) {
         if (kDebugMode) {
-          print("TODO error $error");
+          print("TODO getEpisodes request error $error");
         }
       }
 
@@ -97,6 +98,9 @@ class HttpRepository {
         total: total,
       );
     } else {
+      if (kDebugMode) {
+        print("TODO getEpisodes invalid response");
+      }
       throw "Impossible de recuperer les episodes";
     }
   }
@@ -110,7 +114,7 @@ class HttpRepository {
     final String url = "https://$baseUrl/$_apiPath/$endingOptionPath";
 
     final String categoryQuery =
-        categories.toString().isEmpty ? "&$_categoriesPath$categories" : "";
+        categories.toString().isEmpty ? "&$_categoriesPath=$categories" : "";
     late Response response;
 
     try {
@@ -145,7 +149,16 @@ class HttpRepository {
     final baseUrl = _getBaseUrl();
 
     final String url = "https://$baseUrl/$_apiPath/search?search=";
-    final Response response = await get(Uri.parse(url + searchText));
+    late Response response;
+
+    try {
+      response = await get(Uri.parse(url + searchText));
+    } catch (error) {
+      if (kDebugMode) {
+        print("TODO search request failed $error");
+      }
+      throw "La recherche a échoué";
+    }
 
     if (response.statusCode == 200) {
       final List<dynamic> body = jsonDecode(response.body) as List<dynamic>;
@@ -155,6 +168,9 @@ class HttpRepository {
 
       return ids;
     } else {
+      if (kDebugMode) {
+        print("TODO error incorrect search");
+      }
       throw "La recherche a échoué";
     }
   }
@@ -185,6 +201,58 @@ class HttpRepository {
       return _removeEmptyEpisodes(episodes);
     } else {
       throw "La recherche a échoué";
+    }
+  }
+
+  Future<EpisodesCategories> getEpisodesCategories({int pageIndex = 1}) async {
+    final baseUrl = _getBaseUrl();
+
+    final String url = "https://$baseUrl/$_apiPath/$_categoriesPath";
+    late Response response;
+
+    try {
+      response = await get(
+        Uri.parse(
+          "$url?$_pagePath$pageIndex&$_amountPerPagePath$nbOfEpisodesCategoriesPerPage",
+        ),
+      );
+    } catch (error) {
+      if (kDebugMode) {
+        print("TODO getEpisodesCategories request failed $error");
+      }
+      throw Exception();
+    }
+
+    if (response.statusCode == 200) {
+      final List<dynamic> body = jsonDecode(response.body) as List<dynamic>;
+
+      final List<EpisodesCategory> episodesItems = body.map(
+        (dynamic item) {
+          final EpisodesCategory episodesCategory =
+              EpisodesCategory.fromJson(item as Map<String, dynamic>);
+          return episodesCategory;
+        },
+      ).toList();
+
+      int total = 100;
+
+      try {
+        total = int.parse(response.headers['x-wp-total']!);
+      } catch (error) {
+        if (kDebugMode) {
+          print("TODO error parse x-wp-total $error");
+        }
+      }
+
+      return EpisodesCategories(
+        items: episodesItems,
+        total: total,
+      );
+    } else {
+      if (kDebugMode) {
+        print("TODO getEpisodesCategories incorrect response");
+      }
+      throw Exception();
     }
   }
 }

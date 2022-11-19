@@ -47,6 +47,8 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
           onTap: () {
             // ignore: avoid_print
             print(ref.watch(currentEpisodePlayableProvider)?.positionInSeconds);
+            // ignore: avoid_print
+            print(ref.watch(currentEpisodePlayableProvider)?.title);
           },
           child: Text(
             "Lecteur",

@@ -1,22 +1,36 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fwp/models/episode_model.dart';
-import 'package:fwp/providers/providers.dart';
-import 'package:fwp/repositories/repositories.dart';
+import 'package:fwp/screens/home/widgets/widgets.dart';
 import 'package:fwp/widgets/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class HomeScreen extends HookConsumerWidget {
+class HomeScreen extends StatefulWidget {
   final ScrollController scrollController;
   const HomeScreen({required this.scrollController});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int groupValue = 0;
+
+  Widget buildSegment({required String text, required bool isSelected}) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 16,
+        color: isSelected ? Colors.white : Colors.black,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return AdaptiveScaffold(
       titleBar: TitleBar(
         title: Text(
-          "Derniers épisodes",
+          "Accueil",
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
@@ -24,86 +38,50 @@ class HomeScreen extends HookConsumerWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Derniers épisodes",
+          "Accueil",
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
-      body: HookConsumer(
-        builder: (context, ref, child) {
-          final count = ref.watch(episodesCountProvider);
-
-          Future<Episodes> refresh() {
-            ref.refresh(paginatedEpisodesProvider(0));
-            return ref.read(paginatedEpisodesProvider(0).future);
-          }
-
-          return count.when(
-            loading: () => const Center(
-              child: CircularProgressIndicator(),
+      body: Column(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: CupertinoSlidingSegmentedControl<int>(
+                thumbColor: Theme.of(context).colorScheme.primary,
+                groupValue: groupValue,
+                children: {
+                  0: buildSegment(
+                    text: "Derniers épisodes",
+                    isSelected: groupValue == 0,
+                  ),
+                  1: buildSegment(
+                    text: "Catégories",
+                    isSelected: groupValue == 1,
+                  ),
+                },
+                onValueChanged: (value) {
+                  setState(() {
+                    groupValue = value!;
+                  });
+                },
+              ),
             ),
-            error: (error, stack) {
-              if (kDebugMode) {
-                print("TODO count $error $stack");
-              }
-
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Une erreur est survenue'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ElevatedButton.icon(
-                      icon: const Icon(
-                        Icons.refresh,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      onPressed: refresh,
-                      label: const Text("Essayer à nouveau"),
-                    )
-                  ],
-                ),
-              );
-            },
-            data: (count) {
-              return RefreshIndicator(
-                onRefresh: refresh,
-                child: ListView.separated(
-                  controller: scrollController,
-                  separatorBuilder: (context, _) {
-                    return const SizedBox(
-                      height: 2,
-                    );
-                  },
-                  itemCount: count,
-                  itemBuilder: (context, index) {
-                    final pageIndex = index ~/ nbOfEpisodesPerPage;
-                    final episodeIndex = index % nbOfEpisodesPerPage;
-
-                    return ProviderScope(
-                      overrides: [
-                        currentEpisode.overrideWithValue(
-                          ref
-                              .watch(
-                                paginatedEpisodesProvider(
-                                  pageIndex,
-                                ),
-                              )
-                              .whenData(
-                                (page) => page.items[episodeIndex],
-                              ),
-                        ),
-                      ],
-                      child: EpisodeCardItem(),
-                    );
-                  },
-                ),
-              );
-            },
-          );
-        },
+          ),
+          if (groupValue == 0) ...[
+            Expanded(
+              child: LatestEpisodes(
+                scrollController: widget.scrollController,
+              ),
+            ),
+          ] else ...[
+            Expanded(
+              child: Categories(
+                scrollController: widget.scrollController,
+              ),
+            ),
+          ]
+        ],
       ),
     );
   }
