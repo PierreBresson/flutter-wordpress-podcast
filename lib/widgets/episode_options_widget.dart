@@ -164,6 +164,10 @@ class EpisodeOptions extends ConsumerWidget {
           text: "Lire l'épisode",
           onTap: () async {
             try {
+              final positionInSeconds = ref
+                  .read(alreadyPlayedEpisodesStateProvider.notifier)
+                  .getPlaybackPositionInSeconds(episode);
+
               final Episode episodeToPlay = Episode(
                 id: episode.id,
                 articleUrl: episode.articleUrl,
@@ -172,6 +176,7 @@ class EpisodeOptions extends ConsumerWidget {
                 title: episode.title,
                 description: episode.description,
                 imageUrl: episode.imageUrl,
+                positionInSeconds: positionInSeconds,
               );
 
               ref

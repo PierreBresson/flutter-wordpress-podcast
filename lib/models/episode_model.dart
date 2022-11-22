@@ -80,25 +80,19 @@ class Episode {
       if (APP.thinkerview.name == app) {
         imageUrl = json['episode_featured_image'] as String;
         /* in case acf plugin isn't working */
-        try {
-          final rendered = json['content']['rendered'] as String;
-          final regexp = RegExp(
-            r'((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube-nocookie\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?',
+        final rendered = json['content']['rendered'] as String;
+        final regexp = RegExp(
+          r'((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube-nocookie\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?',
+        );
+        final match = regexp.firstMatch(rendered);
+        final matchedText = match?.group(0);
+        if (matchedText != null) {
+          final id = matchedText.replaceAll(
+            "https://www.youtube-nocookie.com/embed/",
+            "",
           );
-          final match = regexp.firstMatch(rendered);
-          final matchedText = match?.group(0);
-          if (matchedText != null) {
-            final id = matchedText.replaceAll(
-              "https://www.youtube-nocookie.com/embed/",
-              "",
-            );
-            youtubeUrl =
-                "https://www.youtube.com/watch?v=${id.replaceAll('"', "")}";
-          }
-        } catch (error) {
-          if (kDebugMode) {
-            print("TODO Episode.fromJson error: $error");
-          }
+          youtubeUrl =
+              "https://www.youtube.com/watch?v=${id.replaceAll('"', "")}";
         }
       } else if (APP.causecommune.name == app) {
         imageUrl = json['episode_player_image'] as String;

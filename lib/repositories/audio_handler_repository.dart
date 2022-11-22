@@ -2,6 +2,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 Future<AudioHandler> initAudioService() async {
   final String app = dotenv.env['APP']!;
@@ -18,6 +19,8 @@ Future<AudioHandler> initAudioService() async {
 
 class MyAudioHandler extends BaseAudioHandler {
   final _player = AudioPlayer();
+  PackageInfo packageInfo =
+      PackageInfo(appName: "", packageName: "", version: "", buildNumber: "");
 
   MyAudioHandler() {
     _notifyAudioHandlerAboutPlaybackEvents();
@@ -83,11 +86,13 @@ class MyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> playMediaItem(MediaItem newMediaItem) async {
     final url = newMediaItem.extras?.entries.first.value as String;
+    final positionInSeconds = newMediaItem.extras?.entries.last.value as int;
     queue.add([newMediaItem]);
     mediaItem.add(newMediaItem);
 
     await _player.setUrl(url);
-    _player.play();
+    await _player.play();
+    await _player.seek(Duration(seconds: positionInSeconds));
   }
 
   @override
@@ -113,22 +118,36 @@ class MyAudioHandler extends BaseAudioHandler {
 
   @override
   Future customAction(String action, [Map<String, dynamic>? extras]) async {
-    if (action == 'dispose') {
+    const seekDuration = 30;
+
+    if (action == "dispose") {
       super.stop();
       await _player.dispose();
     } else if (action == "forward") {
-      _player.seek(_player.position + const Duration(seconds: 30));
+      final int position = _player.position.inSeconds;
+      final int? duration = _player.duration?.inSeconds;
+      if (duration != null) {
+        if (position + seekDuration < duration) {
+          _player
+              .seek(_player.position + const Duration(seconds: seekDuration));
+        }
+      }
     } else if (action == "backward") {
-      _player.seek(_player.position - const Duration(seconds: 30));
-    } else if (action == 'loadEpisode') {
+      final position = _player.position;
+      if (position.inSeconds > seekDuration) {
+        _player.seek(_player.position - const Duration(seconds: seekDuration));
+      }
+    } else if (action == "loadEpisode") {
       final episode = extras?.entries.first.value as Episode;
 
       final newMediaItem = MediaItem(
         id: episode.id.toString(),
-        album: "",
+        album: packageInfo.appName,
         artUri: Uri.parse(episode.imageUrl),
         title: episode.title,
-        extras: {'url': episode.audioFileUrl},
+        extras: {
+          'url': episode.audioFileUrl,
+        },
       );
 
       queue.add([newMediaItem]);

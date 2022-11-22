@@ -160,8 +160,7 @@ class EpisodeCard extends StatelessWidget {
                   ),
                   constraints: getConstraints(context),
                   child: Text(
-                    title +
-                        (hasBeenPlayed ? " - already played" : " - not played"),
+                    title,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),

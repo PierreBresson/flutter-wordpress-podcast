@@ -1,3 +1,4 @@
+export './already_played_episodes_provider.dart';
 export './categories_provider.dart';
 export './episodes_provider.dart';
 export './played_episodes_provider.dart';
