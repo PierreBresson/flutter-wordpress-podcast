@@ -14,7 +14,14 @@ class Episode {
   final String articleUrl;
   final String? youtubeUrl;
   final String description;
+  int positionInSeconds;
+  bool isPlaying;
+  String? imagePath;
+  String? audioFilePath;
+  String? imageDownloadTaskId;
+  String? audioFileDownloadTaskId;
 
+  @override
   Episode({
     required this.id,
     required this.audioFileUrl,
@@ -24,7 +31,36 @@ class Episode {
     required this.imageUrl,
     required this.description,
     this.youtubeUrl,
-  });
+    this.positionInSeconds = 0,
+    this.isPlaying = false,
+    this.imageDownloadTaskId,
+    this.imagePath,
+    this.audioFileDownloadTaskId,
+    this.audioFilePath,
+  }) : super();
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'date': date,
+      'audioFileUrl': audioFileUrl,
+      'articleUrl': articleUrl,
+      'imageUrl': imageUrl,
+      'title': title,
+      'description': description,
+      'positionInSeconds': positionInSeconds,
+      'isPlaying': isPlaying,
+      'imageDownloadTaskId': imageDownloadTaskId,
+      'audioFileDownloadTaskId': audioFileDownloadTaskId,
+      'imagePath': imagePath,
+      'audioFilePath': audioFilePath,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl, description $description, isPlaying: $isPlaying, imageDownloadTaskId: $imageDownloadTaskId, audioFileDownloadTaskId: $audioFileDownloadTaskId, imagePath: $imagePath, audioFilePath: $audioFilePath }';
+  }
 
   factory Episode.fromJson(Map<String, dynamic> json) {
     final app = dotenv.env['APP'];
@@ -92,71 +128,6 @@ class Episode {
         description: "",
       );
     }
-  }
-
-  @override
-  String toString() {
-    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, articleUrl $articleUrl, description $description}';
-  }
-}
-
-class EpisodePlayable extends Episode {
-  int positionInSeconds;
-  bool isPlaying;
-  bool hasBeenFullyPlayed;
-  String? imagePath;
-  String? audioFilePath;
-  String? imageDownloadTaskId;
-  String? audioFileDownloadTaskId;
-
-  @override
-  EpisodePlayable({
-    this.positionInSeconds = 0,
-    this.isPlaying = false,
-    this.hasBeenFullyPlayed = false,
-    this.imageDownloadTaskId,
-    this.imagePath,
-    this.audioFileDownloadTaskId,
-    this.audioFilePath,
-    required int id,
-    required String date,
-    required String audioFileUrl,
-    required String articleUrl,
-    required String imageUrl,
-    required String title,
-    required String description,
-  }) : super(
-          id: id,
-          date: date,
-          audioFileUrl: audioFileUrl,
-          articleUrl: articleUrl,
-          imageUrl: imageUrl,
-          title: title,
-          description: description,
-        );
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'date': date,
-      'audioFileUrl': audioFileUrl,
-      'articleUrl': articleUrl,
-      'imageUrl': imageUrl,
-      'title': title,
-      'description': description,
-      'positionInSeconds': positionInSeconds,
-      'isPlaying': isPlaying,
-      'hasBeenFullyPlayed': hasBeenFullyPlayed,
-      'imageDownloadTaskId': imageDownloadTaskId,
-      'audioFileDownloadTaskId': audioFileDownloadTaskId,
-      'imagePath': imagePath,
-      'audioFilePath': audioFilePath,
-    };
-  }
-
-  @override
-  String toString() {
-    return 'EpisodePlayable{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl, description $description, isPlaying: $isPlaying, imageDownloadTaskId: $imageDownloadTaskId, audioFileDownloadTaskId: $audioFileDownloadTaskId, imagePath: $imagePath, audioFilePath: $audioFilePath, hasBeenFullyPlayed: $hasBeenFullyPlayed}';
   }
 }
 

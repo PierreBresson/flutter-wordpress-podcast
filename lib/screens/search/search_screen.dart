@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -200,26 +202,37 @@ class _SearchScreenState extends State<SearchScreen> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return ListView.builder(
-      itemCount: episodes.length,
-      itemBuilder: (context, index) => EpisodeCard(
-        imageUrl: episodes[index].imageUrl,
-        title: episodes[index].title,
-        audioFileUrl: episodes[index].audioFileUrl,
-        onPressed: () {
-          showModalBottomSheet<void>(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            context: context,
-            builder: (BuildContext context) =>
-                EpisodeOptions(episode: episodes[index]),
-          );
-        },
-      ),
+    return HookConsumer(
+      builder: (context, ref, child) {
+        return ListView.builder(
+          itemCount: episodes.length,
+          itemBuilder: (context, index) {
+            final hasBeenPlayed = ref
+                .watch(playedEpisodesStateProvider)
+                .contains(episodes[index].id);
+
+            return EpisodeCard(
+              hasBeenPlayed: hasBeenPlayed,
+              imageUrl: episodes[index].imageUrl,
+              title: episodes[index].title,
+              audioFileUrl: episodes[index].audioFileUrl,
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  context: context,
+                  builder: (BuildContext context) =>
+                      EpisodeOptions(episode: episodes[index]),
+                );
+              },
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -6,12 +6,12 @@ import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Categories extends HookConsumerWidget {
+class Categories extends StatelessWidget {
   final ScrollController scrollController;
   const Categories({required this.scrollController});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return HookConsumer(
       builder: (context, ref, child) {
         final count = ref.watch(episodesCategoriesCountProvider);

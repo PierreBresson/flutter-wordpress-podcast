@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/screens/screens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:fwp/screens/episodes_of_category/episodes_of_category_screen.dart';
 
 final currentEpisodesCategory = Provider<AsyncValue<EpisodesCategory>>((ref) {
   throw UnimplementedError();

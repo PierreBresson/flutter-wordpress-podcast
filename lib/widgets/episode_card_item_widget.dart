@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,9 +24,11 @@ class EpisodeCard extends StatelessWidget {
   final String title;
   final String audioFileUrl;
   final VoidCallback onPressed;
+  final bool hasBeenPlayed;
 
   const EpisodeCard({
     Key? key,
+    required this.hasBeenPlayed,
     required this.onPressed,
     required this.imageUrl,
     required this.title,
@@ -79,56 +82,76 @@ class EpisodeCard extends StatelessWidget {
             onTap: onPressed,
             child: Column(
               children: [
-                CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  imageBuilder: (context, imageProvider) => Container(
-                    height: imageHeigth,
-                    constraints: getConstraints(context),
-                    decoration: BoxDecoration(
-                      borderRadius: borderRadius,
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: borderRadius,
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: Colors.white.withOpacity(0.2),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.fitHeight,
+                Stack(
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      imageBuilder: (context, imageProvider) => Container(
+                        height: imageHeigth,
+                        constraints: getConstraints(context),
+                        decoration: BoxDecoration(
+                          borderRadius: borderRadius,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: borderRadius,
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+                            child: Container(
+                              alignment: Alignment.center,
+                              color: Colors.white.withOpacity(0.2),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  placeholder: (context, url) => Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: imageHeigth / 2 - circularProgressIndicatorSize,
-                    ),
-                    child: SizedBox(
-                      width: circularProgressIndicatorSize,
-                      height: circularProgressIndicatorSize,
-                      child: const CircularProgressIndicator(),
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => SizedBox(
-                    height: imageHeigth,
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 24,
+                      placeholder: (context, url) => Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical:
+                              imageHeigth / 2 - circularProgressIndicatorSize,
+                        ),
+                        child: SizedBox(
+                          width: circularProgressIndicatorSize,
+                          height: circularProgressIndicatorSize,
+                          child: const CircularProgressIndicator(),
+                        ),
                       ),
-                      child: AppImage(),
+                      errorWidget: (context, url, error) => SizedBox(
+                        height: imageHeigth,
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 24,
+                          ),
+                          child: AppImage(),
+                        ),
+                      ),
                     ),
-                  ),
+                    if (hasBeenPlayed) ...[
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                          child: Icon(
+                            Icons.check_circle,
+                            size: 30,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      )
+                    ] else ...[
+                      const SizedBox.shrink()
+                    ],
+                  ],
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(
@@ -137,7 +160,8 @@ class EpisodeCard extends StatelessWidget {
                   ),
                   constraints: getConstraints(context),
                   child: Text(
-                    title,
+                    title +
+                        (hasBeenPlayed ? " - already played" : " - not played"),
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
@@ -188,7 +212,11 @@ class EpisodeCardItem extends HookConsumerWidget {
       },
       loading: () => const SizedBox.shrink(),
       data: (episode) {
+        final hasBeenPlayed =
+            ref.watch(playedEpisodesStateProvider).contains(episode.id);
+
         return EpisodeCard(
+          hasBeenPlayed: hasBeenPlayed,
           imageUrl: episode.imageUrl,
           title: episode.title,
           audioFileUrl: episode.audioFileUrl,

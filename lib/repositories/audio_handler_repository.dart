@@ -120,22 +120,22 @@ class MyAudioHandler extends BaseAudioHandler {
       _player.seek(_player.position + const Duration(seconds: 30));
     } else if (action == "backward") {
       _player.seek(_player.position - const Duration(seconds: 30));
-    } else if (action == 'loadEpisodePlayable') {
-      final episodePlayable = extras?.entries.first.value as EpisodePlayable;
+    } else if (action == 'loadEpisode') {
+      final episode = extras?.entries.first.value as Episode;
 
       final newMediaItem = MediaItem(
-        id: episodePlayable.id.toString(),
+        id: episode.id.toString(),
         album: "",
-        artUri: Uri.parse(episodePlayable.imageUrl),
-        title: episodePlayable.title,
-        extras: {'url': episodePlayable.audioFileUrl},
+        artUri: Uri.parse(episode.imageUrl),
+        title: episode.title,
+        extras: {'url': episode.audioFileUrl},
       );
 
       queue.add([newMediaItem]);
       mediaItem.add(newMediaItem);
 
       final Duration position = Duration(
-        seconds: episodePlayable.positionInSeconds,
+        seconds: episode.positionInSeconds,
       );
 
       await _player.setUrl(newMediaItem.extras?['url'] as String);

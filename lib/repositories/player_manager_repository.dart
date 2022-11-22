@@ -30,7 +30,7 @@ class PlayerManager {
     _listenToChangesInPlaylist();
   }
 
-  void playEpisode(EpisodePlayable episodePlayble) {
+  void playEpisode(Episode episodePlayble) {
     final imageUrl = episodePlayble.imageUrl;
     final artUri = Uri.parse(imageUrl);
 
@@ -47,9 +47,9 @@ class PlayerManager {
     );
 
     ref.read(currentEpisodePlayableProvider.notifier).update(
-          (EpisodePlayable? state) => state == null
+          (Episode? state) => state == null
               ? null
-              : EpisodePlayable(
+              : Episode(
                   date: episodePlayble.date,
                   id: episodePlayble.id,
                   audioFileUrl: episodePlayble.audioFileUrl,
@@ -59,7 +59,6 @@ class PlayerManager {
                   description: episodePlayble.description,
                   isPlaying: true,
                   positionInSeconds: episodePlayble.positionInSeconds,
-                  hasBeenFullyPlayed: episodePlayble.hasBeenFullyPlayed,
                   imageDownloadTaskId: episodePlayble.imageDownloadTaskId,
                   imagePath: episodePlayble.imagePath,
                   audioFileDownloadTaskId:
@@ -107,9 +106,9 @@ class PlayerManager {
       final oldState = progressNotifier.value;
 
       ref.read(currentEpisodePlayableProvider.notifier).update(
-            (EpisodePlayable? state) => state == null
+            (Episode? state) => state == null
                 ? null
-                : EpisodePlayable(
+                : Episode(
                     id: state.id,
                     date: state.date,
                     audioFileUrl: state.audioFileUrl,
@@ -118,7 +117,6 @@ class PlayerManager {
                     imageUrl: state.imageUrl,
                     description: state.description,
                     positionInSeconds: position.inSeconds,
-                    hasBeenFullyPlayed: state.hasBeenFullyPlayed,
                     imageDownloadTaskId: state.imageDownloadTaskId,
                     imagePath: state.imagePath,
                     audioFileDownloadTaskId: state.audioFileDownloadTaskId,
@@ -192,8 +190,6 @@ class PlayerManager {
       //   descriptionProcessed = mediaItem?.extras?['description'] as String;
       // }
 
-      // final bool? hasBeenFullyPlayed =
-      //     mediaItem?.extras?['hasBeenFullyPlayed'] as bool?;
       // final String? imagePath = mediaItem?.extras?['imagePath'] as String?;
       // final String? audioFilePath =
       //     mediaItem?.extras?['audioFilePath'] as String?;
@@ -205,7 +201,7 @@ class PlayerManager {
       // final imageUrl = mediaItem?.artUri.toString() ?? '';
 
       // getIt<DatabaseHandler>().insertEpisodePlayable(
-      //   EpisodePlayable(
+      //   Episode(
       //     date: "",
       //     id: idProcessed,
       //     audioFileUrl: audioFileUrlProcessed,
@@ -215,7 +211,6 @@ class PlayerManager {
       //     imageUrl: imageUrl,
       //     positionInSeconds: 0,
       //     isPlaying: true,
-      //     hasBeenFullyPlayed: hasBeenFullyPlayed,
       //     imagePath: imagePath,
       //     audioFilePath: audioFilePath,
       //     imageDownloadTaskId: imageDownloadTaskId,
@@ -236,11 +231,10 @@ class PlayerManager {
 
   Future<void> dispose() async => _audioHandler.customAction('dispose');
 
-  void loadEpisodePlayable(EpisodePlayable episodePlayable) =>
-      _audioHandler.customAction(
-        'loadEpisodePlayable',
+  void loadEpisode(Episode episode) => _audioHandler.customAction(
+        'loadEpisode',
         {
-          "episodePlayable": episodePlayable,
+          "episode": episode,
         },
       );
 }

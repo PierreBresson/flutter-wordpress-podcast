@@ -52,6 +52,8 @@ class EpisodeOptions extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final playerManager = getIt<PlayerManager>();
     final isDarkMode = isAppInDarkMode(context);
+    final hasBeenPlayed =
+        ref.watch(playedEpisodesStateProvider).contains(episode.id);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -94,19 +96,41 @@ class EpisodeOptions extends ConsumerWidget {
             });
           },
         ),
+        HookConsumer(
+          builder: (context, ref, child) {
+            return ListItem(
+              iconData: Icons.copy,
+              text: "Copier lien fichier audio",
+              onTap: () {
+                Navigator.pop(context);
+                Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
+                    .then((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content:
+                          Text("Le lien a été copié dans le presse-papiers"),
+                    ),
+                  );
+                });
+              },
+            );
+          },
+        ),
         ListItem(
-          iconData: Icons.copy,
-          text: "Copier lien fichier audio",
+          iconData: Icons.check_circle,
+          text:
+              hasBeenPlayed ? "Marquer comme non lu" : "Marquer comme déjà lu",
           onTap: () {
+            if (hasBeenPlayed) {
+              ref
+                  .read(playedEpisodesStateProvider.notifier)
+                  .removePlayedEpisode(episode.id);
+            } else {
+              ref
+                  .read(playedEpisodesStateProvider.notifier)
+                  .addPlayedEpisode(episode.id);
+            }
             Navigator.pop(context);
-            Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
-                .then((_) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Le lien a été copié dans le presse-papiers"),
-                ),
-              );
-            });
           },
         ),
         ListItem(
@@ -140,7 +164,7 @@ class EpisodeOptions extends ConsumerWidget {
           text: "Lire l'épisode",
           onTap: () async {
             try {
-              final EpisodePlayable episodePlayable = EpisodePlayable(
+              final Episode episodeToPlay = Episode(
                 id: episode.id,
                 articleUrl: episode.articleUrl,
                 audioFileUrl: episode.audioFileUrl,
@@ -152,10 +176,10 @@ class EpisodeOptions extends ConsumerWidget {
 
               ref
                   .read(currentEpisodePlayableProvider.notifier)
-                  .update((state) => episodePlayable);
+                  .update((state) => episodeToPlay);
 
               ref.read(tabIndexProvider.notifier).update((state) => 1);
-              playerManager.playEpisode(episodePlayable);
+              playerManager.playEpisode(episodeToPlay);
 
               Navigator.pop(context);
             } catch (error) {

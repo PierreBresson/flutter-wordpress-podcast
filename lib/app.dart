@@ -247,11 +247,11 @@ class _FwpAppState extends ConsumerState<FwpApp> {
     // await getIt<DatabaseHandler>().init();
 
     // final playerManager = getIt<PlayerManager>();
-    // final episodePlayable =
+    // final episode =
     //     await getIt<DatabaseHandler>().getFirstEpisodePlayable();
 
-    // if (episodePlayable.audioFileUrl.isNotEmpty) {
-    //   playerManager.loadEpisodePlayable(episodePlayable);
+    // if (episode.audioFileUrl.isNotEmpty) {
+    //   playerManager.loadEpisode(episode);
     // }
   }
 
