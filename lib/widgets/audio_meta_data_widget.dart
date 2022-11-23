@@ -4,6 +4,18 @@ import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/app_image.dart';
 
+final _borderRadius = BorderRadius.circular(14.0);
+final _decoration = BoxDecoration(
+  boxShadow: [
+    BoxShadow(
+      color: Colors.grey.withOpacity(0.35),
+      spreadRadius: 8,
+      blurRadius: 12,
+      offset: const Offset(0, 3),
+    ),
+  ],
+);
+
 class AudioMetaData extends StatelessWidget {
   const AudioMetaData({Key? key}) : super(key: key);
 
@@ -56,7 +68,13 @@ class EpisodeImage extends StatelessWidget {
     if (audioUri.toString().isEmpty) {
       return ConstrainedBox(
         constraints: BoxConstraints(maxWidth: imageMaxWidth),
-        child: const AppImage(),
+        child: Container(
+          decoration: isDarkMode ? null : _decoration,
+          child: ClipRRect(
+            borderRadius: _borderRadius,
+            child: const AppImage(),
+          ),
+        ),
       );
     }
 
@@ -66,25 +84,18 @@ class EpisodeImage extends StatelessWidget {
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: imageMaxWidth),
           child: Container(
-            decoration: isDarkMode
-                ? null
-                : BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.35),
-                        spreadRadius: 8,
-                        blurRadius: 12,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
+            decoration: isDarkMode ? null : _decoration,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(14.0),
-              child: Image(
-                fit: BoxFit.contain,
-                image: NetworkImage(
-                  audioUri.toString(),
-                ),
+              borderRadius: _borderRadius,
+              child: Image.network(
+                audioUri.toString(),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const AppImage();
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const AppImage();
+                },
               ),
             ),
           ),

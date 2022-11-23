@@ -10,13 +10,13 @@ import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-double imageHeigth = 200;
-double circularProgressIndicatorSize = 20;
-double verticalPadding = 18;
-Radius circularRadius = const Radius.circular(14);
-BorderRadius borderRadius = BorderRadius.only(
-  topLeft: circularRadius,
-  topRight: circularRadius,
+const double _imageHeigth = 200;
+const double _circularProgressIndicatorSize = 20;
+const double _verticalPadding = 18;
+const Radius _circularRadius = Radius.circular(14);
+const BorderRadius _borderRadius = BorderRadius.only(
+  topLeft: _circularRadius,
+  topRight: _circularRadius,
 );
 
 class EpisodeCard extends StatelessWidget {
@@ -37,7 +37,7 @@ class EpisodeCard extends StatelessWidget {
 
   BoxConstraints getConstraints(BuildContext context) {
     const maxWidth = 500.0;
-    final maxWidgetWidth = MediaQuery.of(context).size.width - verticalPadding;
+    final maxWidgetWidth = MediaQuery.of(context).size.width - _verticalPadding;
 
     return BoxConstraints(
       maxWidth: maxWidth,
@@ -61,13 +61,13 @@ class EpisodeCard extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: verticalPadding, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: _verticalPadding, vertical: 12),
       child: Center(
         child: Container(
           constraints: getConstraints(context),
           decoration: BoxDecoration(
             color: getBackgroundColor(isDarkMode: isDarkMode),
-            borderRadius: BorderRadius.all(circularRadius),
+            borderRadius: BorderRadius.all(_circularRadius),
             boxShadow: isDarkMode
                 ? null
                 : [
@@ -87,17 +87,17 @@ class EpisodeCard extends StatelessWidget {
                     CachedNetworkImage(
                       imageUrl: imageUrl,
                       imageBuilder: (context, imageProvider) => Container(
-                        height: imageHeigth,
+                        height: _imageHeigth,
                         constraints: getConstraints(context),
                         decoration: BoxDecoration(
-                          borderRadius: borderRadius,
+                          borderRadius: _borderRadius,
                           image: DecorationImage(
                             image: imageProvider,
                             fit: BoxFit.cover,
                           ),
                         ),
                         child: ClipRRect(
-                          borderRadius: borderRadius,
+                          borderRadius: _borderRadius,
                           child: BackdropFilter(
                             filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
                             child: Container(
@@ -118,16 +118,16 @@ class EpisodeCard extends StatelessWidget {
                       placeholder: (context, url) => Padding(
                         padding: EdgeInsets.symmetric(
                           vertical:
-                              imageHeigth / 2 - circularProgressIndicatorSize,
+                              _imageHeigth / 2 - _circularProgressIndicatorSize,
                         ),
                         child: SizedBox(
-                          width: circularProgressIndicatorSize,
-                          height: circularProgressIndicatorSize,
+                          width: _circularProgressIndicatorSize,
+                          height: _circularProgressIndicatorSize,
                           child: const CircularProgressIndicator(),
                         ),
                       ),
                       errorWidget: (context, url, error) => SizedBox(
-                        height: imageHeigth,
+                        height: _imageHeigth,
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: 24,
@@ -155,7 +155,7 @@ class EpisodeCard extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(
-                    vertical: verticalPadding,
+                    vertical: _verticalPadding,
                     horizontal: 20,
                   ),
                   constraints: getConstraints(context),

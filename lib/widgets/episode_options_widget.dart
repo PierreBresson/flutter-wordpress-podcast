@@ -96,24 +96,19 @@ class EpisodeOptions extends ConsumerWidget {
             });
           },
         ),
-        HookConsumer(
-          builder: (context, ref, child) {
-            return ListItem(
-              iconData: Icons.copy,
-              text: "Copier lien fichier audio",
-              onTap: () {
-                Navigator.pop(context);
-                Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
-                    .then((_) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content:
-                          Text("Le lien a été copié dans le presse-papiers"),
-                    ),
-                  );
-                });
-              },
-            );
+        ListItem(
+          iconData: Icons.copy,
+          text: "Copier lien fichier audio",
+          onTap: () {
+            Navigator.pop(context);
+            Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
+                .then((_) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Le lien a été copié dans le presse-papiers"),
+                ),
+              );
+            });
           },
         ),
         ListItem(
@@ -168,23 +163,14 @@ class EpisodeOptions extends ConsumerWidget {
                   .read(alreadyPlayedEpisodesStateProvider.notifier)
                   .getPlaybackPositionInSeconds(episode);
 
-              final Episode episodeToPlay = Episode(
-                id: episode.id,
-                articleUrl: episode.articleUrl,
-                audioFileUrl: episode.audioFileUrl,
-                date: episode.date,
-                title: episode.title,
-                description: episode.description,
-                imageUrl: episode.imageUrl,
-                positionInSeconds: positionInSeconds,
-              );
+              episode.positionInSeconds = positionInSeconds;
 
               ref
                   .read(currentEpisodePlayableProvider.notifier)
-                  .update((state) => episodeToPlay);
+                  .update((state) => episode);
 
               ref.read(tabIndexProvider.notifier).update((state) => 1);
-              playerManager.playEpisode(episodeToPlay);
+              playerManager.playEpisode(episode);
 
               Navigator.pop(context);
             } catch (error) {

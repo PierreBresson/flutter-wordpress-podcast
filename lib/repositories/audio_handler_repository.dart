@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/models/models.dart';
 import 'package:just_audio/just_audio.dart';
@@ -90,16 +91,38 @@ class MyAudioHandler extends BaseAudioHandler {
     queue.add([newMediaItem]);
     mediaItem.add(newMediaItem);
 
-    await _player.setUrl(url);
+    print("playMediaItem $positionInSeconds");
+
+    try {
+      await _player.setUrl(url);
+    } on PlayerException catch (error) {
+      if (kDebugMode) {
+        print("TODO audioHandler : Error code: ${error.code}");
+        print("TODO audioHandler : Error message: ${error.message}");
+      }
+    } on PlayerInterruptedException catch (error) {
+      if (kDebugMode) {
+        print("TODO audioHandler : Connection aborted: ${error.message}");
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print('TODO audioHandler : An error occured: $error');
+      }
+    }
+
     await _player.play();
     await _player.seek(Duration(seconds: positionInSeconds));
   }
 
   @override
-  Future<void> play() => _player.play();
+  Future<void> play() {
+    return _player.play();
+  }
 
   @override
-  Future<void> pause() => _player.pause();
+  Future<void> pause() {
+    return _player.pause();
+  }
 
   @override
   Future<void> stop() async {
@@ -114,7 +137,10 @@ class MyAudioHandler extends BaseAudioHandler {
   }
 
   @override
-  Future<void> seek(Duration position) => _player.seek(position);
+  Future<void> seek(Duration position) {
+    print("audiohandler position $position");
+    return _player.seek(position);
+  }
 
   @override
   Future customAction(String action, [Map<String, dynamic>? extras]) async {
@@ -139,6 +165,7 @@ class MyAudioHandler extends BaseAudioHandler {
       }
     } else if (action == "loadEpisode") {
       final episode = extras?.entries.first.value as Episode;
+      print("loadEpisode episode $episode");
 
       final newMediaItem = MediaItem(
         id: episode.id.toString(),

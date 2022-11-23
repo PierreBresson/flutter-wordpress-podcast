@@ -15,7 +15,6 @@ class Episode {
   final String? youtubeUrl;
   final String description;
   int positionInSeconds;
-  bool isPlaying;
   String? imagePath;
   String? audioFilePath;
   String? imageDownloadTaskId;
@@ -32,7 +31,6 @@ class Episode {
     required this.description,
     this.youtubeUrl,
     this.positionInSeconds = 0,
-    this.isPlaying = false,
     this.imageDownloadTaskId,
     this.imagePath,
     this.audioFileDownloadTaskId,
@@ -49,7 +47,6 @@ class Episode {
       'title': title,
       'description': description,
       'positionInSeconds': positionInSeconds,
-      'isPlaying': isPlaying,
       'imageDownloadTaskId': imageDownloadTaskId,
       'audioFileDownloadTaskId': audioFileDownloadTaskId,
       'imagePath': imagePath,
@@ -59,7 +56,7 @@ class Episode {
 
   @override
   String toString() {
-    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl, description $description, isPlaying: $isPlaying, imageDownloadTaskId: $imageDownloadTaskId, audioFileDownloadTaskId: $audioFileDownloadTaskId, imagePath: $imagePath, audioFilePath: $audioFilePath }';
+    return 'Episode{id: $id, date: $date, audioFileUrl: $audioFileUrl, imageUrl: $imageUrl, title: $title, positionInSeconds: $positionInSeconds, articleUrl: $articleUrl, description $description, imageDownloadTaskId: $imageDownloadTaskId, audioFileDownloadTaskId: $audioFileDownloadTaskId, imagePath: $imagePath, audioFilePath: $audioFilePath }';
   }
 
   factory Episode.fromJson(Map<String, dynamic> json) {

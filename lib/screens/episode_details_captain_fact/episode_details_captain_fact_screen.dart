@@ -167,10 +167,15 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return const ErrorMessage();
+                  return const ErrorMessage(
+                    message:
+                        "Aucune donnée de Fact Checking pour cet épisode, merci de revenir plus tard",
+                  );
                 }
               } else {
-                return const ErrorMessage();
+                return const ErrorMessage(
+                  message: "Aucune donnée de Fact Checking pour cet épisode",
+                );
               }
             }
 

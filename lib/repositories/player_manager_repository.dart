@@ -30,9 +30,10 @@ class PlayerManager {
     _listenToChangesInPlaylist();
   }
 
-  void playEpisode(Episode episode) {
+  Future<void> playEpisode(Episode episode) async {
     final imageUrl = episode.imageUrl;
     final artUri = Uri.parse(imageUrl);
+    final positionInSeconds = episode.positionInSeconds;
 
     final mediaItem = MediaItem(
       id: episode.id.toString(),
@@ -46,26 +47,15 @@ class PlayerManager {
     );
 
     ref.read(currentEpisodePlayableProvider.notifier).update(
-          (Episode? state) => state == null
-              ? null
-              : Episode(
-                  date: episode.date,
-                  id: episode.id,
-                  audioFileUrl: episode.audioFileUrl,
-                  articleUrl: episode.articleUrl,
-                  title: episode.title,
-                  imageUrl: episode.imageUrl,
-                  description: episode.description,
-                  isPlaying: true,
-                  positionInSeconds: episode.positionInSeconds,
-                  imageDownloadTaskId: episode.imageDownloadTaskId,
-                  imagePath: episode.imagePath,
-                  audioFileDownloadTaskId: episode.audioFileDownloadTaskId,
-                  audioFilePath: episode.audioFilePath,
-                ),
+          (Episode? state) => state == null ? null : episode,
         );
 
     _audioHandler.playMediaItem(mediaItem);
+    print("playEpisode positionInSeconds $positionInSeconds");
+    if (positionInSeconds != 0) {
+      print("object");
+      // await _audioHandler.seek(Duration(seconds: episode.positionInSeconds));
+    }
   }
 
   void _listenToChangesInPlaylist() {
@@ -93,6 +83,7 @@ class PlayerManager {
       } else if (processingState != AudioProcessingState.completed) {
         playButtonNotifier.value = ButtonState.playing;
       } else {
+        print("last else _listenToPlaybackState");
         _audioHandler.seek(Duration.zero);
         _audioHandler.pause();
       }
@@ -115,6 +106,8 @@ class PlayerManager {
             .read(alreadyPlayedEpisodesStateProvider.notifier)
             .updatePlayedEpisode(episode);
       }
+
+      print("listne current position ${position.inSeconds}");
 
       progressNotifier.value = ProgressBarState(
         current: position,
@@ -215,7 +208,11 @@ class PlayerManager {
   void play() => _audioHandler.play();
   void pause() => _audioHandler.pause();
 
-  void seek(Duration position) => _audioHandler.seek(position);
+  Future<void> seek(Duration position) {
+    print("player manager position $position");
+
+    return _audioHandler.seek(position);
+  }
 
   void goForward30Seconds() => _audioHandler.customAction('forward');
 
