@@ -37,25 +37,18 @@ class HomeScreen extends HookConsumerWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text(
-          LocaleKeys.home_screen_title.tr(),
-          style: Theme.of(context).textTheme.headline6,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MenuButton(
+              currentScreen: currentScreen,
+              onPressed: () => onPressedMenu(context),
+            ),
+          ],
         ),
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: MenuButton(
-                  currentScreen: currentScreen,
-                  onPressed: () => onPressedMenu(context),
-                ),
-              ),
-            ],
-          ),
           if (currentScreen == Screens.latestEpisodes) ...[
             Expanded(
               child: LatestEpisodes(
