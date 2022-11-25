@@ -56,13 +56,13 @@ class CaptainFactGrades extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
+        DecoratedBox(
           decoration: sumOfApprovals! > 0
               ? BoxDecoration(
                   borderRadius: BorderRadius.circular(16.0),
                   color: Colors.green,
                 )
-              : null,
+              : const BoxDecoration(),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,
@@ -77,13 +77,13 @@ class CaptainFactGrades extends StatelessWidget {
             ),
           ),
         ),
-        Container(
+        DecoratedBox(
           decoration: sumOfDisapprovals! > 0
               ? BoxDecoration(
                   borderRadius: BorderRadius.circular(16.0),
                   color: Colors.red,
                 )
-              : null,
+              : const BoxDecoration(),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,

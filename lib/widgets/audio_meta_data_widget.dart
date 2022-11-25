@@ -68,8 +68,8 @@ class EpisodeImage extends StatelessWidget {
     if (audioUri.toString().isEmpty) {
       return ConstrainedBox(
         constraints: BoxConstraints(maxWidth: imageMaxWidth),
-        child: Container(
-          decoration: isDarkMode ? null : _decoration,
+        child: DecoratedBox(
+          decoration: isDarkMode ? const BoxDecoration() : _decoration,
           child: ClipRRect(
             borderRadius: _borderRadius,
             child: const AppImage(),
@@ -83,8 +83,8 @@ class EpisodeImage extends StatelessWidget {
       children: [
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: imageMaxWidth),
-          child: Container(
-            decoration: isDarkMode ? null : _decoration,
+          child: DecoratedBox(
+            decoration: isDarkMode ? const BoxDecoration() : _decoration,
             child: ClipRRect(
               borderRadius: _borderRadius,
               child: Image.network(

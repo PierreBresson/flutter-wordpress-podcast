@@ -74,8 +74,8 @@ class MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
+        foregroundColor: Colors.black26,
         splashFactory: NoSplash.splashFactory,
-        primary: Colors.black26,
         shape: const StadiumBorder(),
         side: BorderSide(
           width: 2,

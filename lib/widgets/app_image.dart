@@ -17,7 +17,7 @@ class AppImage extends StatelessWidget {
     } else if (app == APP.causecommune.name) {
       imageUri = 'assets/images/cause-commune.png';
     }
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: isDarkMode ? Colors.black : Colors.white,
       ),

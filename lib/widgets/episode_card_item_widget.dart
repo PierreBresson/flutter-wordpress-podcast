@@ -106,13 +106,9 @@ class EpisodeCard extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.center,
                               color: Colors.white.withOpacity(0.2),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ),
+                              child: Image(
+                                image: imageProvider,
+                                fit: BoxFit.fitHeight,
                               ),
                             ),
                           ),
