@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:graphql/client.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/locale.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:fwp/i18n.dart';
 
 final _httpLink = HttpLink('https://graphql.captainfact.io/');
 const String readVideoData = r'''

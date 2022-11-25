@@ -92,7 +92,8 @@ class EpisodeOptions extends ConsumerWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                      LocaleKeys.episode_options_widget_link_was_copied.tr()),
+                    LocaleKeys.episode_options_widget_link_was_copied.tr(),
+                  ),
                 ),
               );
             });
@@ -108,7 +109,8 @@ class EpisodeOptions extends ConsumerWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                      LocaleKeys.episode_options_widget_link_was_copied.tr()),
+                    LocaleKeys.episode_options_widget_link_was_copied.tr(),
+                  ),
                 ),
               );
             });
