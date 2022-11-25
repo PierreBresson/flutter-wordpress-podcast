@@ -8,7 +8,7 @@ class EpisodesOfCategory extends StatelessWidget {
     return AdaptiveScaffold(
       titleBar: TitleBar(
         title: Text(
-          "Livres",
+          "WIP",
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
@@ -16,7 +16,7 @@ class EpisodesOfCategory extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Livres",
+          "WIP",
           style: Theme.of(context).textTheme.headline6,
         ),
       ),

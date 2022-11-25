@@ -1,36 +1,36 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fwp/i18n.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/screens/home/widgets/widgets.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends HookConsumerWidget {
   final ScrollController scrollController;
   const HomeScreen({required this.scrollController});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentScreen = ref.watch(homeMenuProvider);
 
-class _HomeScreenState extends State<HomeScreen> {
-  int groupValue = 0;
+    Future<void> onPressedMenu(BuildContext context) {
+      return showModalBottomSheet<void>(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        context: context,
+        builder: (BuildContext context) => const MenuSheet(),
+      );
+    }
 
-  Widget buildSegment({required String text, required bool isSelected}) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 16,
-        color: isSelected ? Colors.white : Colors.black,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return AdaptiveScaffold(
       titleBar: TitleBar(
         title: Text(
-          "Accueil",
+          LocaleKeys.home_screen_title.tr(),
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
@@ -38,48 +38,38 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Accueil",
+          LocaleKeys.home_screen_title.tr(),
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
       body: Column(
         children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: CupertinoSlidingSegmentedControl<int>(
-                thumbColor: Theme.of(context).colorScheme.primary,
-                groupValue: groupValue,
-                children: {
-                  0: buildSegment(
-                    text: "Derniers épisodes",
-                    isSelected: groupValue == 0,
-                  ),
-                  1: buildSegment(
-                    text: "Catégories",
-                    isSelected: groupValue == 1,
-                  ),
-                },
-                onValueChanged: (value) {
-                  setState(() {
-                    groupValue = value!;
-                  });
-                },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: MenuButton(
+                  currentScreen: currentScreen,
+                  onPressed: () => onPressedMenu(context),
+                ),
               ),
-            ),
+            ],
           ),
-          if (groupValue == 0) ...[
+          if (currentScreen == Screens.latestEpisodes) ...[
             Expanded(
               child: LatestEpisodes(
-                scrollController: widget.scrollController,
+                scrollController: scrollController,
               ),
             ),
-          ] else ...[
+          ] else if (currentScreen == Screens.categories) ...[
             Expanded(
               child: Categories(
-                scrollController: widget.scrollController,
+                scrollController: scrollController,
               ),
             ),
+          ] else if (currentScreen == Screens.offline) ...[
+            const Text("nothing here yet"),
           ]
         ],
       ),

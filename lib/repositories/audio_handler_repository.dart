@@ -91,8 +91,6 @@ class MyAudioHandler extends BaseAudioHandler {
     queue.add([newMediaItem]);
     mediaItem.add(newMediaItem);
 
-    print("playMediaItem $positionInSeconds");
-
     try {
       await _player.setUrl(url);
     } on PlayerException catch (error) {
@@ -111,7 +109,9 @@ class MyAudioHandler extends BaseAudioHandler {
     }
 
     await _player.play();
-    await _player.seek(Duration(seconds: positionInSeconds));
+    if (positionInSeconds != 0) {
+      await _player.seek(Duration(seconds: positionInSeconds));
+    }
   }
 
   @override
@@ -138,7 +138,6 @@ class MyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> seek(Duration position) {
-    print("audiohandler position $position");
     return _player.seek(position);
   }
 
@@ -165,7 +164,6 @@ class MyAudioHandler extends BaseAudioHandler {
       }
     } else if (action == "loadEpisode") {
       final episode = extras?.entries.first.value as Episode;
-      print("loadEpisode episode $episode");
 
       final newMediaItem = MediaItem(
         id: episode.id.toString(),

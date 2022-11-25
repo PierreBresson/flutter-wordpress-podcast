@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/app.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -33,8 +33,8 @@ Future<SentryEvent?> beforeSend(SentryEvent event, {dynamic hint}) async {
 }
 
 Future<void> setupApp() async {
-  initializeDateFormatting('fr_FR');
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -56,8 +56,13 @@ Future<void> setupApp() async {
       options.beforeSend = beforeSend;
     },
     appRunner: () => runApp(
-      const ProviderScope(
-        child: FwpApp(),
+      EasyLocalization(
+        path: 'assets/translations',
+        supportedLocales: const [Locale('en'), Locale('fr')],
+        fallbackLocale: const Locale('fr'),
+        child: const ProviderScope(
+          child: App(),
+        ),
       ),
     ),
   );

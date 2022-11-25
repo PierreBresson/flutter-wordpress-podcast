@@ -61,13 +61,16 @@ class EpisodeCard extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: _verticalPadding, vertical: 12),
+      padding: const EdgeInsets.symmetric(
+        horizontal: _verticalPadding,
+        vertical: 12,
+      ),
       child: Center(
         child: Container(
           constraints: getConstraints(context),
           decoration: BoxDecoration(
             color: getBackgroundColor(isDarkMode: isDarkMode),
-            borderRadius: BorderRadius.all(_circularRadius),
+            borderRadius: const BorderRadius.all(_circularRadius),
             boxShadow: isDarkMode
                 ? null
                 : [
@@ -115,7 +118,7 @@ class EpisodeCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      placeholder: (context, url) => Padding(
+                      placeholder: (context, url) => const Padding(
                         padding: EdgeInsets.symmetric(
                           vertical:
                               _imageHeigth / 2 - _circularProgressIndicatorSize,
@@ -123,12 +126,12 @@ class EpisodeCard extends StatelessWidget {
                         child: SizedBox(
                           width: _circularProgressIndicatorSize,
                           height: _circularProgressIndicatorSize,
-                          child: const CircularProgressIndicator(),
+                          child: CircularProgressIndicator(),
                         ),
                       ),
-                      errorWidget: (context, url, error) => SizedBox(
+                      errorWidget: (context, url, error) => const SizedBox(
                         height: _imageHeigth,
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: 24,
                           ),
@@ -154,7 +157,7 @@ class EpisodeCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     vertical: _verticalPadding,
                     horizontal: 20,
                   ),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
@@ -108,13 +109,13 @@ class _SearchScreenState extends State<SearchScreen> {
         hasUserStartedSearching) {
       if (query.isEmpty) {
         return Text(
-          'Résultats',
+          LocaleKeys.search_screen_results.tr(),
           style: Theme.of(context).textTheme.headline6,
         );
       }
 
       return Text(
-        'Résultats pour "$query"',
+        LocaleKeys.search_screen_results.tr(args: [query]),
         style: Theme.of(context).textTheme.headline6,
       );
     }
@@ -125,7 +126,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Icons.search,
           size: 20,
         ),
-        placeholder: "Chercher ici",
+        placeholder: LocaleKeys.search_screen_search_here.tr(),
         placeholderStyle: TextStyle(color: Colors.grey[500]),
         decoration: BoxDecoration(
           color: isDarkMode ? Colors.black : Colors.grey[200],
@@ -158,7 +159,7 @@ class _SearchScreenState extends State<SearchScreen> {
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: 'Chercher',
+          hintText: LocaleKeys.search_screen_search.tr(),
           icon: IconButton(
             icon: const Icon(
               Icons.arrow_back,
@@ -175,17 +176,17 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     return Text(
-      "Chercher un épisode",
+      LocaleKeys.search_screen_search_an_episode.tr(),
       style: Theme.of(context).textTheme.headline6,
     );
   }
 
   Widget renderNoSearchResult() {
     if (hasUserStartedSearching) {
-      return const Center(
+      return Center(
         child: Text(
-          'Aucun résultat',
-          style: TextStyle(fontSize: 24),
+          LocaleKeys.search_screen_no_result.tr(),
+          style: const TextStyle(fontSize: 24),
         ),
       );
     }
@@ -195,7 +196,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget renderResults() {
     if (hasError) {
-      return const Center(child: Text("Une erreur est survenue"));
+      return Center(child: Text(LocaleKeys.ui_error.tr()));
     }
 
     if (isLoading) {

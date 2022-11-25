@@ -1,7 +1,7 @@
 name: fwp
 description: Podcast white label app based on Wordpress API using Flutter framework
 publish_to: "none"
-version: 3.3.1+33100
+version: 3.4.0+34000
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -30,6 +30,7 @@ dependencies:
   macos_ui: ^1.4.1+1
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^2.0.2
+  easy_localization: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -46,4 +47,5 @@ flutter:
     - assets/images/
     - assets/markdown/
     - assets/data/
+    - assets/translations/
     - .env

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/styles/styles.dart';
 
@@ -68,7 +69,8 @@ class CaptainFactGrades extends StatelessWidget {
               vertical: 2,
             ),
             child: Text(
-              "Confirme: $sumOfApprovals",
+              LocaleKeys.captain_fact_grades_widget_confirme
+                  .tr(args: [sumOfApprovals.toString()]),
               style: TextStyle(
                 color: getTextColor(context, sumOfApprovals),
               ),
@@ -88,7 +90,8 @@ class CaptainFactGrades extends StatelessWidget {
               vertical: 2,
             ),
             child: Text(
-              "Réfute: $sumOfDisapprovals",
+              LocaleKeys.captain_fact_grades_widget_refute
+                  .tr(args: [sumOfDisapprovals.toString()]),
               style: TextStyle(
                 color: getTextColor(context, sumOfDisapprovals),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
@@ -73,7 +74,7 @@ class EpisodeOptions extends ConsumerWidget {
         const SizedBox(height: 30),
         ListItem(
           iconData: Icons.link,
-          text: "Ouvrir article dans navigateur",
+          text: LocaleKeys.episode_options_widget_open_article_in_browser.tr(),
           onTap: () {
             Navigator.pop(context);
             launchUrl(
@@ -83,14 +84,15 @@ class EpisodeOptions extends ConsumerWidget {
         ),
         ListItem(
           iconData: Icons.copy,
-          text: "Copier lien article",
+          text: LocaleKeys.episode_options_widget_copy_article_link.tr(),
           onTap: () {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.articleUrl))
                 .then((_) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Le lien a été copié dans le presse-papiers"),
+                SnackBar(
+                  content: Text(
+                      LocaleKeys.episode_options_widget_link_was_copied.tr()),
                 ),
               );
             });
@@ -98,14 +100,15 @@ class EpisodeOptions extends ConsumerWidget {
         ),
         ListItem(
           iconData: Icons.copy,
-          text: "Copier lien fichier audio",
+          text: LocaleKeys.episode_options_widget_copy_audio_link.tr(),
           onTap: () {
             Navigator.pop(context);
             Clipboard.setData(ClipboardData(text: episode.audioFileUrl))
                 .then((_) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Le lien a été copié dans le presse-papiers"),
+                SnackBar(
+                  content: Text(
+                      LocaleKeys.episode_options_widget_link_was_copied.tr()),
                 ),
               );
             });
@@ -113,8 +116,9 @@ class EpisodeOptions extends ConsumerWidget {
         ),
         ListItem(
           iconData: Icons.check_circle,
-          text:
-              hasBeenPlayed ? "Marquer comme non lu" : "Marquer comme déjà lu",
+          text: hasBeenPlayed
+              ? LocaleKeys.episode_options_widget_mark_as_not_read.tr()
+              : LocaleKeys.episode_options_widget_mark_as_read.tr(),
           onTap: () {
             if (hasBeenPlayed) {
               ref
@@ -130,7 +134,7 @@ class EpisodeOptions extends ConsumerWidget {
         ),
         ListItem(
           iconData: Icons.info_sharp,
-          text: "Plus d'info sur l'épisode",
+          text: LocaleKeys.episode_options_widget_more_info_on_episode.tr(),
           onTap: () async {
             Navigator.pop(context);
             if (app == APP.thinkerview.name) {
@@ -156,7 +160,7 @@ class EpisodeOptions extends ConsumerWidget {
         ),
         ListItem(
           iconData: Icons.play_arrow_rounded,
-          text: "Lire l'épisode",
+          text: LocaleKeys.episode_options_widget_play_episode.tr(),
           onTap: () async {
             try {
               final positionInSeconds = ref
@@ -178,8 +182,8 @@ class EpisodeOptions extends ConsumerWidget {
                 print("TODO error play episode $error");
               }
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Une erreur est survenue"),
+                SnackBar(
+                  content: Text(LocaleKeys.ui_error.tr()),
                 ),
               );
             }

@@ -4,8 +4,10 @@ import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:graphql/client.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/locale.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:fwp/i18n.dart';
 
 final _httpLink = HttpLink('https://graphql.captainfact.io/');
 const String readVideoData = r'''
@@ -85,8 +87,10 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
                 episode: episode,
               ),
             ),
-            const ErrorMessage(
-              message: "Impossible de récupérer l'url youtube",
+            ErrorMessage(
+              message: LocaleKeys
+                  .episode_details_captain_fact_screen_impossible_to_get_youtube_url
+                  .tr(),
             )
           ],
         ),
@@ -167,14 +171,17 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return const ErrorMessage(
-                    message:
-                        "Aucune donnée de Fact Checking pour cet épisode, merci de revenir plus tard",
+                  return ErrorMessage(
+                    message: LocaleKeys
+                        .episode_details_captain_fact_screen_no_fact_checking_data_please_come_back_later
+                        .tr(),
                   );
                 }
               } else {
-                return const ErrorMessage(
-                  message: "Aucune donnée de Fact Checking pour cet épisode",
+                return ErrorMessage(
+                  message: LocaleKeys
+                      .episode_details_captain_fact_screen_no_fact_checking_data
+                      .tr(),
                 );
               }
             }
@@ -235,7 +242,9 @@ class Header extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "Fact Checking - ",
+                      LocaleKeys
+                          .episode_details_captain_fact_screen_fact_checking
+                          .tr(),
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     Text(
@@ -257,8 +266,10 @@ class Header extends StatelessWidget {
               if (hasStatements)
                 const SizedBox.shrink()
               else
-                const ErrorMessage(
-                  message: "Aucun Fact Checking pour cet épisode",
+                ErrorMessage(
+                  message: LocaleKeys
+                      .episode_details_captain_fact_screen_no_fact_checking
+                      .tr(),
                 ),
             ],
           ),
@@ -268,17 +279,17 @@ class Header extends StatelessWidget {
 }
 
 class ErrorMessage extends StatelessWidget {
-  final String message;
+  final String? message;
   const ErrorMessage({
     Key? key,
-    this.message = "Une erreur est survenue, essayer de nouveau plus tard",
+    this.message,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        message,
+        message ?? LocaleKeys.ui_error_please_try_again_later.tr(),
         style: Theme.of(context).textTheme.bodyText1,
       ),
     );

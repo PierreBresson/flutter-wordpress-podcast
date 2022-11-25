@@ -8,7 +8,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class PlayerManager {
-  // Listeners: Updates going to the UI
   final currentSongTitleNotifier = ValueNotifier<String>('');
   final progressNotifier = ProgressNotifier();
   final playButtonNotifier = PlayButtonNotifier();
@@ -33,7 +32,6 @@ class PlayerManager {
   Future<void> playEpisode(Episode episode) async {
     final imageUrl = episode.imageUrl;
     final artUri = Uri.parse(imageUrl);
-    final positionInSeconds = episode.positionInSeconds;
 
     final mediaItem = MediaItem(
       id: episode.id.toString(),
@@ -51,11 +49,6 @@ class PlayerManager {
         );
 
     _audioHandler.playMediaItem(mediaItem);
-    print("playEpisode positionInSeconds $positionInSeconds");
-    if (positionInSeconds != 0) {
-      print("object");
-      // await _audioHandler.seek(Duration(seconds: episode.positionInSeconds));
-    }
   }
 
   void _listenToChangesInPlaylist() {
@@ -83,7 +76,6 @@ class PlayerManager {
       } else if (processingState != AudioProcessingState.completed) {
         playButtonNotifier.value = ButtonState.playing;
       } else {
-        print("last else _listenToPlaybackState");
         _audioHandler.seek(Duration.zero);
         _audioHandler.pause();
       }
@@ -106,8 +98,6 @@ class PlayerManager {
             .read(alreadyPlayedEpisodesStateProvider.notifier)
             .updatePlayedEpisode(episode);
       }
-
-      print("listne current position ${position.inSeconds}");
 
       progressNotifier.value = ProgressBarState(
         current: position,
@@ -205,22 +195,18 @@ class PlayerManager {
     });
   }
 
-  void play() => _audioHandler.play();
-  void pause() => _audioHandler.pause();
+  Future<void> play() => _audioHandler.play();
+  Future<void> pause() => _audioHandler.pause();
 
-  Future<void> seek(Duration position) {
-    print("player manager position $position");
+  Future<void> seek(Duration position) => _audioHandler.seek(position);
 
-    return _audioHandler.seek(position);
-  }
+  Future<void> goForward30Seconds() => _audioHandler.customAction('forward');
 
-  void goForward30Seconds() => _audioHandler.customAction('forward');
-
-  void goBackward30Seconds() => _audioHandler.customAction('backward');
+  Future<void> goBackward30Seconds() => _audioHandler.customAction('backward');
 
   Future<void> dispose() async => _audioHandler.customAction('dispose');
 
-  void loadEpisode(Episode episode) => _audioHandler.customAction(
+  Future<void> loadEpisode(Episode episode) => _audioHandler.customAction(
         'loadEpisode',
         {
           "episode": episode,

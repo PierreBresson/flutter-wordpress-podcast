@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -50,7 +52,7 @@ class _BooksScreenState extends State<BooksScreen> {
         String markdown = "";
 
         if (response.statusCode != 200) {
-          _streamController.sink.addError("Une erreur est survenue");
+          _streamController.sink.addError(LocaleKeys.ui_error.tr());
           setState(() {
             isLoading = false;
           });
@@ -72,7 +74,7 @@ class _BooksScreenState extends State<BooksScreen> {
       setState(() {
         isLoading = false;
       });
-      _streamController.sink.addError("Error while loading data");
+      _streamController.sink.addError(LocaleKeys.ui_error.tr());
     }
   }
 
@@ -87,7 +89,7 @@ class _BooksScreenState extends State<BooksScreen> {
     return AdaptiveScaffold(
       titleBar: TitleBar(
         title: Text(
-          "Livres",
+          LocaleKeys.books_screen_title.tr(),
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
@@ -95,7 +97,7 @@ class _BooksScreenState extends State<BooksScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Livres",
+          LocaleKeys.books_screen_title.tr(),
           style: Theme.of(context).textTheme.headline6,
         ),
         actions: [
@@ -135,8 +137,8 @@ class _BooksScreenState extends State<BooksScreen> {
               return Markdown(data: snapshot.data ?? "");
             }
 
-            return const Center(
-              child: Text("Une erreur est survenue"),
+            return Center(
+              child: Text(LocaleKeys.ui_error.tr()),
             );
           },
         ),

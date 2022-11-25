@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
@@ -36,7 +37,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     return AdaptiveScaffold(
       titleBar: TitleBar(
         title: Text(
-          "Lecteur",
+          LocaleKeys.player_screen_title.tr(),
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
@@ -51,7 +52,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
             print(ref.watch(currentEpisodePlayableProvider)?.title);
           },
           child: Text(
-            "Lecteur",
+            LocaleKeys.player_screen_title.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
         ),

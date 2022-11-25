@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/models/episode_model.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
@@ -34,7 +35,7 @@ class Categories extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Une erreur est survenue'),
+                  Text(LocaleKeys.ui_error.tr()),
                   const SizedBox(
                     height: 10,
                   ),
@@ -45,7 +46,7 @@ class Categories extends StatelessWidget {
                       size: 20,
                     ),
                     onPressed: refresh,
-                    label: const Text("Essayer à nouveau"),
+                    label: Text(LocaleKeys.ui_try_again.tr()),
                   )
                 ],
               ),

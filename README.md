@@ -28,10 +28,9 @@ Already existing and planned features
 - [x] Log crash/bugs to Sentry
 - [x] Image caching
 - [x] Episode detail - Fact checking for Thinkerview
+- [x] localization - i18n
 - [ ] Stream live radio
-- [ ] Refactor into smaller widgets
 - [ ] Tests
-- [ ] localization - i18
 - [ ] Categories screen
 - [ ] Chromecast / Airplay
 - [ ] Download podcast / offline mode
@@ -50,6 +49,8 @@ App tested and working on :
 ### Getting started
 
 Create `.env` file with `APP=causecommune` or `APP=thinkerview` inside and `DSN=yourSecretDSNfromSentry`.
+
+Run `make localizations` to generate new translations.
 
 ### Run the app
 

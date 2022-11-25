@@ -11,7 +11,6 @@ class EpisodeDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Intl.defaultLocale = 'fr';
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
     final isDarkMode = isAppInDarkMode(context);

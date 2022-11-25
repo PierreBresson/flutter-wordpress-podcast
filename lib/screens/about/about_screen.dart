@@ -6,16 +6,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-const causeCommuneDescription =
-    "Cause Commune rassemble dans sa grille de programmes les voix pour l’instant disparates des chercheurs et des inventeurs de solutions propres à relever les défis écologiques, techniques, sociaux et économiques du monde d’aujourd’hui. Pour ce faire, sont notamment invités à la rejoindre tous les acteurs du logiciel libre et du numérique, de la culture libre, de la science et de l’éducation, de l’environnement et de la nature qui oeuvrent pour le maintien et la sauvegarde des Biens Communs et pour une société de la Connaissance fondée sur le partage.";
-const thinkerviewDescrption =
-    "ThinkerView est un groupe indépendant issu d'internet, très diffèrent de la plupart des think-tanks qui sont inféodés à des partis politiques ou des intérêts privés";
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -74,7 +70,7 @@ class _AboutScreenState extends State<AboutScreen> {
     return AdaptiveScaffold(
       titleBar: TitleBar(
         title: Text(
-          "A propos",
+          LocaleKeys.about_screen_title.tr(),
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
@@ -82,7 +78,7 @@ class _AboutScreenState extends State<AboutScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          "A propos",
+          LocaleKeys.about_screen_title.tr(),
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
@@ -105,10 +101,17 @@ class _AboutScreenState extends State<AboutScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                "Cette application open-source app a été conçu par Pierre Bresson de manière indépendante. N'hésitez pas à m'aider sur ko-fi.com et laisser un message ou bonne note à l'app pour encorager le développement de l'application!",
+              Text(
+                LocaleKeys.about_screen_app_intro.tr(),
               ),
               const SizedBox(height: 10),
+              if (app == APP.thinkerview.name) ...[
+                Text(
+                  LocaleKeys.about_screen_app_warning_thinkerview.tr(),
+                  style: const TextStyle(fontStyle: FontStyle.italic),
+                ),
+                const SizedBox(height: 10),
+              ],
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(
@@ -117,8 +120,8 @@ class _AboutScreenState extends State<AboutScreen> {
                       "https://www.google.fr/search?client=firefox-b-d&q=ko+fi+pierre+bresson",
                     ),
                   ),
-                  child: const Text(
-                    "Ko-fi Pierre Bresson",
+                  child: Text(
+                    LocaleKeys.about_screen_kofi_pierre_bresson.tr(),
                   ),
                 ),
               ),
@@ -136,7 +139,7 @@ class _AboutScreenState extends State<AboutScreen> {
                               "https://docs.google.com/forms/d/e/1FAIpQLSc0S2evuA0Klqoqyo5WNRcjUxm2J5asb0ASf5d0pRKBccwqOw/viewform?usp=sf_link",
                             ),
                     ),
-                    child: const Text("Votre feedback sur l'app!"),
+                    child: Text(LocaleKeys.about_screen_your_app_feedback.tr()),
                   ),
                 ),
               Padding(
@@ -147,7 +150,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       "https://github.com/PierreBresson/flutter-wordpress-podcast",
                     ),
                   ),
-                  child: const Text("Github"),
+                  child: Text(LocaleKeys.about_screen_github.tr()),
                 ),
               ),
               renderPodcastDescription(),
@@ -198,7 +201,7 @@ class _AboutScreenState extends State<AboutScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Version ",
+                      LocaleKeys.about_screen_version.tr(),
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Text(
@@ -235,12 +238,13 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   Widget renderPodcastDescription() {
-    var podcastDescription = "";
+    String podcastDescription = "";
 
     if (app == APP.causecommune.name) {
-      podcastDescription = causeCommuneDescription;
+      podcastDescription =
+          LocaleKeys.about_screen_cause_commune_description.tr();
     } else if (app == APP.thinkerview.name) {
-      podcastDescription = thinkerviewDescrption;
+      podcastDescription = LocaleKeys.about_screen_thinkerview_description.tr();
     }
 
     return Column(

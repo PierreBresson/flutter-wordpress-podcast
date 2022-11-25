@@ -22,3 +22,8 @@ run-ios-causecommune: ## run ios causecommune
 run-android-causecommune: ## run android causecommune
 	flutter clean
 	flutter run --flavor causecommune
+
+localizations: ## generate localizations
+	flutter pub run easy_localization:generate -S assets/translations -O lib/generated/
+	flutter pub run easy_localization:generate -f keys -S assets/translations -s en.json -o keys.g.dart
+	flutter format lib/generated/
