@@ -18,7 +18,7 @@ class Categories extends StatelessWidget {
         final count = ref.watch(episodesCategoriesCountProvider);
 
         Future<Episodes> refresh() {
-          ref.refresh(paginatedEpisodesProvider(0));
+          ref.invalidate(paginatedEpisodesProvider(0));
           return ref.read(paginatedEpisodesProvider(0).future);
         }
 
@@ -73,11 +73,12 @@ class Categories extends StatelessWidget {
                         ref
                             .watch(
                               paginatedEpisodesCategoriesProvider(
-                                pageIndex,
+                                pageIndex ~/ nbOfEpisodesCategoriesPerPage,
                               ),
                             )
                             .whenData(
-                              (page) => page.items[categoryIndex],
+                              (page) => page.items[categoryIndex %
+                                  nbOfEpisodesCategoriesPerPage],
                             ),
                       ),
                     ],

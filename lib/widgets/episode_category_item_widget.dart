@@ -53,9 +53,12 @@ class EpisodesCategoryItem extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  episodesCategory.name,
-                  style: Theme.of(context).textTheme.headline5,
+                Expanded(
+                  child: Text(
+                    episodesCategory.name,
+                    style: Theme.of(context).textTheme.headline5,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 Icon(
                   Icons.chevron_right_rounded,

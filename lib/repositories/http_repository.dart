@@ -12,7 +12,8 @@ const _thinkerviewUrl = "thinkerview.com";
 const _causeCommuneUrl = "cause-commune.fm";
 const _amountPerPagePath = "per_page=";
 const _pagePath = "page=";
-const _categoriesPath = "categories";
+const _categoriesPathThinkerview = "categories";
+const _categoriesPathCauseCommune = "series";
 
 List<Episode> _removeEmptyEpisodes(List<Episode> episodes) {
   return episodes
@@ -112,9 +113,16 @@ class HttpRepository {
     final baseUrl = _getBaseUrl();
     final endingOptionPath = _getEndingOptionPath();
     final String url = "https://$baseUrl/$_apiPath/$endingOptionPath";
+    String categoriesPath = "";
+
+    if (app == APP.thinkerview.name) {
+      categoriesPath = _categoriesPathThinkerview;
+    } else if (app == APP.causecommune.name) {
+      categoriesPath = _categoriesPathCauseCommune;
+    }
 
     final String categoryQuery =
-        categories.toString().isEmpty ? "&$_categoriesPath=$categories" : "";
+        categories.toString().isEmpty ? "&$categoriesPath=$categories" : "";
     late Response response;
 
     try {
@@ -206,8 +214,14 @@ class HttpRepository {
 
   Future<EpisodesCategories> getEpisodesCategories({int pageIndex = 1}) async {
     final baseUrl = _getBaseUrl();
+    String url = "https://$baseUrl/$_apiPath/";
 
-    final String url = "https://$baseUrl/$_apiPath/$_categoriesPath";
+    if (app == APP.thinkerview.name) {
+      url = url + _categoriesPathThinkerview;
+    } else if (app == APP.causecommune.name) {
+      url = url + _categoriesPathCauseCommune;
+    }
+
     late Response response;
 
     try {
