@@ -10,8 +10,8 @@ const iconPlaySize = 60.0;
 
 class PlayerScreen extends ConsumerStatefulWidget {
   const PlayerScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<PlayerScreen> createState() => _PlayerScreenState();

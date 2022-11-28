@@ -9,12 +9,12 @@ class AdaptiveScaffold extends StatelessWidget {
   final TitleBar? titleBar;
   final FloatingActionButton? floatingActionButton;
   const AdaptiveScaffold({
-    Key? key,
+    super.key,
     this.appBar,
     required this.body,
     this.floatingActionButton,
     this.titleBar,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

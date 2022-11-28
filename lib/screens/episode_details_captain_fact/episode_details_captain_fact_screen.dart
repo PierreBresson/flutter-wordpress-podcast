@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
@@ -32,10 +33,7 @@ const String readVideoData = r'''
 // const youtubeUrl = "https://www.youtube.com/watch?v=xx3PsG2mr-Y&feature=emb_title";
 
 class EpisodeDetailsCaptainFact extends StatelessWidget {
-  final Episode episode;
-
-  EpisodeDetailsCaptainFact({Key? key, required this.episode})
-      : super(key: key);
+  EpisodeDetailsCaptainFact({super.key});
 
   final GraphQLClient client = GraphQLClient(
     cache: GraphQLCache(),
@@ -54,6 +52,8 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Episode episode =
+        Beamer.of(context).currentBeamLocation.data! as Episode;
     Intl.defaultLocale = 'fr';
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
@@ -203,11 +203,11 @@ class Header extends StatelessWidget {
   final Episode episode;
   final List<Statements>? statements;
   const Header({
-    Key? key,
+    super.key,
     required this.episode,
     required this.dateformat,
     this.statements,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -279,9 +279,9 @@ class Header extends StatelessWidget {
 class ErrorMessage extends StatelessWidget {
   final String? message;
   const ErrorMessage({
-    Key? key,
+    super.key,
     this.message,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

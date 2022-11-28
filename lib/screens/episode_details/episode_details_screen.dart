@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:fwp/models/models.dart';
@@ -5,12 +6,12 @@ import 'package:fwp/styles/styles.dart';
 import 'package:intl/intl.dart';
 
 class EpisodeDetails extends StatelessWidget {
-  final Episode episode;
-
-  const EpisodeDetails({Key? key, required this.episode}) : super(key: key);
+  const EpisodeDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Episode episode =
+        Beamer.of(context).currentBeamLocation.data! as Episode;
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
     final isDarkMode = isAppInDarkMode(context);

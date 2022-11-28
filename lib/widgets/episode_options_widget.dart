@@ -1,12 +1,13 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/i18n.dart';
+import 'package:fwp/locations.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
-import 'package:fwp/screens/screens.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,11 +19,11 @@ class ListItem extends StatelessWidget {
   final IconData iconData;
   final String text;
   const ListItem({
-    Key? key,
+    super.key,
     required this.iconData,
     required this.text,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +46,9 @@ class EpisodeOptions extends ConsumerWidget {
   final app = dotenv.env['APP'];
 
   EpisodeOptions({
-    Key? key,
+    super.key,
     required this.episode,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -140,23 +141,9 @@ class EpisodeOptions extends ConsumerWidget {
           onTap: () async {
             Navigator.pop(context);
             if (app == APP.thinkerview.name) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EpisodeDetailsCaptainFact(
-                    episode: episode,
-                  ),
-                ),
-              );
+              context.beamToNamed(homeCaptainFactPath, data: episode);
             } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EpisodeDetails(
-                    episode: episode,
-                  ),
-                ),
-              );
+              context.beamToNamed(homeArticlePath, data: episode);
             }
           },
         ),
@@ -191,7 +178,7 @@ class EpisodeOptions extends ConsumerWidget {
             }
           },
         ),
-        const SizedBox(height: 50),
+        const SizedBox(height: 10),
       ],
     );
   }

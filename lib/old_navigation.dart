@@ -14,8 +14,8 @@ import 'package:macos_ui/macos_ui.dart';
 
 class MainNavigation extends ConsumerStatefulWidget {
   const MainNavigation({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MainNavigationState();

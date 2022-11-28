@@ -1,7 +1,8 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fwp/locations.dart';
 import 'package:fwp/models/models.dart';
-import 'package:fwp/screens/screens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final currentEpisodesCategory = Provider<AsyncValue<EpisodesCategory>>((ref) {
@@ -40,11 +41,7 @@ class EpisodesCategoryItem extends HookConsumerWidget {
       data: (episodesCategory) {
         return GestureDetector(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => EpisodesOfCategory(),
-              ),
-            );
+            context.beamToNamed(homeCategoryPath, data: episodesCategory);
           },
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),

@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MenuSheet extends HookConsumerWidget {
   const MenuSheet({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,7 +54,7 @@ class MenuSheet extends HookConsumerWidget {
             Navigator.pop(context);
           },
         ),
-        const SizedBox(height: 50),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -65,10 +65,10 @@ class MenuButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const MenuButton({
-    Key? key,
+    super.key,
     required this.currentScreen,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +111,10 @@ class MenuItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const MenuItem({
-    Key? key,
+    super.key,
     required this.name,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,7 @@ const bookUrl =
     'https://raw.githubusercontent.com/Killkitten/Thinkerview-Recommandations-lecture/master/README.md';
 
 class BooksScreen extends StatefulWidget {
-  const BooksScreen({Key? key}) : super(key: key);
+  const BooksScreen({super.key});
 
   @override
   State<BooksScreen> createState() => _BooksScreenState();

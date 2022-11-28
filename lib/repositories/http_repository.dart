@@ -102,13 +102,13 @@ class HttpRepository {
       if (kDebugMode) {
         print("TODO getEpisodes invalid response");
       }
-      throw "Impossible de recuperer les episodes";
+      throw "Impossible to get episodes";
     }
   }
 
-  Future<List<Episode>> getEpisodesFromCategory({
+  Future<Episodes> getEpisodesFromCategory({
     int pageIndex = 1,
-    int? categories,
+    int? categoryId,
   }) async {
     final baseUrl = _getBaseUrl();
     final endingOptionPath = _getEndingOptionPath();
@@ -122,7 +122,7 @@ class HttpRepository {
     }
 
     final String categoryQuery =
-        categories.toString().isEmpty ? "&$categoriesPath=$categories" : "";
+        categoryId.toString().isEmpty ? "&$categoriesPath=$categoryId" : "";
     late Response response;
 
     try {
@@ -133,13 +133,13 @@ class HttpRepository {
       if (kDebugMode) {
         print("TODO error $error");
       }
-      throw "Impossible de recuperer les episodes";
+      throw "Error when getting episodes from category $categoryId";
     }
 
     if (response.statusCode == 200) {
       final List<dynamic> body = jsonDecode(response.body) as List<dynamic>;
 
-      final List<Episode> episodes = body.map(
+      final List<Episode> episodesItems = body.map(
         (dynamic item) {
           final Episode newEpisode =
               Episode.fromJson(item as Map<String, dynamic>);
@@ -147,9 +147,22 @@ class HttpRepository {
         },
       ).toList();
 
-      return episodes;
+      int total = 100;
+
+      try {
+        total = int.parse(response.headers['x-wp-total']!);
+      } catch (error) {
+        if (kDebugMode) {
+          print("TODO getEpisodes request error $error");
+        }
+      }
+
+      return Episodes(
+        items: episodesItems,
+        total: total,
+      );
     } else {
-      throw "Impossible de recuperer les episodes";
+      throw "Impossible to get episodes from category $categoryId";
     }
   }
 

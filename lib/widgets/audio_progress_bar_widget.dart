@@ -4,7 +4,8 @@ import 'package:fwp/notifiers/notifiers.dart';
 import 'package:fwp/repositories/repositories.dart';
 
 class AudioProgressBar extends StatelessWidget {
-  const AudioProgressBar({Key? key}) : super(key: key);
+  const AudioProgressBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();

@@ -5,7 +5,7 @@ import 'package:fwp/styles/styles.dart';
 
 class CaptainFactGrades extends StatelessWidget {
   final List<Comments>? comments;
-  const CaptainFactGrades({Key? key, required this.comments}) : super(key: key);
+  const CaptainFactGrades({super.key, required this.comments});
 
   Color getTextColor(BuildContext context, int? grade) {
     if (isAppInDarkMode(context)) {

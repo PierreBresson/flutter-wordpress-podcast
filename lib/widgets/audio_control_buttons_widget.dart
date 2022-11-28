@@ -5,7 +5,7 @@ import 'package:fwp/repositories/repositories.dart';
 const iconSize = 50.0;
 
 class AudioControlButtons extends StatelessWidget {
-  const AudioControlButtons({Key? key}) : super(key: key);
+  const AudioControlButtons({super.key});
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();
@@ -49,7 +49,7 @@ class AudioControlButtons extends StatelessWidget {
 }
 
 class PlayButton extends StatelessWidget {
-  const PlayButton({Key? key}) : super(key: key);
+  const PlayButton({super.key});
   @override
   Widget build(BuildContext context) {
     final playerManager = getIt<PlayerManager>();

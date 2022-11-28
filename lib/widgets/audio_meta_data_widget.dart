@@ -17,7 +17,7 @@ final _decoration = BoxDecoration(
 );
 
 class AudioMetaData extends StatelessWidget {
-  const AudioMetaData({Key? key}) : super(key: key);
+  const AudioMetaData({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +56,10 @@ class EpisodeImage extends StatelessWidget {
   final Uri audioUri;
   final double imageMaxWidth;
   const EpisodeImage({
-    Key? key,
+    super.key,
     required this.audioUri,
     required this.imageMaxWidth,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

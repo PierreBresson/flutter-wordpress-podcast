@@ -4,7 +4,7 @@ import 'package:fwp/i18n.dart';
 class ErrorIndicator extends StatelessWidget {
   final VoidCallback onTryAgain;
 
-  const ErrorIndicator({required this.onTryAgain, Key? key}) : super(key: key);
+  const ErrorIndicator({required this.onTryAgain, super.key});
 
   @override
   Widget build(BuildContext context) {

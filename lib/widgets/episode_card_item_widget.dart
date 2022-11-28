@@ -27,13 +27,13 @@ class EpisodeCard extends StatelessWidget {
   final bool hasBeenPlayed;
 
   const EpisodeCard({
-    Key? key,
+    super.key,
     required this.hasBeenPlayed,
     required this.onPressed,
     required this.imageUrl,
     required this.title,
     required this.audioFileUrl,
-  }) : super(key: key);
+  });
 
   BoxConstraints getConstraints(BuildContext context) {
     const maxWidth = 500.0;

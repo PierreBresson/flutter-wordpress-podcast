@@ -4,7 +4,7 @@ import 'package:fwp/models/models.dart';
 import 'package:fwp/styles/styles.dart';
 
 class AppImage extends StatelessWidget {
-  const AppImage({Key? key}) : super(key: key);
+  const AppImage({super.key});
 
   @override
   Widget build(BuildContext context) {
