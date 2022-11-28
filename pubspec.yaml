@@ -28,8 +28,8 @@ dependencies:
   graphql: ^5.1.1
   flutter_widget_from_html: ^0.8.5
   macos_ui: ^1.4.1+1
-  flutter_hooks: ^0.18.0
-  hooks_riverpod: ^2.0.2
+  flutter_hooks: ^0.18.5+1
+  hooks_riverpod: ^2.1.1
   easy_localization: ^3.0.1
   beamer: ^1.5.3
 

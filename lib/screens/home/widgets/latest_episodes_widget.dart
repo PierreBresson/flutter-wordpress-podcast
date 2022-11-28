@@ -73,12 +73,11 @@ class LatestEpisodes extends StatelessWidget {
                         ref
                             .watch(
                               paginatedEpisodesProvider(
-                                pageIndex ~/ nbOfEpisodesPerPage,
+                                pageIndex,
                               ),
                             )
                             .whenData(
-                              (page) => page
-                                  .items[episodeIndex % nbOfEpisodesPerPage],
+                              (page) => page.items[episodeIndex],
                             ),
                       ),
                     ],

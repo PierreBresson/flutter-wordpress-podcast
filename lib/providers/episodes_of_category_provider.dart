@@ -12,8 +12,6 @@ class PaginationIndexAndCategoryId {
   });
 }
 
-final initValue = PaginationIndexAndCategoryId(categoryId: 0, pageIndex: 0);
-
 final FutureProviderFamily<Episodes, PaginationIndexAndCategoryId>
     paginatedEpisodesOfCategoryProvider =
     FutureProvider.family<Episodes, PaginationIndexAndCategoryId>(
@@ -31,7 +29,7 @@ final ProviderFamily<AsyncValue<int>, PaginationIndexAndCategoryId>
         (ref, paginationIndexAndCategoryId) {
   return ref
       .watch(
-        paginatedEpisodesOfCategoryProvider(initValue),
+        paginatedEpisodesOfCategoryProvider(paginationIndexAndCategoryId),
       )
       .whenData((page) => page.total);
 });

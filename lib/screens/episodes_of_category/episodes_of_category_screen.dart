@@ -9,14 +9,27 @@ import 'package:fwp/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class EpisodesOfCategory extends StatelessWidget {
+class EpisodesOfCategory extends StatefulWidget {
   final ScrollController scrollController;
   const EpisodesOfCategory({required this.scrollController});
+
+  @override
+  State<EpisodesOfCategory> createState() => _EpisodesOfCategoryState();
+}
+
+class _EpisodesOfCategoryState extends State<EpisodesOfCategory> {
+  PaginationIndexAndCategoryId paginationIndexAndCategoryId =
+      PaginationIndexAndCategoryId(categoryId: 0, pageIndex: 0);
 
   @override
   Widget build(BuildContext context) {
     final EpisodesCategory episodesCategory =
         Beamer.of(context).currentBeamLocation.data! as EpisodesCategory;
+
+    paginationIndexAndCategoryId = PaginationIndexAndCategoryId(
+      pageIndex: 1,
+      categoryId: episodesCategory.id,
+    );
 
     return AdaptiveScaffold(
       titleBar: TitleBar(
@@ -36,30 +49,16 @@ class EpisodesOfCategory extends StatelessWidget {
       body: HookConsumer(
         builder: (context, ref, child) {
           final count = ref.watch(
-            episodesOfCategoryCountProvider(
-              PaginationIndexAndCategoryId(
-                categoryId: episodesCategory.id,
-                pageIndex: 0,
-              ),
-            ),
+            episodesOfCategoryCountProvider(paginationIndexAndCategoryId),
           );
 
           Future<Episodes> refresh() {
             ref.invalidate(
-              paginatedEpisodesOfCategoryProvider(
-                PaginationIndexAndCategoryId(
-                  categoryId: episodesCategory.id,
-                  pageIndex: 0,
-                ),
-              ),
+              paginatedEpisodesOfCategoryProvider(paginationIndexAndCategoryId),
             );
             return ref.read(
-              paginatedEpisodesOfCategoryProvider(
-                PaginationIndexAndCategoryId(
-                  categoryId: episodesCategory.id,
-                  pageIndex: 0,
-                ),
-              ).future,
+              paginatedEpisodesOfCategoryProvider(paginationIndexAndCategoryId)
+                  .future,
             );
           }
 
@@ -96,11 +95,10 @@ class EpisodesOfCategory extends StatelessWidget {
               );
             },
             data: (count) {
-              print("inside $count");
               return RefreshIndicator(
                 onRefresh: refresh,
                 child: ListView.separated(
-                  controller: scrollController,
+                  controller: widget.scrollController,
                   separatorBuilder: (context, _) {
                     return const SizedBox(
                       height: 2,
@@ -110,19 +108,22 @@ class EpisodesOfCategory extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final pageIndex = index ~/ nbOfEpisodesPerPage;
                     final episodeIndex = index % nbOfEpisodesPerPage;
+                    final curr = PaginationIndexAndCategoryId(
+                      categoryId: episodesCategory.id,
+                      pageIndex: 1,
+                    );
 
                     return ProviderScope(
                       overrides: [
                         currentEpisode.overrideWithValue(
                           ref
                               .watch(
-                                paginatedEpisodesProvider(
-                                  pageIndex ~/ nbOfEpisodesPerPage,
+                                paginatedEpisodesOfCategoryProvider(
+                                  curr,
                                 ),
                               )
                               .whenData(
-                                (page) => page
-                                    .items[episodeIndex % nbOfEpisodesPerPage],
+                                (page) => page.items[episodeIndex],
                               ),
                         ),
                       ],

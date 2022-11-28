@@ -122,8 +122,11 @@ class HttpRepository {
     }
 
     final String categoryQuery =
-        categoryId.toString().isEmpty ? "&$categoriesPath=$categoryId" : "";
+        categoryId != null ? "&$categoriesPath=$categoryId" : "";
     late Response response;
+
+    print("categoryQuery $categoryQuery");
+    print(url + _pagePath + pageIndex.toString() + categoryQuery);
 
     try {
       response = await get(

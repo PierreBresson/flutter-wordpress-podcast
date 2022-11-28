@@ -22,7 +22,7 @@ class AppImage extends StatelessWidget {
         color: isDarkMode ? Colors.black : Colors.white,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(40),
         child: Image(
           image: AssetImage(
             imageUri,
