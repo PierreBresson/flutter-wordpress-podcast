@@ -32,6 +32,7 @@ dependencies:
   hooks_riverpod: ^2.1.1
   easy_localization: ^3.0.1
   beamer: ^1.5.3
+  tuple: ^2.0.1
 
 dev_dependencies:
   flutter_test:
