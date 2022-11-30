@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/locations.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final currentEpisodesCategory = Provider<AsyncValue<EpisodesCategory>>((ref) {
@@ -41,9 +42,12 @@ class EpisodesCategoryItem extends HookConsumerWidget {
       data: (episodesCategory) {
         return GestureDetector(
           onTap: () {
+            ref
+                .read(currentEpisodesCategoryProvider.notifier)
+                .update((state) => episodesCategory);
+
             context.beamToNamed(
               homeEpisodesCategoryPath,
-              data: episodesCategory,
             );
           },
           child: Container(

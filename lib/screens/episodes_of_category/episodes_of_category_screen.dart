@@ -1,4 +1,3 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/i18n.dart';
@@ -10,17 +9,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:tuple/tuple.dart';
 
-class EpisodesOfCategory extends StatelessWidget {
+class EpisodesOfCategory extends HookConsumerWidget {
   final ScrollController scrollController;
   const EpisodesOfCategory({required this.scrollController});
 
   @override
-  Widget build(BuildContext context) {
-    EpisodesCategory episodesCategory = EpisodesCategory(id: 0, name: "");
-    final data = Beamer.of(context).currentBeamLocation.data;
-    if (data != null) {
-      episodesCategory = data as EpisodesCategory;
-    }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final episodesCategory = ref.watch(currentEpisodesCategoryProvider);
 
     return AdaptiveScaffold(
       titleBar: TitleBar(

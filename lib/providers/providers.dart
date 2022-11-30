@@ -1,5 +1,6 @@
 export './already_played_episodes_provider.dart';
 export './categories_provider.dart';
+export './current_episodes_category_provider.dart';
 export './episodes_of_category_provider.dart';
 export './episodes_provider.dart';
 export './home_menu_provider.dart';
