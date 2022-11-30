@@ -65,16 +65,6 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: isDarkMode ? Colors.white : Colors.black,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.maybePop(context);
-            },
-          ),
         ),
         body: Column(
           children: [
