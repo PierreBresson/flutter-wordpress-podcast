@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fwp/screens/screens.dart';
 
 const _homePath = 'home';
-const _categoryPath = 'category';
+const _episodesCategoryPath = 'episodes_category';
 const _articlePath = 'article';
 const _captainFactPath = 'captain_fact';
 
-const homeCategoryPath = '/$_homePath/$_categoryPath';
+const homeEpisodesCategoryPath = '/$_homePath/$_episodesCategoryPath';
 const homeArticlePath = '/$_homePath/$_articlePath';
 const homeCaptainFactPath = '/$_homePath/$_captainFactPath';
 
@@ -17,42 +17,55 @@ class HomeLocation extends BeamLocation<BeamState> {
 
   @override
   List<String> get pathPatterns =>
-      [homeCategoryPath, homeArticlePath, homeCaptainFactPath];
+      [homeEpisodesCategoryPath, homeArticlePath, homeCaptainFactPath];
 
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     final List<String> pathPatternSegments = state.pathPatternSegments;
-
-    return [
+    final beamPages = [
       BeamPage(
         key: const ValueKey(_homePath),
         title: 'Home',
         type: BeamPageType.noTransition,
         child: HomeScreen(scrollController: homeController),
-      ),
-      if (pathPatternSegments.contains(_categoryPath))
+      )
+    ];
+
+    if (pathPatternSegments.contains(_episodesCategoryPath)) {
+      beamPages.add(
         BeamPage(
-          key: const ValueKey(homeCategoryPath),
+          key: const ValueKey(homeEpisodesCategoryPath),
           title: 'Category',
           child: EpisodesOfCategory(
             scrollController: homeController,
           ),
         ),
-      if (pathPatternSegments.contains(_articlePath))
+      );
+    }
+
+    if (pathPatternSegments.contains(_articlePath)) {
+      beamPages.add(
         const BeamPage(
           key: ValueKey(homeArticlePath),
           title: 'Article',
           child: EpisodeDetails(),
         ),
-      if (pathPatternSegments.contains(_captainFactPath))
+      );
+    }
+
+    if (pathPatternSegments.contains(_captainFactPath)) {
+      beamPages.add(
         BeamPage(
           key: const ValueKey(
             homeCaptainFactPath,
           ),
           title: 'Captain Fact',
           child: EpisodeDetailsCaptainFact(),
-        )
-    ];
+        ),
+      );
+    }
+
+    return beamPages;
   }
 }
 

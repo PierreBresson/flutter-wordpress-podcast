@@ -41,7 +41,10 @@ class EpisodesCategoryItem extends HookConsumerWidget {
       data: (episodesCategory) {
         return GestureDetector(
           onTap: () {
-            context.beamToNamed(homeCategoryPath, data: episodesCategory);
+            context.beamToNamed(
+              homeEpisodesCategoryPath,
+              data: episodesCategory,
+            );
           },
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
