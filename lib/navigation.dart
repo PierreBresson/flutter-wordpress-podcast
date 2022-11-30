@@ -4,6 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fwp/i18n.dart';
 import 'package:fwp/locations.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 const _homePath = "/home";
 const _playerPath = "/player";
@@ -14,19 +16,18 @@ const _aboutPath = "/about";
 final _isThinkerviewApp = dotenv.env['APP'] == APP.thinkerview.name;
 final ScrollController _homeController = ScrollController();
 
-class ScaffoldWithBottomNavBar extends StatefulWidget {
+class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
   const ScaffoldWithBottomNavBar({
     super.key,
   });
 
   @override
-  State<ScaffoldWithBottomNavBar> createState() =>
+  ConsumerState<ScaffoldWithBottomNavBar> createState() =>
       _ScaffoldWithBottomNavBarState();
 }
 
-class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
-  int _currentIndex = 0;
-
+class _ScaffoldWithBottomNavBarState
+    extends ConsumerState<ScaffoldWithBottomNavBar> {
   final _routerDelegates = [
     BeamerDelegate(
       initialPath: _homePath,
@@ -82,19 +83,19 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
     final String uriString = Beamer.of(context).configuration.location!;
     switch (uriString) {
       case _homePath:
-        _currentIndex = 0;
+        ref.read(tabIndexProvider.notifier).update((state) => 0);
         break;
       case _playerPath:
-        _currentIndex = 1;
+        ref.read(tabIndexProvider.notifier).update((state) => 1);
         break;
       case _searchPath:
-        _currentIndex = 2;
+        ref.read(tabIndexProvider.notifier).update((state) => 2);
         break;
       case _booksPath:
-        _currentIndex = 3;
+        ref.read(tabIndexProvider.notifier).update((state) => 3);
         break;
       case _aboutPath:
-        _currentIndex = 4;
+        ref.read(tabIndexProvider.notifier).update((state) => 4);
         break;
       default:
     }
@@ -104,7 +105,7 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        index: _currentIndex,
+        index: ref.watch(tabIndexProvider),
         children: [
           Beamer(
             routerDelegate: _routerDelegates[0],
@@ -126,7 +127,7 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
+        currentIndex: ref.watch(tabIndexProvider),
         items: [
           BottomNavigationBarItem(
             label: LocaleKeys.bottom_bar_navigation_home.tr(),
@@ -151,11 +152,15 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
           ),
         ],
         onTap: (index) {
-          if (index != _currentIndex) {
-            setState(() => _currentIndex = index);
-            _routerDelegates[_currentIndex].update(rebuild: false);
+          final currentIndex = ref.watch(tabIndexProvider);
+          final location = Beamer.of(context).currentConfiguration?.location;
+          if (index != currentIndex) {
+            ref.read(tabIndexProvider.notifier).update((state) => index);
+            _routerDelegates[currentIndex].update(rebuild: false);
           }
-          if (index == 0) {
+          if (index == 0 &&
+              currentIndex == 0 &&
+              location!.length == _homePath.length) {
             if (_homeController.hasClients) {
               _homeController.jumpTo(_homeController.position.minScrollExtent);
             }

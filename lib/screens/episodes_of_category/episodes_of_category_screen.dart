@@ -16,8 +16,11 @@ class EpisodesOfCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EpisodesCategory episodesCategory =
-        Beamer.of(context).currentBeamLocation.data! as EpisodesCategory;
+    EpisodesCategory episodesCategory = EpisodesCategory(id: 0, name: "");
+    final data = Beamer.of(context).currentBeamLocation.data;
+    if (data != null) {
+      episodesCategory = data as EpisodesCategory;
+    }
 
     return AdaptiveScaffold(
       titleBar: TitleBar(
@@ -88,6 +91,13 @@ class EpisodesOfCategory extends StatelessWidget {
               );
             },
             data: (count) {
+              if (count == 0) {
+                return Center(
+                  child: Text(
+                    LocaleKeys.episodes_of_category_screen_no_episode.tr(),
+                  ),
+                );
+              }
               return RefreshIndicator(
                 onRefresh: refresh,
                 child: ListView.separated(
@@ -109,7 +119,9 @@ class EpisodesOfCategory extends StatelessWidget {
                               .watch(
                                 paginatedEpisodesOfCategoryProvider(
                                   Tuple2<int, int>(
-                                      pageIndex, episodesCategory.id),
+                                    pageIndex,
+                                    episodesCategory.id,
+                                  ),
                                 ),
                               )
                               .whenData(

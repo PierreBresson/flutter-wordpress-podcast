@@ -59,7 +59,7 @@ class Categories extends StatelessWidget {
                 controller: scrollController,
                 separatorBuilder: (context, _) {
                   return const SizedBox(
-                    height: 2,
+                    height: 3,
                   );
                 },
                 itemCount: count,
@@ -73,12 +73,11 @@ class Categories extends StatelessWidget {
                         ref
                             .watch(
                               paginatedEpisodesCategoriesProvider(
-                                pageIndex ~/ nbOfEpisodesCategoriesPerPage,
+                                pageIndex,
                               ),
                             )
                             .whenData(
-                              (page) => page.items[categoryIndex %
-                                  nbOfEpisodesCategoriesPerPage],
+                              (page) => page.items[categoryIndex],
                             ),
                       ),
                     ],

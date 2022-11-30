@@ -10,6 +10,6 @@ final paginatedEpisodesCategoriesProvider =
 
 final episodesCategoriesCountProvider = Provider((ref) {
   return ref
-      .watch(paginatedEpisodesCategoriesProvider(1))
+      .watch(paginatedEpisodesCategoriesProvider(0))
       .whenData((page) => page.total);
 });

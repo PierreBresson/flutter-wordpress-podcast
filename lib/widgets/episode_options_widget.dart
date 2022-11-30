@@ -165,7 +165,7 @@ class EpisodeOptions extends ConsumerWidget {
               ref.read(tabIndexProvider.notifier).update((state) => 1);
               playerManager.playEpisode(episode);
 
-              Navigator.pop(context);
+              Navigator.of(context).maybePop();
             } catch (error) {
               if (kDebugMode) {
                 print("TODO error play episode $error");

@@ -9,5 +9,5 @@ final paginatedEpisodesProvider =
 });
 
 final episodesCountProvider = Provider((ref) {
-  return ref.watch(paginatedEpisodesProvider(1)).whenData((page) => page.total);
+  return ref.watch(paginatedEpisodesProvider(0)).whenData((page) => page.total);
 });

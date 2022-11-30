@@ -18,7 +18,7 @@ final ProviderFamily<AsyncValue<int>, Tuple2<int, int>>
     Provider.family<AsyncValue<int>, Tuple2<int, int>>((ref, item) {
   return ref
       .watch(
-        paginatedEpisodesOfCategoryProvider(item.withItem1(1)),
+        paginatedEpisodesOfCategoryProvider(item.withItem1(0)),
       )
       .whenData((page) => page.total);
 });

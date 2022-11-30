@@ -42,7 +42,7 @@ final ligthThemeDataCauseCommune = ThemeData(
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle.dark,
     iconTheme: IconThemeData(
-      color: Colors.black, //change your color here
+      color: Colors.black,
     ),
   ),
 );
@@ -59,7 +59,7 @@ final darkThemeDataCauseCommune = ThemeData(
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle.light,
     iconTheme: IconThemeData(
-      color: Colors.white, //change your color here
+      color: Colors.white,
     ),
   ),
 );
@@ -120,7 +120,7 @@ final ligthThemeDataThinkerview = ThemeData(
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle.dark,
     iconTheme: IconThemeData(
-      color: Colors.black, //change your color here
+      color: Colors.black,
     ),
   ),
 );
@@ -137,7 +137,7 @@ final darkThemeDataThinkerview = ThemeData(
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle.light,
     iconTheme: IconThemeData(
-      color: Colors.white, //change your color here
+      color: Colors.white,
     ),
   ),
 );

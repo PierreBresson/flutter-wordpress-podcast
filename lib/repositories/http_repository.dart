@@ -125,9 +125,6 @@ class HttpRepository {
         categoryId != null ? "&$categoriesPath=$categoryId" : "";
     late Response response;
 
-    print("categoryQuery $categoryQuery");
-    print(url + _pagePath + pageIndex.toString() + categoryQuery);
-
     try {
       response = await get(
         Uri.parse(url + _pagePath + pageIndex.toString() + categoryQuery),
@@ -256,8 +253,24 @@ class HttpRepository {
     if (response.statusCode == 200) {
       final List<dynamic> body = jsonDecode(response.body) as List<dynamic>;
 
-      final List<EpisodesCategory> episodesItems = body.map(
+      final List<EpisodesCategory?> episodesItems = body.map(
         (dynamic item) {
+          //For thinkerview, we remove 'veille' as they aren't episodes
+          if (app == APP.thinkerview.name) {
+            int id = 0;
+            try {
+              // ignore: avoid_dynamic_calls
+              id = item['id'] as int;
+            } catch (error) {
+              if (kDebugMode) {
+                print("TODO error get id getEpisodesCategories $error");
+              }
+            }
+            if (id == 1) {
+              return null;
+            }
+          }
+
           final EpisodesCategory episodesCategory =
               EpisodesCategory.fromJson(item as Map<String, dynamic>);
           return episodesCategory;
@@ -268,14 +281,20 @@ class HttpRepository {
 
       try {
         total = int.parse(response.headers['x-wp-total']!);
+        if (app == APP.thinkerview.name) {
+          total--;
+        }
       } catch (error) {
         if (kDebugMode) {
           print("TODO error parse x-wp-total $error");
         }
       }
 
+      final List<EpisodesCategory> items =
+          episodesItems.whereType<EpisodesCategory>().toList();
+
       return EpisodesCategories(
-        items: episodesItems,
+        items: items,
         total: total,
       );
     } else {
