@@ -143,7 +143,16 @@ class EpisodeOptions extends ConsumerWidget {
             if (app == APP.thinkerview.name) {
               context.beamToNamed(homeCaptainFactPath, data: episode);
             } else {
-              context.beamToNamed(homeArticlePath, data: episode);
+              final data = Beamer.of(context).currentBeamLocation.data;
+
+              if (data.runtimeType == EpisodesCategory) {
+                context.beamToNamed(
+                  homeEpisodesCategoryArticlePath,
+                  data: episode,
+                );
+              } else {
+                context.beamToNamed(homeArticlePath, data: episode);
+              }
             }
           },
         ),

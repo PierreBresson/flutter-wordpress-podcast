@@ -1,15 +1,19 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:fwp/models/models.dart';
 import 'package:fwp/screens/screens.dart';
 
-const _homePath = 'home';
+const homePath = 'home';
 const _episodesCategoryPath = 'episodes_category';
+const _episodesCategoryarticlePath = 'episodes_category_article';
 const _articlePath = 'article';
 const _captainFactPath = 'captain_fact';
 
-const homeEpisodesCategoryPath = '/$_homePath/$_episodesCategoryPath';
-const homeArticlePath = '/$_homePath/$_articlePath';
-const homeCaptainFactPath = '/$_homePath/$_captainFactPath';
+const homeEpisodesCategoryPath = '/$homePath/$_episodesCategoryPath';
+const homeEpisodesCategoryArticlePath =
+    '/$homePath/$_episodesCategoryPath/$_episodesCategoryarticlePath';
+const homeArticlePath = '/$homePath/$_articlePath';
+const homeCaptainFactPath = '/$homePath/$_captainFactPath';
 
 class HomeLocation extends BeamLocation<BeamState> {
   final ScrollController homeController;
@@ -24,7 +28,7 @@ class HomeLocation extends BeamLocation<BeamState> {
     final List<String> pathPatternSegments = state.pathPatternSegments;
     final beamPages = [
       BeamPage(
-        key: const ValueKey(_homePath),
+        key: const ValueKey(homePath),
         title: 'Home',
         type: BeamPageType.noTransition,
         child: HomeScreen(scrollController: homeController),
@@ -35,7 +39,7 @@ class HomeLocation extends BeamLocation<BeamState> {
       beamPages.add(
         BeamPage(
           key: const ValueKey(homeEpisodesCategoryPath),
-          title: 'Category',
+          title: 'EpisodesCategory',
           child: EpisodesOfCategory(
             scrollController: homeController,
           ),
@@ -47,6 +51,16 @@ class HomeLocation extends BeamLocation<BeamState> {
       beamPages.add(
         const BeamPage(
           key: ValueKey(homeArticlePath),
+          title: 'Article',
+          child: EpisodeDetails(),
+        ),
+      );
+    }
+
+    if (pathPatternSegments.contains(_episodesCategoryarticlePath)) {
+      beamPages.add(
+        const BeamPage(
+          key: ValueKey(homeEpisodesCategoryArticlePath),
           title: 'Article',
           child: EpisodeDetails(),
         ),

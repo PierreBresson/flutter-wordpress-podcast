@@ -7,7 +7,7 @@ import 'package:fwp/models/models.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-const _homePath = "/home";
+const _homePath = "/$homePath";
 const _playerPath = "/player";
 const _searchPath = "/search";
 const _booksPath = "/books";
