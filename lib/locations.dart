@@ -1,6 +1,5 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:fwp/models/models.dart';
 import 'package:fwp/screens/screens.dart';
 
 const homePath = 'home';
