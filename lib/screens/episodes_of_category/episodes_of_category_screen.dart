@@ -15,7 +15,7 @@ class EpisodesOfCategory extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final episodesCategory = ref.watch(currentEpisodesCategoryProvider);
+    final episodesCategory = ref.watch(episodesCategorySelectedProvider);
 
     return AdaptiveScaffold(
       titleBar: TitleBar(

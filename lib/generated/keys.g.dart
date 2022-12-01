@@ -71,4 +71,7 @@ abstract class LocaleKeys {
       'episode_options_widget_play_episode';
   static const episodes_of_category_screen_no_episode =
       'episodes_of_category_screen_no_episode';
+  static const episode_details_screen_title = 'episode_details_screen_title';
+  static const episode_details_captain_fact_screen_title =
+      'episode_details_captain_fact_screen_title';
 }

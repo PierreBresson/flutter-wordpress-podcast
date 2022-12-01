@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:fwp/screens/screens.dart';
 
 const homePath = 'home';
-const _episodesCategoryPath = 'episodes_category';
-const _episodesCategoryarticlePath = 'episodes_category_article';
-const _articlePath = 'article';
-const _captainFactPath = 'captain_fact';
+const episodesCategoryPath = 'episodes_category';
+const episodesCategoryarticlePath = 'episodes_category_article';
+const articlePath = 'article';
+const captainFactPath = 'captain_fact';
 
-const homeEpisodesCategoryPath = '/$homePath/$_episodesCategoryPath';
+const homeEpisodesCategoryPath = '/$homePath/$episodesCategoryPath';
 const homeEpisodesCategoryArticlePath =
-    '/$homePath/$_episodesCategoryPath/$_episodesCategoryarticlePath';
-const homeArticlePath = '/$homePath/$_articlePath';
-const homeCaptainFactPath = '/$homePath/$_captainFactPath';
+    '/$homePath/$episodesCategoryPath/$episodesCategoryarticlePath';
+const homeArticlePath = '/$homePath/$articlePath';
+const homeCaptainFactPath = '/$homePath/$captainFactPath';
 
 class HomeLocation extends BeamLocation<BeamState> {
   final ScrollController homeController;
@@ -34,7 +34,7 @@ class HomeLocation extends BeamLocation<BeamState> {
       )
     ];
 
-    if (pathPatternSegments.contains(_episodesCategoryPath)) {
+    if (pathPatternSegments.contains(episodesCategoryPath)) {
       beamPages.add(
         BeamPage(
           key: const ValueKey(homeEpisodesCategoryPath),
@@ -46,7 +46,7 @@ class HomeLocation extends BeamLocation<BeamState> {
       );
     }
 
-    if (pathPatternSegments.contains(_articlePath)) {
+    if (pathPatternSegments.contains(articlePath)) {
       beamPages.add(
         const BeamPage(
           key: ValueKey(homeArticlePath),
@@ -56,7 +56,7 @@ class HomeLocation extends BeamLocation<BeamState> {
       );
     }
 
-    if (pathPatternSegments.contains(_episodesCategoryarticlePath)) {
+    if (pathPatternSegments.contains(episodesCategoryarticlePath)) {
       beamPages.add(
         const BeamPage(
           key: ValueKey(homeEpisodesCategoryArticlePath),
@@ -66,7 +66,7 @@ class HomeLocation extends BeamLocation<BeamState> {
       );
     }
 
-    if (pathPatternSegments.contains(_captainFactPath)) {
+    if (pathPatternSegments.contains(captainFactPath)) {
       beamPages.add(
         BeamPage(
           key: const ValueKey(

@@ -1,10 +1,11 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:graphql/client.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,7 +33,7 @@ const String readVideoData = r'''
 // for dev debug, instead of episode.youtubeUrl you can use this one below
 // const youtubeUrl = "https://www.youtube.com/watch?v=xx3PsG2mr-Y&feature=emb_title";
 
-class EpisodeDetailsCaptainFact extends StatelessWidget {
+class EpisodeDetailsCaptainFact extends HookConsumerWidget {
   EpisodeDetailsCaptainFact({super.key});
 
   final GraphQLClient client = GraphQLClient(
@@ -51,9 +52,8 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final Episode episode =
-        Beamer.of(context).currentBeamLocation.data! as Episode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final episode = ref.watch(episodeSelectedProvider);
     Intl.defaultLocale = 'fr';
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
@@ -65,6 +65,10 @@ class EpisodeDetailsCaptainFact extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
+          title: Text(
+            LocaleKeys.episode_details_captain_fact_screen_title.tr(),
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
         body: Column(
           children: [

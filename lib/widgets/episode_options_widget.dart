@@ -140,18 +140,24 @@ class EpisodeOptions extends ConsumerWidget {
           text: LocaleKeys.episode_options_widget_more_info_on_episode.tr(),
           onTap: () async {
             Navigator.pop(context);
-            if (app == APP.thinkerview.name) {
-              context.beamToNamed(homeCaptainFactPath, data: episode);
-            } else {
-              final data = Beamer.of(context).currentBeamLocation.data;
+            ref
+                .read(episodeSelectedProvider.notifier)
+                .update((state) => episode);
 
-              if (data.runtimeType == EpisodesCategory) {
-                context.beamToNamed(
-                  homeEpisodesCategoryArticlePath,
-                  data: episode,
-                );
-              } else {
-                context.beamToNamed(homeArticlePath, data: episode);
+            if (app == APP.thinkerview.name) {
+              context.beamToNamed(homeCaptainFactPath);
+            } else {
+              final state =
+                  Beamer.of(context).currentBeamLocation.state as BeamState?;
+
+              if (state != null) {
+                if (state.pathPatternSegments.contains(episodesCategoryPath)) {
+                  context.beamToNamed(
+                    homeEpisodesCategoryArticlePath,
+                  );
+                } else {
+                  context.beamToNamed(homeArticlePath);
+                }
               }
             }
           },

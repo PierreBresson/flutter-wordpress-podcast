@@ -43,7 +43,7 @@ class EpisodesCategoryItem extends HookConsumerWidget {
         return GestureDetector(
           onTap: () {
             ref
-                .read(currentEpisodesCategoryProvider.notifier)
+                .read(episodesCategorySelectedProvider.notifier)
                 .update((state) => episodesCategory);
 
             context.beamToNamed(

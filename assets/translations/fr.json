@@ -45,5 +45,7 @@
   "episode_options_widget_mark_as_read": "Marquer comme déjà lu",
   "episode_options_widget_more_info_on_episode": "Plus d'info sur l'épisode",
   "episode_options_widget_play_episode": "Lire l'épisode",
-  "episodes_of_category_screen_no_episode": "Aucun épisode"
+  "episodes_of_category_screen_no_episode": "Aucun épisode",
+  "episode_details_screen_title": "Informations",
+  "episode_details_captain_fact_screen_title": "Captain Fact"
 }

@@ -1,16 +1,15 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:fwp/models/models.dart';
-import 'package:intl/intl.dart';
+import 'package:fwp/i18n.dart';
+import 'package:fwp/providers/providers.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class EpisodeDetails extends StatelessWidget {
+class EpisodeDetails extends HookConsumerWidget {
   const EpisodeDetails({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final Episode episode =
-        Beamer.of(context).currentBeamLocation.data! as Episode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final episode = ref.watch(episodeSelectedProvider);
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
 
@@ -18,6 +17,10 @@ class EpisodeDetails extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        title: Text(
+          LocaleKeys.episode_details_screen_title.tr(),
+          style: Theme.of(context).textTheme.headline6,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

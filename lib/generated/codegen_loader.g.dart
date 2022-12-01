@@ -70,7 +70,9 @@ class CodegenLoader extends AssetLoader {
     "episode_options_widget_mark_as_read": "Mark as read",
     "episode_options_widget_more_info_on_episode": "More info on episode",
     "episode_options_widget_play_episode": "Play episode",
-    "episodes_of_category_screen_no_episode": "No episode"
+    "episodes_of_category_screen_no_episode": "No episode",
+    "episode_details_screen_title": "Informations",
+    "episode_details_captain_fact_screen_title": "Captain Fact"
   };
   static const Map<String, dynamic> fr = {
     "bottom_bar_navigation_home": "Accueil",
@@ -130,7 +132,9 @@ class CodegenLoader extends AssetLoader {
     "episode_options_widget_mark_as_read": "Marquer comme déjà lu",
     "episode_options_widget_more_info_on_episode": "Plus d'info sur l'épisode",
     "episode_options_widget_play_episode": "Lire l'épisode",
-    "episodes_of_category_screen_no_episode": "Aucun épisode"
+    "episodes_of_category_screen_no_episode": "Aucun épisode",
+    "episode_details_screen_title": "Informations",
+    "episode_details_captain_fact_screen_title": "Captain Fact"
   };
   static const Map<String, Map<String, dynamic>> mapLocales = {
     "en": en,
