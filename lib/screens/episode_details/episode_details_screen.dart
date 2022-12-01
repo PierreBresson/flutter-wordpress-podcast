@@ -5,13 +5,36 @@ import 'package:fwp/providers/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EpisodeDetails extends HookConsumerWidget {
-  const EpisodeDetails({super.key});
+  final scrollController = ScrollController();
+
+  void scrollToTopOrGoBack(BuildContext context) {
+    if (scrollController.hasClients) {
+      if (scrollController.position.pixels == 0) {
+        Navigator.of(context).maybePop();
+      } else {
+        scrollController.jumpTo(scrollController.position.minScrollExtent);
+      }
+    }
+  }
+
+  EpisodeDetails({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final episode = ref.watch(episodeSelectedProvider);
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
+
+    ref.listen(tabIndexProvider, (previous, next) {
+      final previousTabIndex = previous as TabIndex?;
+      final nextTabIndex = next as TabIndex?;
+
+      if (previousTabIndex != null && nextTabIndex != null) {
+        if (previousTabIndex.index == 0 && nextTabIndex.index == 0) {
+          scrollToTopOrGoBack(context);
+        }
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -23,6 +46,7 @@ class EpisodeDetails extends HookConsumerWidget {
         ),
       ),
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Column(

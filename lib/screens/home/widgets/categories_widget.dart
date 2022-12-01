@@ -8,14 +8,30 @@ import 'package:fwp/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Categories extends StatelessWidget {
-  final ScrollController scrollController;
-  const Categories({required this.scrollController});
+  final scrollController = ScrollController();
+
+  void scrollToTop() {
+    if (scrollController.hasClients) {
+      scrollController.jumpTo(scrollController.position.minScrollExtent);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return HookConsumer(
       builder: (context, ref, child) {
         final count = ref.watch(episodesCategoriesCountProvider);
+
+        ref.listen(tabIndexProvider, (previous, next) {
+          final previousTabIndex = previous as TabIndex?;
+          final nextTabIndex = next as TabIndex?;
+
+          if (previousTabIndex != null && nextTabIndex != null) {
+            if (previousTabIndex.index == 0 && nextTabIndex.index == 0) {
+              scrollToTop();
+            }
+          }
+        });
 
         Future<Episodes> refresh() {
           ref.invalidate(paginatedEpisodesProvider(0));

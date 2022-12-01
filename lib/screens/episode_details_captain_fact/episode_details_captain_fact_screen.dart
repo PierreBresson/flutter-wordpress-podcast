@@ -34,6 +34,18 @@ const String readVideoData = r'''
 // const youtubeUrl = "https://www.youtube.com/watch?v=xx3PsG2mr-Y&feature=emb_title";
 
 class EpisodeDetailsCaptainFact extends HookConsumerWidget {
+  final scrollController = ScrollController();
+
+  void scrollToTopOrGoBack(BuildContext context) {
+    if (scrollController.hasClients) {
+      if (scrollController.position.pixels == 0) {
+        Navigator.of(context).maybePop();
+      } else {
+        scrollController.jumpTo(scrollController.position.minScrollExtent);
+      }
+    }
+  }
+
   EpisodeDetailsCaptainFact({super.key});
 
   final GraphQLClient client = GraphQLClient(
@@ -58,6 +70,17 @@ class EpisodeDetailsCaptainFact extends HookConsumerWidget {
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
     final isDarkMode = isAppInDarkMode(context);
+
+    ref.listen(tabIndexProvider, (previous, next) {
+      final previousTabIndex = previous as TabIndex?;
+      final nextTabIndex = next as TabIndex?;
+
+      if (previousTabIndex != null && nextTabIndex != null) {
+        if (previousTabIndex.index == 0 && nextTabIndex.index == 0) {
+          scrollToTopOrGoBack(context);
+        }
+      }
+    });
 
     if (episode.youtubeUrl == null) {
       return AdaptiveScaffold(
@@ -116,6 +139,7 @@ class EpisodeDetailsCaptainFact extends HookConsumerWidget {
                   return Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: ListView.builder(
+                      controller: scrollController,
                       itemCount: statements.length + 1,
                       itemBuilder: (context, index) {
                         if (index == 0) {

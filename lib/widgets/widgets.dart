@@ -5,6 +5,6 @@ export './audio_meta_data_widget.dart';
 export './audio_progress_bar_widget.dart';
 export './captain_fact_grades_widget.dart';
 export './episode_card_item_widget.dart';
-export './episode_options_widget.dart';
+export './episode_options_widget/episode_options_widget.dart';
 export './episodes_category_item_widget.dart';
 export './error_indicator_widget.dart';

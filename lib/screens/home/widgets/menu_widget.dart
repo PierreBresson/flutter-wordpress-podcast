@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/providers/providers.dart';
-import 'package:fwp/styles/styles.dart';
+import 'package:fwp/widgets/bottom_sheet_header_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MenuSheet extends HookConsumerWidget {
@@ -10,7 +10,6 @@ class MenuSheet extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDarkMode = isAppInDarkMode(context);
     void updateCurrentScreen(Screens screen) {
       ref.read(homeMenuProvider.notifier).update((state) => screen);
     }
@@ -19,18 +18,7 @@ class MenuSheet extends HookConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 20),
-        Center(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              height: 5,
-              width: 42,
-              color: isDarkMode ? Colors.grey : Colors.black38,
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
+        const BottomSheetHeader(),
         MenuItem(
           name: Screens.latestEpisodes.translate(),
           onTap: () {

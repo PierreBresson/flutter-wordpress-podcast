@@ -14,7 +14,6 @@ const _booksPath = "/books";
 const _aboutPath = "/about";
 
 final _isThinkerviewApp = dotenv.env['APP'] == APP.thinkerview.name;
-final ScrollController _homeController = ScrollController();
 
 class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
   const ScaffoldWithBottomNavBar({
@@ -33,7 +32,7 @@ class _ScaffoldWithBottomNavBarState
       initialPath: _homePath,
       locationBuilder: (routeInformation, _) {
         if (routeInformation.location!.contains(_homePath)) {
-          return HomeLocation(routeInformation, _homeController);
+          return HomeLocation(routeInformation);
         }
         return NotFound(path: routeInformation.location!);
       },
@@ -83,19 +82,19 @@ class _ScaffoldWithBottomNavBarState
     final String uriString = Beamer.of(context).configuration.location!;
     switch (uriString) {
       case _homePath:
-        ref.read(tabIndexProvider.notifier).update((state) => 0);
+        ref.read(tabIndexProvider.notifier).updateTabIndex(0);
         break;
       case _playerPath:
-        ref.read(tabIndexProvider.notifier).update((state) => 1);
+        ref.read(tabIndexProvider.notifier).updateTabIndex(1);
         break;
       case _searchPath:
-        ref.read(tabIndexProvider.notifier).update((state) => 2);
+        ref.read(tabIndexProvider.notifier).updateTabIndex(2);
         break;
       case _booksPath:
-        ref.read(tabIndexProvider.notifier).update((state) => 3);
+        ref.read(tabIndexProvider.notifier).updateTabIndex(3);
         break;
       case _aboutPath:
-        ref.read(tabIndexProvider.notifier).update((state) => 4);
+        ref.read(tabIndexProvider.notifier).updateTabIndex(4);
         break;
       default:
     }
@@ -105,7 +104,7 @@ class _ScaffoldWithBottomNavBarState
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        index: ref.watch(tabIndexProvider),
+        index: ref.watch(tabIndexProvider).index,
         children: [
           Beamer(
             routerDelegate: _routerDelegates[0],
@@ -127,7 +126,7 @@ class _ScaffoldWithBottomNavBarState
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: ref.watch(tabIndexProvider),
+        currentIndex: ref.watch(tabIndexProvider).index,
         items: [
           BottomNavigationBarItem(
             label: LocaleKeys.bottom_bar_navigation_home.tr(),
@@ -152,18 +151,19 @@ class _ScaffoldWithBottomNavBarState
           ),
         ],
         onTap: (index) {
-          final currentIndex = ref.watch(tabIndexProvider);
-          final location = Beamer.of(context).currentConfiguration?.location;
-          if (index != currentIndex) {
-            ref.read(tabIndexProvider.notifier).update((state) => index);
-            _routerDelegates[currentIndex].update(rebuild: false);
-          }
-          if (index == 0 &&
-              currentIndex == 0 &&
-              location!.length == _homePath.length) {
-            if (_homeController.hasClients) {
-              _homeController.jumpTo(_homeController.position.minScrollExtent);
-            }
+          final tabIndex = ref.watch(tabIndexProvider);
+          ref.read(tabIndexProvider.notifier).updateTabIndex(index);
+          // final currentConfiguration = Beamer.of(context).currentConfiguration;
+
+          // if (currentConfiguration != null) {
+          //   final state = currentConfiguration.state as BeamState?;
+          //   if (state != null) {
+          //     print(state.pathPatternSegments);
+          //   }
+          // }
+
+          if (index != tabIndex.index) {
+            _routerDelegates[tabIndex.index].update(rebuild: false);
           }
         },
       ),

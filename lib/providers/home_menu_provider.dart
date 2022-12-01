@@ -22,4 +22,5 @@ extension ScreensExtension on Screens {
   }
 }
 
-final homeMenuProvider = StateProvider<Screens>((ref) => Screens.categories);
+final homeMenuProvider =
+    StateProvider<Screens>((ref) => Screens.latestEpisodes);

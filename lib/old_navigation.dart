@@ -59,9 +59,7 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
       ];
 
       screens = [
-        HomeScreen(
-          scrollController: _homeController,
-        ),
+        HomeScreen(),
         const PlayerScreen(),
         const SearchScreen(),
         const BooksScreen(),
@@ -101,9 +99,7 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
       ];
 
       screens = [
-        HomeScreen(
-          scrollController: _homeController,
-        ),
+        HomeScreen(),
         const PlayerScreen(),
         const SearchScreen(),
         const AboutScreen(),
@@ -257,7 +253,7 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
   }
 
   void updateTabIndexProvider(int tabIndex) {
-    ref.read(tabIndexProvider.notifier).update((state) => tabIndex);
+    ref.read(tabIndexProvider.notifier).updateTabIndex(tabIndex);
     if (tabIndex == 0) {
       if (_homeController.hasClients) {
         _homeController.jumpTo(_homeController.position.minScrollExtent);
@@ -291,7 +287,7 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
             minWidth: 200,
             builder: (context, controller) {
               return SidebarItems(
-                currentIndex: ref.watch(tabIndexProvider),
+                currentIndex: ref.watch(tabIndexProvider).index,
                 onChanged: (index) => updateTabIndexProvider(index),
                 scrollController: controller,
                 items: getSidebar(isDarkMode: isDarkMode),
@@ -299,7 +295,7 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
             },
           ),
           child: IndexedStack(
-            index: ref.watch(tabIndexProvider),
+            index: ref.watch(tabIndexProvider).index,
             children: screens,
           ),
         ),
@@ -308,13 +304,13 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
 
     return Scaffold(
       body: IndexedStack(
-        index: ref.watch(tabIndexProvider),
+        index: ref.watch(tabIndexProvider).index,
         children: screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: bottomNavigationBarItems,
-        currentIndex: ref.watch(tabIndexProvider),
+        currentIndex: ref.watch(tabIndexProvider).index,
         onTap: (index) => updateTabIndexProvider(index),
       ),
     );

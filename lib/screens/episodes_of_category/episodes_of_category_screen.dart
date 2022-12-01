@@ -10,8 +10,17 @@ import 'package:macos_ui/macos_ui.dart';
 import 'package:tuple/tuple.dart';
 
 class EpisodesOfCategory extends HookConsumerWidget {
-  final ScrollController scrollController;
-  const EpisodesOfCategory({required this.scrollController});
+  final scrollController = ScrollController();
+
+  void scrollToTopOrGoBack(BuildContext context) {
+    if (scrollController.hasClients) {
+      if (scrollController.position.pixels == 0) {
+        Navigator.of(context).maybePop();
+      } else {
+        scrollController.jumpTo(scrollController.position.minScrollExtent);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,6 +48,17 @@ class EpisodesOfCategory extends HookConsumerWidget {
               Tuple2<int, int>(0, episodesCategory.id),
             ),
           );
+
+          ref.listen(tabIndexProvider, (previous, next) {
+            final previousTabIndex = previous as TabIndex?;
+            final nextTabIndex = next as TabIndex?;
+
+            if (previousTabIndex != null && nextTabIndex != null) {
+              if (previousTabIndex.index == 0 && nextTabIndex.index == 0) {
+                scrollToTopOrGoBack(context);
+              }
+            }
+          });
 
           Future<Episodes> refresh() {
             ref.invalidate(

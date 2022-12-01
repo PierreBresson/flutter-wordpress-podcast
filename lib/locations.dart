@@ -15,8 +15,7 @@ const homeArticlePath = '/$homePath/$articlePath';
 const homeCaptainFactPath = '/$homePath/$captainFactPath';
 
 class HomeLocation extends BeamLocation<BeamState> {
-  final ScrollController homeController;
-  HomeLocation(super.routeInformation, this.homeController);
+  HomeLocation(super.routeInformation);
 
   @override
   List<String> get pathPatterns =>
@@ -30,7 +29,7 @@ class HomeLocation extends BeamLocation<BeamState> {
         key: const ValueKey(homePath),
         title: 'Home',
         type: BeamPageType.noTransition,
-        child: HomeScreen(scrollController: homeController),
+        child: HomeScreen(),
       )
     ];
 
@@ -39,17 +38,15 @@ class HomeLocation extends BeamLocation<BeamState> {
         BeamPage(
           key: const ValueKey(homeEpisodesCategoryPath),
           title: 'EpisodesCategory',
-          child: EpisodesOfCategory(
-            scrollController: homeController,
-          ),
+          child: EpisodesOfCategory(),
         ),
       );
     }
 
     if (pathPatternSegments.contains(articlePath)) {
       beamPages.add(
-        const BeamPage(
-          key: ValueKey(homeArticlePath),
+        BeamPage(
+          key: const ValueKey(homeArticlePath),
           title: 'Article',
           child: EpisodeDetails(),
         ),
@@ -58,8 +55,8 @@ class HomeLocation extends BeamLocation<BeamState> {
 
     if (pathPatternSegments.contains(episodesCategoryarticlePath)) {
       beamPages.add(
-        const BeamPage(
-          key: ValueKey(homeEpisodesCategoryArticlePath),
+        BeamPage(
+          key: const ValueKey(homeEpisodesCategoryArticlePath),
           title: 'Article',
           child: EpisodeDetails(),
         ),

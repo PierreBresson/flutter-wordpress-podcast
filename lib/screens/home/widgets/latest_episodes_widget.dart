@@ -7,15 +7,36 @@ import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LatestEpisodes extends StatelessWidget {
-  final ScrollController scrollController;
-  const LatestEpisodes({required this.scrollController});
+class LatestEpisodes extends StatefulWidget {
+  @override
+  State<LatestEpisodes> createState() => _LatestEpisodesState();
+}
+
+class _LatestEpisodesState extends State<LatestEpisodes> {
+  final scrollController = ScrollController();
+
+  void scrollToTop() {
+    if (scrollController.hasClients) {
+      scrollController.jumpTo(scrollController.position.minScrollExtent);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return HookConsumer(
       builder: (context, ref, child) {
         final count = ref.watch(episodesCountProvider);
+
+        ref.listen(tabIndexProvider, (previous, next) {
+          final previousTabIndex = previous as TabIndex?;
+          final nextTabIndex = next as TabIndex?;
+
+          if (previousTabIndex != null && nextTabIndex != null) {
+            if (previousTabIndex.index == 0 && nextTabIndex.index == 0) {
+              scrollToTop();
+            }
+          }
+        });
 
         Future<Episodes> refresh() {
           ref.invalidate(paginatedEpisodesProvider(0));

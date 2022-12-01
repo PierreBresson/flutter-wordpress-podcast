@@ -7,9 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class HomeScreen extends HookConsumerWidget {
-  final ScrollController scrollController;
-  const HomeScreen({required this.scrollController});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentScreen = ref.watch(homeMenuProvider);
@@ -51,15 +48,11 @@ class HomeScreen extends HookConsumerWidget {
         children: [
           if (currentScreen == Screens.latestEpisodes) ...[
             Expanded(
-              child: LatestEpisodes(
-                scrollController: scrollController,
-              ),
+              child: LatestEpisodes(),
             ),
           ] else if (currentScreen == Screens.categories) ...[
             Expanded(
-              child: Categories(
-                scrollController: scrollController,
-              ),
+              child: Categories(),
             ),
           ] else if (currentScreen == Screens.offline) ...[
             const Text("nothing here yet"),
