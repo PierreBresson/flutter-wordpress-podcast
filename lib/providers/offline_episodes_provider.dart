@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fwp/models/models.dart';
 
-final episodes = [
+final fakeEpisodes = [
   Episode(
     id: 0,
-    audioFileUrl: "toto",
-    audioFilePath: "toto",
+    audioFileUrl:
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     articleUrl: "toto",
     date: "toto",
     title: "Episode 1",
@@ -14,7 +14,9 @@ final episodes = [
   ),
   Episode(
     id: 1,
-    audioFileUrl: "toto",
+    audioFileUrl:
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    audioFilePath: "some path",
     articleUrl: "toto",
     date: "toto",
     title: "Episode 2",
@@ -24,7 +26,7 @@ final episodes = [
 ];
 
 class OfflineEpisodesNotifier extends StateNotifier<List<Episode>> {
-  OfflineEpisodesNotifier() : super(episodes);
+  OfflineEpisodesNotifier() : super(fakeEpisodes);
 
   void addOfflineEpisode(Episode episode) {
     state = [...state, episode];
