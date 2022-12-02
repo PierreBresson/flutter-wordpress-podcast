@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/providers/providers.dart';
-import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:graphql/client.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -69,7 +68,6 @@ class EpisodeDetailsCaptainFact extends HookConsumerWidget {
     Intl.defaultLocale = 'fr';
     final DateTime dateTime = DateTime.parse(episode.date);
     final String dateformat = DateFormat.yMMMMEEEEd().format(dateTime);
-    final isDarkMode = isAppInDarkMode(context);
 
     ref.listen(tabIndexProvider, (previous, next) {
       final previousTabIndex = previous as TabIndex?;
