@@ -14,6 +14,8 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		9E322932293A445000DC5E74 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E322931293A443400DC5E74 /* libsqlite3.tbd */; };
+		9E322933293A447500DC5E74 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E322931293A443400DC5E74 /* libsqlite3.tbd */; };
 		9E8BC5682784ECC500291E05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		9E8BC5692784ECC500291E05 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		9E8BC56D2784ECC500291E05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
@@ -72,6 +74,7 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9E322931293A443400DC5E74 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		9E8BC5782784ECC500291E05 /* CauseCommune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CauseCommune.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8BC5792784ECC500291E05 /* Runner copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Runner copy-Info.plist"; path = "/Users/pierrebresson/Documents/Code/fwp/ios/Runner copy-Info.plist"; sourceTree = "<absolute>"; };
 		B494679BB7452D442F1EA3BA /* Pods_CauseCommune.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CauseCommune.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E322933293A447500DC5E74 /* libsqlite3.tbd in Frameworks */,
 				547AE37A5DB76C68D3785BC1 /* Pods_Thinkerview.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E322932293A445000DC5E74 /* libsqlite3.tbd in Frameworks */,
 				B093A2AA4FED10DB103BD613 /* Pods_CauseCommune.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,6 +176,7 @@
 		F3014CC19B7986A96E5D70F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E322931293A443400DC5E74 /* libsqlite3.tbd */,
 				B494679BB7452D442F1EA3BA /* Pods_CauseCommune.framework */,
 				FA9EF267F07F73AF0750CDE3 /* Pods_Thinkerview.framework */,
 			);

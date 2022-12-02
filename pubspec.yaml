@@ -33,6 +33,11 @@ dependencies:
   easy_localization: ^3.0.1
   beamer: ^1.5.3
   tuple: ^2.0.1
+  flutter_downloader: ^1.9.1
+  android_path_provider: ^0.3.0
+  path_provider: ^2.0.11
+  device_info_plus: ^8.0.0
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:

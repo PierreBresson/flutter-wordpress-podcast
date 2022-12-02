@@ -9,6 +9,7 @@ import 'package:fwp/i18n.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -47,6 +48,10 @@ Future<void> setupApp() async {
   final dsn = dotenv.env['DSN'];
 
   HttpOverrides.global = MyHttpOverrides();
+
+  await FlutterDownloader.initialize(
+    debug: kDebugMode,
+  );
 
   await SentryFlutter.init(
     (options) {

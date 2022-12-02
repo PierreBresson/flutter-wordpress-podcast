@@ -38,6 +38,19 @@ class OfflineEpisodesNotifier extends StateNotifier<List<Episode>> {
         if (episode.id != episodeToBeRemoved.id) episode,
     ];
   }
+
+  void updateOfflineEpisode(Episode episodeToBeUpdated) {
+    final List<Episode> newState = [];
+    for (final episode in state) {
+      if (episode.id == episodeToBeUpdated.id) {
+        return newState.add(episodeToBeUpdated);
+      } else {
+        return newState.add(episode);
+      }
+    }
+
+    state = newState;
+  }
 }
 
 final offlineEpisodesStateProvider =
