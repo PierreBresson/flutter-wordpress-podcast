@@ -61,6 +61,14 @@ abstract class LocaleKeys {
       'episode_options_widget_link_was_copied';
   static const episode_options_widget_copy_audio_link =
       'episode_options_widget_copy_audio_link';
+  static const episode_options_widget_download_offline_episode =
+      'episode_options_widget_download_offline_episode';
+  static const episode_options_widget_download_offline_episode_in_progress =
+      'episode_options_widget_download_offline_episode_in_progress';
+  static const episode_options_widget_delete_offline_episode =
+      'episode_options_widget_delete_offline_episode';
+  static const episode_options_widget_delete_offline_episode_sucess =
+      'episode_options_widget_delete_offline_episode_sucess';
   static const episode_options_widget_mark_as_not_read =
       'episode_options_widget_mark_as_not_read';
   static const episode_options_widget_mark_as_read =
@@ -69,9 +77,13 @@ abstract class LocaleKeys {
       'episode_options_widget_more_info_on_episode';
   static const episode_options_widget_play_episode =
       'episode_options_widget_play_episode';
+  static const episode_options_widget_play_offline_episode =
+      'episode_options_widget_play_offline_episode';
   static const episodes_of_category_screen_no_episode =
       'episodes_of_category_screen_no_episode';
   static const episode_details_screen_title = 'episode_details_screen_title';
   static const episode_details_captain_fact_screen_title =
       'episode_details_captain_fact_screen_title';
+  static const offline_episodes_widget_no_offline_episode =
+      'offline_episodes_widget_no_offline_episode';
 }

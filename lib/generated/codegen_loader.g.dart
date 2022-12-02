@@ -66,13 +66,22 @@ class CodegenLoader extends AssetLoader {
     "episode_options_widget_copy_article_link": "Copy article link",
     "episode_options_widget_link_was_copied": "Link was copied",
     "episode_options_widget_copy_audio_link": "Copy audio link",
+    "episode_options_widget_download_offline_episode": "Download episode",
+    "episode_options_widget_download_offline_episode_in_progress":
+        "Downloading in progress",
+    "episode_options_widget_delete_offline_episode": "Delete offline episode",
+    "episode_options_widget_delete_offline_episode_sucess":
+        "The offline episode was successfuly deleted",
     "episode_options_widget_mark_as_not_read": "Mark as not read",
     "episode_options_widget_mark_as_read": "Mark as read",
     "episode_options_widget_more_info_on_episode": "More info on episode",
     "episode_options_widget_play_episode": "Play episode",
+    "episode_options_widget_play_offline_episode": "Play offline episode",
     "episodes_of_category_screen_no_episode": "No episode",
     "episode_details_screen_title": "Informations",
-    "episode_details_captain_fact_screen_title": "Captain Fact"
+    "episode_details_captain_fact_screen_title": "Captain Fact",
+    "offline_episodes_widget_no_offline_episode":
+        "No episode was downloaded to be played offline"
   };
   static const Map<String, dynamic> fr = {
     "bottom_bar_navigation_home": "Accueil",
@@ -128,13 +137,23 @@ class CodegenLoader extends AssetLoader {
     "episode_options_widget_link_was_copied":
         "Le lien a été copié dans le presse-papiers",
     "episode_options_widget_copy_audio_link": "Copier lien fichier audio",
+    "episode_options_widget_download_offline_episode": "Télécharger l'épisode",
+    "episode_options_widget_download_offline_episode_in_progress":
+        "Le téléchargement de l'épisode a démarré",
+    "episode_options_widget_delete_offline_episode":
+        "Supprimer l'épisode hors-ligne",
+    "episode_options_widget_delete_offline_episode_sucess":
+        "L'épisode hors-ligne a bien été supprimé",
     "episode_options_widget_mark_as_not_read": "Marquer comme non lu",
     "episode_options_widget_mark_as_read": "Marquer comme déjà lu",
     "episode_options_widget_more_info_on_episode": "Plus d'info sur l'épisode",
     "episode_options_widget_play_episode": "Lire l'épisode",
+    "episode_options_widget_play_offline_episode": "Lire l'épisode hors-ligne",
     "episodes_of_category_screen_no_episode": "Aucun épisode",
     "episode_details_screen_title": "Informations",
-    "episode_details_captain_fact_screen_title": "Captain Fact"
+    "episode_details_captain_fact_screen_title": "Captain Fact",
+    "offline_episodes_widget_no_offline_episode":
+        "Aucun épisode n'a été téléchargé pour une lecture hors-ligne"
   };
   static const Map<String, Map<String, dynamic>> mapLocales = {
     "en": en,

@@ -18,9 +18,16 @@ class EpisodeOptionsListItemPlay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final playerManager = getIt<PlayerManager>();
 
+    bool isOfflineEpisode = false;
+    if (episode.audioFilePath != null && episode.audioFilePath!.isNotEmpty) {
+      isOfflineEpisode = true;
+    }
+
     return EpisodeOptionsListItem(
       iconData: Icons.play_arrow_rounded,
-      text: LocaleKeys.episode_options_widget_play_episode.tr(),
+      text: isOfflineEpisode
+          ? LocaleKeys.episode_options_widget_play_offline_episode.tr()
+          : LocaleKeys.episode_options_widget_play_episode.tr(),
       onTap: () async {
         try {
           final positionInSeconds = ref

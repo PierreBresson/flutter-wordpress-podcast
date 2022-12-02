@@ -19,21 +19,29 @@ const BorderRadius _borderRadius = BorderRadius.only(
   topRight: _circularRadius,
 );
 
-class EpisodeCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String audioFileUrl;
-  final VoidCallback onPressed;
-  final bool hasBeenPlayed;
-
+class EpisodeCard extends HookConsumerWidget {
+  final Episode episode;
   const EpisodeCard({
     super.key,
-    required this.hasBeenPlayed,
-    required this.onPressed,
-    required this.imageUrl,
-    required this.title,
-    required this.audioFileUrl,
+    required this.episode,
   });
+
+  void onPressed(BuildContext context, Episode episode) {
+    final isDarkMode = isAppInDarkMode(context);
+
+    showModalBottomSheet<void>(
+      backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) => EpisodeOptions(episode: episode),
+    );
+  }
 
   BoxConstraints getConstraints(BuildContext context) {
     const maxWidth = 500.0;
@@ -53,10 +61,14 @@ class EpisodeCard extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDarkMode = isAppInDarkMode(context);
+    final hasBeenPlayed =
+        ref.watch(playedEpisodesStateProvider).contains(episode.id);
 
-    if (title == "" || imageUrl == "" || audioFileUrl == "") {
+    if (episode.title == "" ||
+        episode.imageUrl == "" ||
+        episode.audioFileUrl == "") {
       return const SizedBox.shrink();
     }
 
@@ -82,13 +94,13 @@ class EpisodeCard extends StatelessWidget {
                   ],
           ),
           child: InkWell(
-            onTap: onPressed,
+            onTap: () => onPressed(context, episode),
             child: Column(
               children: [
                 Stack(
                   children: [
                     CachedNetworkImage(
-                      imageUrl: imageUrl,
+                      imageUrl: episode.imageUrl,
                       imageBuilder: (context, imageProvider) => Container(
                         height: _imageHeigth,
                         constraints: getConstraints(context),
@@ -159,7 +171,7 @@ class EpisodeCard extends StatelessWidget {
                   ),
                   constraints: getConstraints(context),
                   child: Text(
-                    title,
+                    episode.title,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
@@ -177,23 +189,6 @@ final currentEpisode = Provider<AsyncValue<Episode>>((ref) {
 });
 
 class EpisodeCardItem extends HookConsumerWidget {
-  void onPressed(BuildContext context, Episode episode) {
-    final isDarkMode = isAppInDarkMode(context);
-
-    showModalBottomSheet<void>(
-      backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
-      context: context,
-      builder: (BuildContext context) => EpisodeOptions(episode: episode),
-    );
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final episode = ref.watch(currentEpisode);
@@ -210,15 +205,8 @@ class EpisodeCardItem extends HookConsumerWidget {
       },
       loading: () => const SizedBox.shrink(),
       data: (episode) {
-        final hasBeenPlayed =
-            ref.watch(playedEpisodesStateProvider).contains(episode.id);
-
         return EpisodeCard(
-          hasBeenPlayed: hasBeenPlayed,
-          imageUrl: episode.imageUrl,
-          title: episode.title,
-          audioFileUrl: episode.audioFileUrl,
-          onPressed: () => onPressed(context, episode),
+          episode: episode,
         );
       },
     );

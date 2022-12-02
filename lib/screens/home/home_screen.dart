@@ -55,7 +55,9 @@ class HomeScreen extends HookConsumerWidget {
               child: Categories(),
             ),
           ] else if (currentScreen == Screens.offline) ...[
-            const Text("nothing here yet"),
+            const Expanded(
+              child: OfflineEpisodes(),
+            ),
           ]
         ],
       ),

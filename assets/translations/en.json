@@ -41,11 +41,17 @@
   "episode_options_widget_copy_article_link": "Copy article link",
   "episode_options_widget_link_was_copied": "Link was copied",
   "episode_options_widget_copy_audio_link": "Copy audio link",
+  "episode_options_widget_download_offline_episode": "Download episode",
+  "episode_options_widget_download_offline_episode_in_progress": "Downloading in progress",
+  "episode_options_widget_delete_offline_episode": "Delete offline episode",
+  "episode_options_widget_delete_offline_episode_sucess": "The offline episode was successfuly deleted",
   "episode_options_widget_mark_as_not_read": "Mark as not read",
   "episode_options_widget_mark_as_read": "Mark as read",
   "episode_options_widget_more_info_on_episode": "More info on episode",
   "episode_options_widget_play_episode": "Play episode",
+  "episode_options_widget_play_offline_episode": "Play offline episode",
   "episodes_of_category_screen_no_episode": "No episode",
   "episode_details_screen_title": "Informations",
-  "episode_details_captain_fact_screen_title": "Captain Fact"
+  "episode_details_captain_fact_screen_title": "Captain Fact",
+  "offline_episodes_widget_no_offline_episode": "No episode was downloaded to be played offline"
 }

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
-import 'package:fwp/providers/providers.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:fwp/styles/styles.dart';
 import 'package:fwp/widgets/widgets.dart';
@@ -208,28 +207,8 @@ class _SearchScreenState extends State<SearchScreen> {
         return ListView.builder(
           itemCount: episodes.length,
           itemBuilder: (context, index) {
-            final hasBeenPlayed = ref
-                .watch(playedEpisodesStateProvider)
-                .contains(episodes[index].id);
-
             return EpisodeCard(
-              hasBeenPlayed: hasBeenPlayed,
-              imageUrl: episodes[index].imageUrl,
-              title: episodes[index].title,
-              audioFileUrl: episodes[index].audioFileUrl,
-              onPressed: () {
-                showModalBottomSheet<void>(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                  context: context,
-                  builder: (BuildContext context) =>
-                      EpisodeOptions(episode: episodes[index]),
-                );
-              },
+              episode: episodes[index],
             );
           },
         );

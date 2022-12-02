@@ -13,6 +13,12 @@ class EpisodeOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext contexts) {
+    bool isOfflineEpisode = false;
+
+    if (episode.audioFilePath != null && episode.audioFilePath!.isNotEmpty) {
+      isOfflineEpisode = true;
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,10 +33,15 @@ class EpisodeOptions extends StatelessWidget {
         ),
         EpisodeOptionsListItemCopyPaste(
           episode: episode,
-          isCopyArticleUrl: true,
+          isCopyArticleUrl: false,
         ),
         EpisodeOptionsListItemMarkAsRead(episode: episode),
         EpisodeOptionsListItemInfo(episode: episode),
+        if (isOfflineEpisode) ...[
+          EpisodeOptionsListItemDeleteOfflineEpisode(episode: episode)
+        ] else ...[
+          EpisodeOptionsListItemDownloadOfflineEpisode(episode: episode)
+        ],
         EpisodeOptionsListItemPlay(
           episode: episode,
         ),
