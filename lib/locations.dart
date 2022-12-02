@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fwp/screens/screens.dart';
 
 const homePath = 'home';
+const searchPath = 'search';
 const episodesCategoryPath = 'episodes_category';
 const episodesCategoryarticlePath = 'episodes_category_article';
 const articlePath = 'article';
@@ -13,6 +14,9 @@ const homeEpisodesCategoryArticlePath =
     '/$homePath/$episodesCategoryPath/$episodesCategoryarticlePath';
 const homeArticlePath = '/$homePath/$articlePath';
 const homeCaptainFactPath = '/$homePath/$captainFactPath';
+
+const searchArticlePath = '/$searchPath/$articlePath';
+const searchCaptainFactPath = '/$searchPath/$captainFactPath';
 
 class HomeLocation extends BeamLocation<BeamState> {
   HomeLocation(super.routeInformation);
@@ -87,8 +91,8 @@ class PlayerLocation extends BeamLocation<BeamState> {
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) => [
         const BeamPage(
-          key: ValueKey('a'),
-          title: 'Tab A',
+          key: ValueKey('player'),
+          title: 'Player',
           type: BeamPageType.noTransition,
           child: PlayerScreen(),
         ),
@@ -97,18 +101,46 @@ class PlayerLocation extends BeamLocation<BeamState> {
 
 class SearchLocation extends BeamLocation<BeamState> {
   SearchLocation(super.routeInformation);
-  @override
-  List<String> get pathPatterns => ['/*'];
 
   @override
-  List<BeamPage> buildPages(BuildContext context, BeamState state) => [
-        const BeamPage(
-          key: ValueKey('search'),
-          title: 'Search',
-          type: BeamPageType.noTransition,
-          child: SearchScreen(),
+  List<String> get pathPatterns => [searchArticlePath, searchCaptainFactPath];
+
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final List<String> pathPatternSegments = state.pathPatternSegments;
+    final beamPages = [
+      const BeamPage(
+        key: ValueKey('search'),
+        title: 'Search',
+        type: BeamPageType.noTransition,
+        child: SearchScreen(),
+      )
+    ];
+
+    if (pathPatternSegments.contains(articlePath)) {
+      beamPages.add(
+        BeamPage(
+          key: const ValueKey(searchArticlePath),
+          title: 'Article',
+          child: EpisodeDetails(),
         ),
-      ];
+      );
+    }
+
+    if (pathPatternSegments.contains(captainFactPath)) {
+      beamPages.add(
+        BeamPage(
+          key: const ValueKey(
+            searchCaptainFactPath,
+          ),
+          title: 'Captain Fact',
+          child: EpisodeDetailsCaptainFact(),
+        ),
+      );
+    }
+
+    return beamPages;
+  }
 }
 
 class BooksLocation extends BeamLocation<BeamState> {

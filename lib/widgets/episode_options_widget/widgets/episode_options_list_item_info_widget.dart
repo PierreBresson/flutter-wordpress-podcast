@@ -24,20 +24,24 @@ class EpisodeOptionsListItemInfo extends HookConsumerWidget {
       onTap: () async {
         Navigator.pop(context);
         ref.read(episodeSelectedProvider.notifier).update((state) => episode);
+        final state =
+            Beamer.of(context).currentBeamLocation.state as BeamState?;
+        if (state != null) {
+          final pathPatternSegments = state.pathPatternSegments;
+          final isHomePath = pathPatternSegments.contains(homePath);
+          final captainFact =
+              isHomePath ? homeCaptainFactPath : searchCaptainFactPath;
+          final article = isHomePath ? homeArticlePath : searchArticlePath;
 
-        if (app == APP.thinkerview.name) {
-          context.beamToNamed(homeCaptainFactPath);
-        } else {
-          final state =
-              Beamer.of(context).currentBeamLocation.state as BeamState?;
-
-          if (state != null) {
+          if (app == APP.thinkerview.name) {
+            context.beamToNamed(captainFact);
+          } else {
             if (state.pathPatternSegments.contains(episodesCategoryPath)) {
               context.beamToNamed(
                 homeEpisodesCategoryArticlePath,
               );
             } else {
-              context.beamToNamed(homeArticlePath);
+              context.beamToNamed(article);
             }
           }
         }

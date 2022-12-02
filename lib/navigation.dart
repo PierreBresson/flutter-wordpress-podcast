@@ -153,14 +153,6 @@ class _ScaffoldWithBottomNavBarState
         onTap: (index) {
           final tabIndex = ref.watch(tabIndexProvider);
           ref.read(tabIndexProvider.notifier).updateTabIndex(index);
-          // final currentConfiguration = Beamer.of(context).currentConfiguration;
-
-          // if (currentConfiguration != null) {
-          //   final state = currentConfiguration.state as BeamState?;
-          //   if (state != null) {
-          //     print(state.pathPatternSegments);
-          //   }
-          // }
 
           if (index != tabIndex.index) {
             _routerDelegates[tabIndex.index].update(rebuild: false);

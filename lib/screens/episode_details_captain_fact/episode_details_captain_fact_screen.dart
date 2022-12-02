@@ -115,17 +115,11 @@ class EpisodeDetailsCaptainFact extends HookConsumerWidget {
         titleBar: const TitleBar(),
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: isDarkMode ? Colors.white : Colors.black,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.maybePop(context);
-            },
+          title: Text(
+            LocaleKeys.episode_details_captain_fact_screen_title.tr(),
+            style: Theme.of(context).textTheme.headline6,
           ),
+          backgroundColor: Colors.transparent,
         ),
         body: FutureBuilder(
           future: getVideoData(episode.youtubeUrl!),
