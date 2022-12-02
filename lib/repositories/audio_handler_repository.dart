@@ -91,6 +91,10 @@ class MyAudioHandler extends BaseAudioHandler {
     queue.add([newMediaItem]);
     mediaItem.add(newMediaItem);
 
+    if (_player.playing) {
+      await _player.stop();
+    }
+
     try {
       await _player.setUrl(url);
     } on PlayerException catch (error) {
@@ -108,9 +112,16 @@ class MyAudioHandler extends BaseAudioHandler {
       }
     }
 
-    await _player.play();
+    _player.play();
+
     if (positionInSeconds != 0) {
-      await _player.seek(Duration(seconds: positionInSeconds));
+      try {
+        await _player.seek(Duration(seconds: positionInSeconds));
+      } catch (error) {
+        if (kDebugMode) {
+          print('TODO audioHandler : An error occured seek: $error');
+        }
+      }
     }
   }
 

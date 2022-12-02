@@ -77,30 +77,6 @@ class _ScaffoldWithBottomNavBarState
   ];
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final String uriString = Beamer.of(context).configuration.location!;
-    switch (uriString) {
-      case _homePath:
-        ref.read(tabIndexProvider.notifier).updateTabIndex(0);
-        break;
-      case _playerPath:
-        ref.read(tabIndexProvider.notifier).updateTabIndex(1);
-        break;
-      case _searchPath:
-        ref.read(tabIndexProvider.notifier).updateTabIndex(2);
-        break;
-      case _booksPath:
-        ref.read(tabIndexProvider.notifier).updateTabIndex(3);
-        break;
-      case _aboutPath:
-        ref.read(tabIndexProvider.notifier).updateTabIndex(4);
-        break;
-      default:
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(

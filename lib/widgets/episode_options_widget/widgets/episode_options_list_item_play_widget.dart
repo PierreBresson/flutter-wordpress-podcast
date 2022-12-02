@@ -29,10 +29,6 @@ class EpisodeOptionsListItemPlay extends HookConsumerWidget {
 
           episode.positionInSeconds = positionInSeconds;
 
-          ref
-              .read(currentEpisodePlayableProvider.notifier)
-              .update((state) => episode);
-
           ref.read(tabIndexProvider.notifier).updateTabIndex(1);
           playerManager.playEpisode(episode);
 
@@ -41,6 +37,7 @@ class EpisodeOptionsListItemPlay extends HookConsumerWidget {
           if (kDebugMode) {
             print("TODO error play episode $error");
           }
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(LocaleKeys.ui_error.tr()),

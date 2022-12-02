@@ -44,9 +44,9 @@ class PlayerManager {
       },
     );
 
-    ref.read(currentEpisodePlayableProvider.notifier).update(
-          (Episode? state) => state == null ? null : episode,
-        );
+    ref
+        .read(currentEpisodePlayableProvider.notifier)
+        .update((state) => episode);
 
     _audioHandler.playMediaItem(mediaItem);
   }
@@ -86,14 +86,14 @@ class PlayerManager {
     AudioService.position.listen((Duration position) {
       final oldState = progressNotifier.value;
 
-      final Episode? episode = ref.watch(currentEpisodePlayableProvider);
+      final Episode? episode = ref.read(currentEpisodePlayableProvider);
 
       if (episode != null) {
         episode.positionInSeconds = position.inSeconds;
 
-        ref.read(currentEpisodePlayableProvider.notifier).update(
-              (Episode? state) => state == null ? null : episode,
-            );
+        ref
+            .read(currentEpisodePlayableProvider.notifier)
+            .update((state) => episode);
         ref
             .read(alreadyPlayedEpisodesStateProvider.notifier)
             .updatePlayedEpisode(episode);
@@ -140,58 +140,6 @@ class PlayerManager {
         title: title,
         artUri: mediaItem?.artUri ?? Uri(),
       );
-
-      // final id = mediaItem?.extras?['id'];
-      // int idProcessed = 0;
-      // if (id != null) {
-      //   idProcessed = mediaItem?.extras?['id'] as int;
-      // }
-
-      // final audioFileUrl = mediaItem?.extras?['url'];
-      // String audioFileUrlProcessed = '';
-      // if (audioFileUrl != null) {
-      //   audioFileUrlProcessed = mediaItem?.extras?['url'] as String;
-      // }
-
-      // final articleUrl = mediaItem?.extras?['articleUrl'];
-      // String articleUrlProcessed = '';
-      // if (articleUrl != null) {
-      //   articleUrlProcessed = mediaItem?.extras?['articleUrl'] as String;
-      // }
-
-      // final description = mediaItem?.extras?['description'];
-      // String descriptionProcessed = '';
-      // if (description != null) {
-      //   descriptionProcessed = mediaItem?.extras?['description'] as String;
-      // }
-
-      // final String? imagePath = mediaItem?.extras?['imagePath'] as String?;
-      // final String? audioFilePath =
-      //     mediaItem?.extras?['audioFilePath'] as String?;
-      // final String? imageDownloadTaskId =
-      //     mediaItem?.extras?['imageDownloadTaskId'] as String?;
-      // final String? audioFileDownloadTaskId =
-      //     mediaItem?.extras?['audioFileDownloadTaskId'] as String?;
-
-      // final imageUrl = mediaItem?.artUri.toString() ?? '';
-
-      // getIt<DatabaseHandler>().insertEpisodePlayable(
-      //   Episode(
-      //     date: "",
-      //     id: idProcessed,
-      //     audioFileUrl: audioFileUrlProcessed,
-      //     articleUrl: articleUrlProcessed,
-      //     description: descriptionProcessed,
-      //     title: title,
-      //     imageUrl: imageUrl,
-      //     positionInSeconds: 0,
-      //     isPlaying: true,
-      //     imagePath: imagePath,
-      //     audioFilePath: audioFilePath,
-      //     imageDownloadTaskId: imageDownloadTaskId,
-      //     audioFileDownloadTaskId: audioFileDownloadTaskId,
-      //   ),
-      // );
     });
   }
 

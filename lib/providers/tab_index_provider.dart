@@ -6,7 +6,7 @@ class TabIndex {
 }
 
 class TabIndexNotifier extends StateNotifier<TabIndex> {
-  TabIndexNotifier() : super(TabIndex(index: 2));
+  TabIndexNotifier() : super(TabIndex(index: 0));
 
   void updateTabIndex(int index) {
     state = TabIndex(index: index);
