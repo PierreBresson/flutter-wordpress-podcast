@@ -1,18 +1,7 @@
-import 'dart:isolate';
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:fwp/i18n.dart';
-import 'package:fwp/models/models.dart';
-import 'package:fwp/providers/providers.dart';
-import 'package:fwp/screens/home/widgets/widgets/offline_episodes_downloaded_widget.dart';
-import 'package:fwp/screens/home/widgets/widgets/offline_episodes_downloading_widget.dart';
-import 'package:fwp/widgets/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:fwp/screens/home/widgets/widgets/widgets.dart';
 import 'package:fwp/i18n.dart';
+import 'package:fwp/screens/home/widgets/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum EpisodesTabs { downloaded, inDownload }
 

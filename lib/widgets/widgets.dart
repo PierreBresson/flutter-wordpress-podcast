@@ -8,3 +8,4 @@ export './episode_card_item_widget.dart';
 export './episode_options_widget/episode_options_widget.dart';
 export './episodes_category_item_widget.dart';
 export './error_indicator_widget.dart';
+export './podcast_progress_download_indicator_widget.dart';
