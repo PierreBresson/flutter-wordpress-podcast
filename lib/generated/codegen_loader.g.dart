@@ -80,8 +80,12 @@ class CodegenLoader extends AssetLoader {
     "episodes_of_category_screen_no_episode": "No episode",
     "episode_details_screen_title": "Informations",
     "episode_details_captain_fact_screen_title": "Captain Fact",
-    "offline_episodes_widget_no_offline_episode":
-        "No episode was downloaded to be played offline"
+    "offline_episodes_downloaded_widget_no_offline_episode":
+        "No episode was downloaded to be played offline",
+    "offline_episodes_downloading_widget_no_offline_episode_in_download":
+        "No episode is in download",
+    "offline_episodes_widget_downloaded": "Downloaded",
+    "offline_episodes_widget_in_download": "Downloading"
   };
   static const Map<String, dynamic> fr = {
     "bottom_bar_navigation_home": "Accueil",
@@ -152,8 +156,12 @@ class CodegenLoader extends AssetLoader {
     "episodes_of_category_screen_no_episode": "Aucun épisode",
     "episode_details_screen_title": "Informations",
     "episode_details_captain_fact_screen_title": "Captain Fact",
-    "offline_episodes_widget_no_offline_episode":
-        "Aucun épisode n'a été téléchargé pour une lecture hors-ligne"
+    "offline_episodes_downloaded_widget_no_offline_episode":
+        "Aucun épisode n'a été téléchargé pour une lecture hors-ligne",
+    "offline_episodes_downloading_widget_no_offline_episode_in_download":
+        "Aucun épisode n'est en cours de téléchargement",
+    "offline_episodes_widget_downloaded": "téléchargé",
+    "offline_episodes_widget_in_download": "En téléchargement"
   };
   static const Map<String, Map<String, dynamic>> mapLocales = {
     "en": en,

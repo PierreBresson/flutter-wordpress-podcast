@@ -53,5 +53,8 @@
   "episodes_of_category_screen_no_episode": "No episode",
   "episode_details_screen_title": "Informations",
   "episode_details_captain_fact_screen_title": "Captain Fact",
-  "offline_episodes_widget_no_offline_episode": "No episode was downloaded to be played offline"
+  "offline_episodes_downloaded_widget_no_offline_episode": "No episode was downloaded to be played offline",
+  "offline_episodes_downloading_widget_no_offline_episode_in_download": "No episode is in download",
+  "offline_episodes_widget_downloaded": "Downloaded",
+  "offline_episodes_widget_in_download": "Downloading"
 }

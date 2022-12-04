@@ -84,6 +84,12 @@ abstract class LocaleKeys {
   static const episode_details_screen_title = 'episode_details_screen_title';
   static const episode_details_captain_fact_screen_title =
       'episode_details_captain_fact_screen_title';
-  static const offline_episodes_widget_no_offline_episode =
-      'offline_episodes_widget_no_offline_episode';
+  static const offline_episodes_downloaded_widget_no_offline_episode =
+      'offline_episodes_downloaded_widget_no_offline_episode';
+  static const offline_episodes_downloading_widget_no_offline_episode_in_download =
+      'offline_episodes_downloading_widget_no_offline_episode_in_download';
+  static const offline_episodes_widget_downloaded =
+      'offline_episodes_widget_downloaded';
+  static const offline_episodes_widget_in_download =
+      'offline_episodes_widget_in_download';
 }

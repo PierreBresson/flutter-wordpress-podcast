@@ -51,6 +51,7 @@ Future<void> setupApp() async {
 
   await FlutterDownloader.initialize(
     debug: kDebugMode,
+    ignoreSsl: true,
   );
 
   await SentryFlutter.init(
