@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:android_path_provider/android_path_provider.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fwp/i18n.dart';
@@ -111,30 +112,38 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
       onTap: () async {
         final navigator = Navigator.of(context);
         final scaffold = ScaffoldMessenger.of(context);
-        String? taskId;
+        String? taskIdAudioFileUrl;
+        String? taskIdImage;
 
         try {
-          taskId = await FlutterDownloader.enqueue(
+          taskIdAudioFileUrl = await FlutterDownloader.enqueue(
             url: fakeEpisodes[0].audioFileUrl,
             savedDir: _localPath,
           );
-          print("FlutterDownloader enqueue taskId $taskId");
+          taskIdImage = await FlutterDownloader.enqueue(
+            url: fakeEpisodes[0].imageUrl,
+            savedDir: _localPath,
+          );
         } catch (error) {
-          print("TODO error FlutterDownloader.enqueue $error");
+          if (kDebugMode) {
+            print(
+                "TODO episode options error FlutterDownloader.enqueue $error");
+          }
           showError(scaffold);
           navigator.pop();
           return;
         }
 
-        if (taskId != null) {
+        if (taskIdAudioFileUrl != null && taskIdImage != null) {
           final episodeWithTaskId = widget.episode;
-          episodeWithTaskId.audioFileDownloadTaskId = taskId;
+          episodeWithTaskId.audioFileDownloadTaskId = taskIdAudioFileUrl;
+          episodeWithTaskId.imageDownloadTaskId = taskIdImage;
 
           ref
-              .read(offlineEpisodesStateProvider.notifier)
-              .updateOfflineEpisode(episodeWithTaskId);
+              .read(offlineEpisodesDownloadPendingStateProvider.notifier)
+              .addEpisode(episodeWithTaskId);
         } else {
-          print("TODO taskId is null");
+          print("TODO episode options taskId is null");
 
           showError(scaffold);
           navigator.pop();

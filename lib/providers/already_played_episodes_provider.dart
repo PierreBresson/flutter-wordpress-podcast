@@ -4,7 +4,7 @@ import 'package:fwp/models/models.dart';
 class AlreadyPlayedEpisodesNotifier extends StateNotifier<List<Episode>> {
   AlreadyPlayedEpisodesNotifier() : super([]);
 
-  void updatePlayedEpisode(Episode episode) {
+  void updateEpisode(Episode episode) {
     if (state.map((item) => item.id).contains(episode.id)) {
       final List<Episode> newState = [];
       for (final item in state) {
@@ -22,7 +22,7 @@ class AlreadyPlayedEpisodesNotifier extends StateNotifier<List<Episode>> {
     }
   }
 
-  void removePlayedEpisode(Episode episodeToBeRemoved) {
+  void removeEpisode(Episode episodeToBeRemoved) {
     state = [
       for (final episode in state)
         if (episode != episodeToBeRemoved) episode,

@@ -96,7 +96,7 @@ class PlayerManager {
             .update((state) => episode);
         ref
             .read(alreadyPlayedEpisodesStateProvider.notifier)
-            .updatePlayedEpisode(episode);
+            .updateEpisode(episode);
       }
 
       progressNotifier.value = ProgressBarState(

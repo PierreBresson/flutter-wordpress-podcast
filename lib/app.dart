@@ -59,7 +59,6 @@ class _AppState extends ConsumerState<App> {
   }
 
   final routerDelegate = BeamerDelegate(
-    initialPath: '/a',
     locationBuilder: RoutesLocationBuilder(
       routes: {
         '*': (context, state, data) => const ScaffoldWithBottomNavBar(),

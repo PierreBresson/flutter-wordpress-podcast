@@ -28,18 +28,18 @@ final fakeEpisodes = [
 class OfflineEpisodesNotifier extends StateNotifier<List<Episode>> {
   OfflineEpisodesNotifier() : super(fakeEpisodes);
 
-  void addOfflineEpisode(Episode episode) {
+  void addEpisode(Episode episode) {
     state = [...state, episode];
   }
 
-  void removeOfflineEpisode(Episode episodeToBeRemoved) {
+  void removeEpisode(Episode episodeToBeRemoved) {
     state = [
       for (final episode in state)
         if (episode.id != episodeToBeRemoved.id) episode,
     ];
   }
 
-  void updateOfflineEpisode(Episode episodeToBeUpdated) {
+  void updateEpisode(Episode episodeToBeUpdated) {
     final List<Episode> newState = [];
     for (final episode in state) {
       if (episode.id == episodeToBeUpdated.id) {

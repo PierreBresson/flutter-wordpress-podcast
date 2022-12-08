@@ -26,11 +26,9 @@ class EpisodeOptionsListItemMarkAsRead extends HookConsumerWidget {
         if (hasBeenPlayed) {
           ref
               .read(playedEpisodesStateProvider.notifier)
-              .removePlayedEpisode(episode.id);
+              .removeEpisode(episode.id);
         } else {
-          ref
-              .read(playedEpisodesStateProvider.notifier)
-              .addPlayedEpisode(episode.id);
+          ref.read(playedEpisodesStateProvider.notifier).addEpisode(episode.id);
         }
         Navigator.pop(context);
       },

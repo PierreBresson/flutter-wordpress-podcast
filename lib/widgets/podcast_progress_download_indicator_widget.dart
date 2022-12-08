@@ -17,6 +17,7 @@ class PodcastProgressDownloadIndicator extends StatelessWidget {
     return ListTile(
       title: Text(
         "$progress % - $name",
+        maxLines: 1,
         style: Theme.of(context).textTheme.headline6,
       ),
       trailing: const Icon(

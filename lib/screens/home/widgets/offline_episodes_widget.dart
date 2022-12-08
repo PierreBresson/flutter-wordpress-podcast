@@ -5,11 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum EpisodesTabs { downloaded, inDownload }
 
-Map<EpisodesTabs, Color> skyColors = <EpisodesTabs, Color>{
-  EpisodesTabs.downloaded: const Color(0xff191970),
-  EpisodesTabs.inDownload: const Color(0xff40826d),
-};
-
 class OfflineEpisodes extends ConsumerStatefulWidget {
   const OfflineEpisodes({
     super.key,
@@ -60,7 +55,7 @@ class OfflineEpisodesState extends ConsumerState<OfflineEpisodes> {
             child: OfflineEpisodesDownloaded(),
           ),
         ] else ...[
-          const Expanded(
+          Expanded(
             child: OfflineEpisodesDownloading(),
           ),
         ],

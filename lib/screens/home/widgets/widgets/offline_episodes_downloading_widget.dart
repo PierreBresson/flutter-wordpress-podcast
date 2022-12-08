@@ -1,126 +1,77 @@
-import 'dart:isolate';
-import 'dart:ui';
-
-import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:collection/collection.dart';
 
-class OfflineEpisodesDownloading extends StatefulWidget {
-  const OfflineEpisodesDownloading({
-    super.key,
+class TaskEpisode {
+  final int episodeId;
+  final String name;
+  final int progress;
+  TaskEpisode({
+    required this.episodeId,
+    required this.name,
+    required this.progress,
   });
-
-  @override
-  OfflineEpisodesDownloadingState createState() =>
-      OfflineEpisodesDownloadingState();
 }
 
-class OfflineEpisodesDownloadingState
-    extends State<OfflineEpisodesDownloading> {
-  final ReceivePort _port = ReceivePort();
-  List<Task> tasks = [Task(id: "id", name: "Episode 1", progress: 42)];
-
-  void _bindBackgroundIsolate() {
-    print("_bindBackgroundIsolate");
-    final isSuccess = IsolateNameServer.registerPortWithName(
-      _port.sendPort,
-      'downloader_send_port',
+List<TaskEpisode> getTaskEpisode({
+  required List<Episode> episodesPendingDownload,
+  required List<Task> tasks,
+}) {
+  final List<TaskEpisode> tasksEpisode = [];
+  for (final episodePendingDownload in episodesPendingDownload) {
+    final taskAudioFile = tasks.firstWhereOrNull(
+      (task) => task.id == episodePendingDownload.audioFileDownloadTaskId,
     );
-    if (!isSuccess) {
-      _unbindBackgroundIsolate();
-      _bindBackgroundIsolate();
-      return;
+    final taskImage = tasks.firstWhereOrNull(
+      (task) => task.id == episodePendingDownload.imageUrl,
+    );
+    if (taskAudioFile != null && taskImage != null) {
+      final taskEpisode = TaskEpisode(
+        episodeId: episodePendingDownload.id,
+        name: episodePendingDownload.title,
+        progress: ((taskAudioFile.progress + taskImage.progress) / 2).floor(),
+      );
+      tasksEpisode.add(taskEpisode);
+    } else {
+      if (kDebugMode) {
+        print("TODO can't find corresponding task/episode");
+      }
     }
-    _port.listen((dynamic data) {
-      print("data $data");
-      final taskId = (data as List<dynamic>)[0] as String;
-      final status = data[1] as DownloadTaskStatus;
-      final progress = data[2] as int;
-
-      final currentTask =
-          Task(name: taskId, id: taskId, link: "", progress: progress);
-
-      print(
-        'Callback on UI isolate _port.listen: '
-        'task ($taskId) is in status ($status) and process ($progress)',
-      );
-
-      final List<Task> newTasks = [];
-      for (final task in tasks) {
-        if (task.id == taskId) {
-          newTasks.add(currentTask);
-        } else {
-          newTasks.add(task);
-        }
-      }
-      final Task? existingItem = newTasks.firstWhereOrNull(
-        (task) => task.id == currentTask.id,
-      );
-
-      if (existingItem == null) {
-        newTasks.add(currentTask);
-      }
-
-      setState(() {
-        tasks = newTasks;
-      });
-      print("_bindBackgroundIsolate tasks $tasks");
-      for (final task in tasks) {
-        print(task.toString());
-      }
-      print("_bindBackgroundIsolate newTasks $newTasks");
-      for (final task in newTasks) {
-        print(task.toString());
-      }
-      print("end loop tasksss");
-    });
   }
+  return tasksEpisode;
+}
 
-  @pragma('vm:entry-point')
-  static void downloadCallback(
-    String id,
-    DownloadTaskStatus status,
-    int progress,
-  ) {
-    print(
-      'Callback on background isolate downloadCallback: '
-      'task ($id) is in status ($status) and process ($progress)',
+class OfflineEpisodesDownloading extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // TODO if both tasks are completed then remove episode from offlineEpisodesStateProvider
+    // TODO : do it with a listener outside, maybe inside the offlinedownload wrapper
+    //     final episode = ref
+    //     .read(offlineEpisodesDownloadPendingStateProvider.notifier)
+    //     .getEpisodeFromTaskId(taskId);
+    // if (episode != null) {
+    //   ref.read(offlineEpisodesStateProvider.notifier).addEpisode(episode);
+    // } else {
+    //   if (kDebugMode) {
+    //     print(
+    //       "TODO error offline download wrapper episode with task id $taskId could not be found",
+    //     );
+    //   }
+    // }
+    final List<Task> tasks = ref.watch(tasksStateProvider);
+    final List<Episode> episodesPendingDownload =
+        ref.watch(offlineEpisodesDownloadPendingStateProvider);
+    final List<TaskEpisode> tasksEpisode = getTaskEpisode(
+      episodesPendingDownload: episodesPendingDownload,
+      tasks: tasks,
     );
 
-    IsolateNameServer.lookupPortByName('downloader_send_port')
-        ?.send([id, status, progress]);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _bindBackgroundIsolate();
-
-    FlutterDownloader.registerCallback(downloadCallback, step: 1);
-  }
-
-  void _unbindBackgroundIsolate() {
-    IsolateNameServer.removePortNameMapping('downloader_send_port');
-  }
-
-  @override
-  void dispose() {
-    _unbindBackgroundIsolate();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print("build tasks $tasks");
-    for (final task in tasks) {
-      print(task.toString());
-    }
-    print("object");
-
-    if (tasks.isEmpty) {
+    if (tasksEpisode.isEmpty) {
       return Center(
         child: Text(
           LocaleKeys
@@ -133,8 +84,8 @@ class OfflineEpisodesDownloadingState
     return ListView.separated(
       itemBuilder: (context, index) {
         return PodcastProgressDownloadIndicator(
-          name: tasks[index].name,
-          progress: tasks[index].progress,
+          name: tasksEpisode[index].name,
+          progress: tasksEpisode[index].progress,
           onTap: () {},
         );
       },
@@ -143,7 +94,7 @@ class OfflineEpisodesDownloadingState
           height: 2,
         );
       },
-      itemCount: tasks.length,
+      itemCount: tasksEpisode.length,
     );
   }
 }

@@ -4,12 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fwp/app.dart';
 import 'package:fwp/i18n.dart';
+import 'package:fwp/offline_download_wrapper.dart';
 import 'package:fwp/repositories/repositories.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -67,7 +68,9 @@ Future<void> setupApp() async {
         supportedLocales: const [Locale('en'), Locale('fr')],
         fallbackLocale: const Locale('fr'),
         child: const ProviderScope(
-          child: App(),
+          child: OfflineDownloadWrapper(
+            child: App(),
+          ),
         ),
       ),
     ),

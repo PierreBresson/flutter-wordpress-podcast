@@ -5,7 +5,6 @@ import 'package:fwp/screens/home/widgets/widgets.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 
 class HomeScreen extends HookConsumerWidget {
   @override
@@ -46,18 +45,8 @@ class HomeScreen extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final tasks = await FlutterDownloader.loadTasks();
-          print("tasks $tasks");
-
-          if (tasks != null) {
-            for (final task in tasks) {
-              print(task.filename);
-              print(task.progress);
-              print(task.savedDir);
-              print(task.status);
-              print(task.taskId);
-            }
-          }
+          final toto = ref.read(tasksStateProvider);
+          print(toto);
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
