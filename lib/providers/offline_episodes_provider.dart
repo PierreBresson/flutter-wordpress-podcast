@@ -9,7 +9,8 @@ final fakeEpisodes = [
     articleUrl: "toto",
     date: "toto",
     title: "Episode 1",
-    imageUrl: "https://loremflickr.com/320/240",
+    imageUrl:
+        "https://www.thinkerview.com/wp-content/uploads/maxresdefault-71-440x248.jpg",
     description: "toto",
   ),
   Episode(
@@ -20,7 +21,8 @@ final fakeEpisodes = [
     articleUrl: "toto",
     date: "toto",
     title: "Episode 2",
-    imageUrl: "https://loremflickr.com/320/240",
+    imageUrl:
+        "https://www.thinkerview.com/wp-content/uploads/maxresdefault-71-440x248.jpg",
     description: "toto",
   ),
 ];

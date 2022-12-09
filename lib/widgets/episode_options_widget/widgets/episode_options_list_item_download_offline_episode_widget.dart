@@ -10,6 +10,7 @@ import 'package:fwp/models/models.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/widgets/episode_options_widget/widgets/episode_options_list_item_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -138,6 +139,12 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
           final episodeWithTaskId = widget.episode;
           episodeWithTaskId.audioFileDownloadTaskId = taskIdAudioFileUrl;
           episodeWithTaskId.imageDownloadTaskId = taskIdImage;
+          final baseNameAudioFile =
+              basename(File(episodeWithTaskId.audioFileUrl).path);
+          final baseNameImage = basename(File(episodeWithTaskId.imageUrl).path);
+
+          episodeWithTaskId.audioFilePath = _localPath + baseNameAudioFile;
+          episodeWithTaskId.imagePath = _localPath + baseNameImage;
 
           ref
               .read(offlineEpisodesDownloadPendingStateProvider.notifier)

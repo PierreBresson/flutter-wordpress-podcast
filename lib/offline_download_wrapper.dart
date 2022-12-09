@@ -1,6 +1,7 @@
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -39,13 +40,15 @@ class OfflineEpisodesDownloadingState
       final status = data[1] as DownloadTaskStatus;
       final progress = data[2] as int;
 
-      final task = Task(name: taskId, id: taskId, link: "", progress: progress);
+      final task = Task(
+        name: taskId,
+        id: taskId,
+        link: "",
+        progress: progress,
+        status: status,
+      );
 
-      if (status == DownloadTaskStatus.complete) {
-        ref.read(tasksStateProvider.notifier).removeTask(task);
-      } else {
-        ref.read(tasksStateProvider.notifier).updateTask(task);
-      }
+      ref.read(tasksStateProvider.notifier).updateTask(task);
     });
   }
 
@@ -68,20 +71,29 @@ class OfflineEpisodesDownloadingState
     //
   }
 
-  removeFinished() {
-    final toto = ref.read(tasksStateProvider.notifier).addListener((state) {});
-    //         final episode = ref
-    //     .read(offlineEpisodesDownloadPendingStateProvider.notifier)
-    //     .getEpisodeFromTaskId(taskId);
-    // if (episode != null) {
-    //   ref.read(offlineEpisodesStateProvider.notifier).addEpisode(episode);
-    // } else {
-    //   if (kDebugMode) {
-    //     print(
-    //       "TODO error offline download wrapper episode with task id $taskId could not be found",
-    //     );
-    //   }
-    // }
+  void taskListener() {
+    ref.read(tasksStateProvider.notifier).addListener((state) {
+      final List<Episode> episodes =
+          ref.read(offlineEpisodesDownloadPendingStateProvider);
+      for (final episode in episodes) {
+        final taskAudioFile = state.firstWhereOrNull(
+          (task) => task.id == episode.audioFileDownloadTaskId,
+        );
+        final taskImage = state.firstWhereOrNull(
+          (task) => task.id == episode.imageDownloadTaskId,
+        );
+        print("taskAudioFile $taskAudioFile");
+        print("taskImage $taskImage");
+        if (taskAudioFile != null && taskImage != null) {
+          if (taskAudioFile.status == DownloadTaskStatus.complete &&
+              taskImage.status == DownloadTaskStatus.complete) {
+            ref.read(offlineEpisodesStateProvider.notifier).addEpisode(episode);
+            ref.read(tasksStateProvider.notifier).removeTask(taskAudioFile);
+            ref.read(tasksStateProvider.notifier).removeTask(taskImage);
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -90,6 +102,7 @@ class OfflineEpisodesDownloadingState
     _bindBackgroundIsolate();
     FlutterDownloader.registerCallback(downloadCallback, step: 1);
     loadPreviousTasks();
+    taskListener();
   }
 
   void _unbindBackgroundIsolate() {

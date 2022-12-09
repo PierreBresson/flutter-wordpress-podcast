@@ -1,3 +1,6 @@
+// ignore_for_file: unnecessary_parenthesis
+
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fwp/i18n.dart';
@@ -5,7 +8,6 @@ import 'package:fwp/models/models.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:collection/collection.dart';
 
 class TaskEpisode {
   final int episodeId;
@@ -31,10 +33,11 @@ List<TaskEpisode> getTaskEpisode({
       (task) => task.id == episodePendingDownload.imageUrl,
     );
     if (taskAudioFile != null && taskImage != null) {
+      final progressImage = taskImage.progress / 100;
       final taskEpisode = TaskEpisode(
         episodeId: episodePendingDownload.id,
         name: episodePendingDownload.title,
-        progress: ((taskAudioFile.progress + taskImage.progress) / 2).floor(),
+        progress: (taskAudioFile.progress - 1 + progressImage).floor(),
       );
       tasksEpisode.add(taskEpisode);
     } else {
@@ -64,6 +67,7 @@ class OfflineEpisodesDownloading extends HookConsumerWidget {
     //   }
     // }
     final List<Task> tasks = ref.watch(tasksStateProvider);
+    print("tasks $tasks");
     final List<Episode> episodesPendingDownload =
         ref.watch(offlineEpisodesDownloadPendingStateProvider);
     final List<TaskEpisode> tasksEpisode = getTaskEpisode(
