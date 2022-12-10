@@ -9,10 +9,26 @@ class OfflineEpisodesDownloadPendingNotifier
     state = [...state, episode];
   }
 
+  Episode? getEpisode(int id) {
+    for (final episode in state) {
+      if (episode.id != id) {
+        return episode;
+      }
+    }
+    return null;
+  }
+
   void removeEpisode(Episode episodeToBeRemoved) {
     state = [
       for (final episode in state)
         if (episode.id != episodeToBeRemoved.id) episode,
+    ];
+  }
+
+  void removeEpisodeById(int id) {
+    state = [
+      for (final episode in state)
+        if (episode.id != id) episode,
     ];
   }
 

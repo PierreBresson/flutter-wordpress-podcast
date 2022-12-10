@@ -2,7 +2,6 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fwp/models/models.dart';
@@ -43,7 +42,6 @@ class OfflineEpisodesDownloadingState
       final task = Task(
         name: taskId,
         id: taskId,
-        link: "",
         progress: progress,
         status: status,
       );
@@ -82,8 +80,6 @@ class OfflineEpisodesDownloadingState
         final taskImage = state.firstWhereOrNull(
           (task) => task.id == episode.imageDownloadTaskId,
         );
-        print("taskAudioFile $taskAudioFile");
-        print("taskImage $taskImage");
         if (taskAudioFile != null && taskImage != null) {
           if (taskAudioFile.status == DownloadTaskStatus.complete &&
               taskImage.status == DownloadTaskStatus.complete) {

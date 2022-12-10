@@ -18,10 +18,9 @@ class EpisodeOptionsListItemPlay extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final playerManager = getIt<PlayerManager>();
 
-    bool isOfflineEpisode = false;
-    if (episode.audioFilePath != null && episode.audioFilePath!.isNotEmpty) {
-      isOfflineEpisode = true;
-    }
+    final isOfflineEpisode = ref
+        .watch(offlineEpisodesStateProvider.notifier)
+        .isOfflineEpisode(episode);
 
     return EpisodeOptionsListItem(
       iconData: Icons.play_arrow_rounded,
@@ -37,7 +36,10 @@ class EpisodeOptionsListItemPlay extends HookConsumerWidget {
           episode.positionInSeconds = positionInSeconds;
 
           ref.read(tabIndexProvider.notifier).updateTabIndex(1);
-          playerManager.playEpisode(episode);
+          playerManager.playEpisode(
+            episode: episode,
+            isOfflineEpisode: isOfflineEpisode,
+          );
 
           Navigator.of(context).maybePop();
         } catch (error) {

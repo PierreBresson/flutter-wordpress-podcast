@@ -43,25 +43,17 @@ class HomeScreen extends HookConsumerWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final toto = ref.read(tasksStateProvider);
-          print(toto);
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
       body: Column(
         children: [
-          if (currentScreen == Screens.latestEpisodes) ...[
+          if (currentScreen == HomeScreens.latestEpisodes) ...[
             Expanded(
               child: LatestEpisodes(),
             ),
-          ] else if (currentScreen == Screens.categories) ...[
+          ] else if (currentScreen == HomeScreens.categories) ...[
             Expanded(
               child: Categories(),
             ),
-          ] else if (currentScreen == Screens.offline) ...[
+          ] else if (currentScreen == HomeScreens.offline) ...[
             const Expanded(
               child: OfflineEpisodes(),
             ),

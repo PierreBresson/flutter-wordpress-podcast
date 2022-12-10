@@ -2,10 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fwp/models/models.dart';
 
-final fakeTasks = [Task(id: "id", name: "Episode 1", progress: 42)];
-
 class TasksNotifier extends StateNotifier<List<Task>> {
-  TasksNotifier() : super(fakeTasks);
+  TasksNotifier() : super([]);
 
   void addTask(Task task) {
     state = [...state, task];
@@ -15,6 +13,13 @@ class TasksNotifier extends StateNotifier<List<Task>> {
     state = [
       for (final task in state)
         if (task.id != taskToBeRemoved.id) task,
+    ];
+  }
+
+  void removeTaskById(String id) {
+    state = [
+      for (final task in state)
+        if (task.id != id) task,
     ];
   }
 

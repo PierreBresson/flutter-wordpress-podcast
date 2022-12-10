@@ -69,8 +69,10 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
     if (Platform.isAndroid) {
       try {
         externalStorageDirPath = await AndroidPathProvider.downloadsPath;
-      } catch (err, st) {
-        print('TODO failed to get downloads path: $err, $st');
+      } catch (error, stackTrace) {
+        if (kDebugMode) {
+          print('TODO failed to get downloads path: $error, $stackTrace');
+        }
 
         final directory = await getExternalStorageDirectory();
         externalStorageDirPath = directory?.path;
@@ -118,17 +120,18 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
 
         try {
           taskIdAudioFileUrl = await FlutterDownloader.enqueue(
-            url: fakeEpisodes[0].audioFileUrl,
+            url: widget.episode.audioFileUrl,
             savedDir: _localPath,
           );
           taskIdImage = await FlutterDownloader.enqueue(
-            url: fakeEpisodes[0].imageUrl,
+            url: widget.episode.imageUrl,
             savedDir: _localPath,
           );
         } catch (error) {
           if (kDebugMode) {
             print(
-                "TODO episode options error FlutterDownloader.enqueue $error");
+              "TODO episode options error FlutterDownloader.enqueue $error",
+            );
           }
           showError(scaffold);
           navigator.pop();
@@ -150,7 +153,11 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
               .read(offlineEpisodesDownloadPendingStateProvider.notifier)
               .addEpisode(episodeWithTaskId);
         } else {
-          print("TODO episode options taskId is null");
+          if (kDebugMode) {
+            print(
+              "TODO episode options at least one of one of the taskId is null",
+            );
+          }
 
           showError(scaffold);
           navigator.pop();
@@ -158,6 +165,9 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
         }
 
         navigator.pop();
+        ref
+            .read(homeMenuProvider.notifier)
+            .update((state) => HomeScreens.offline);
 
         scaffold.showSnackBar(
           SnackBar(

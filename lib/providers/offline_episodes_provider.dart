@@ -1,34 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fwp/models/models.dart';
 
-final fakeEpisodes = [
-  Episode(
-    id: 0,
-    audioFileUrl:
-        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    articleUrl: "toto",
-    date: "toto",
-    title: "Episode 1",
-    imageUrl:
-        "https://www.thinkerview.com/wp-content/uploads/maxresdefault-71-440x248.jpg",
-    description: "toto",
-  ),
-  Episode(
-    id: 1,
-    audioFileUrl:
-        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    audioFilePath: "some path",
-    articleUrl: "toto",
-    date: "toto",
-    title: "Episode 2",
-    imageUrl:
-        "https://www.thinkerview.com/wp-content/uploads/maxresdefault-71-440x248.jpg",
-    description: "toto",
-  ),
-];
-
 class OfflineEpisodesNotifier extends StateNotifier<List<Episode>> {
-  OfflineEpisodesNotifier() : super(fakeEpisodes);
+  OfflineEpisodesNotifier() : super([]);
 
   void addEpisode(Episode episode) {
     state = [...state, episode];
@@ -52,6 +26,13 @@ class OfflineEpisodesNotifier extends StateNotifier<List<Episode>> {
     }
 
     state = newState;
+  }
+
+  bool isOfflineEpisode(Episode episode) {
+    for (final item in state) {
+      if (episode.id == item.id) return true;
+    }
+    return false;
   }
 }
 

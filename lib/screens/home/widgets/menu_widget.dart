@@ -10,7 +10,7 @@ class MenuSheet extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void updateCurrentScreen(Screens screen) {
+    void updateCurrentScreen(HomeScreens screen) {
       ref.read(homeMenuProvider.notifier).update((state) => screen);
     }
 
@@ -20,25 +20,25 @@ class MenuSheet extends HookConsumerWidget {
       children: [
         const BottomSheetHeader(),
         MenuItem(
-          name: Screens.latestEpisodes.translate(),
+          name: HomeScreens.latestEpisodes.translate(),
           onTap: () {
-            updateCurrentScreen(Screens.latestEpisodes);
+            updateCurrentScreen(HomeScreens.latestEpisodes);
             Navigator.pop(context);
           },
         ),
         const SizedBox(height: 10),
         MenuItem(
-          name: Screens.categories.translate(),
+          name: HomeScreens.categories.translate(),
           onTap: () {
-            updateCurrentScreen(Screens.categories);
+            updateCurrentScreen(HomeScreens.categories);
             Navigator.pop(context);
           },
         ),
         const SizedBox(height: 10),
         MenuItem(
-          name: Screens.offline.translate(),
+          name: HomeScreens.offline.translate(),
           onTap: () {
-            updateCurrentScreen(Screens.offline);
+            updateCurrentScreen(HomeScreens.offline);
             Navigator.pop(context);
           },
         ),
@@ -49,7 +49,7 @@ class MenuSheet extends HookConsumerWidget {
 }
 
 class MenuButton extends StatelessWidget {
-  final Screens currentScreen;
+  final HomeScreens currentScreen;
   final VoidCallback onPressed;
 
   const MenuButton({

@@ -29,7 +29,10 @@ class PlayerManager {
     _listenToChangesInPlaylist();
   }
 
-  Future<void> playEpisode(Episode episode) async {
+  Future<void> playEpisode({
+    required Episode episode,
+    required bool isOfflineEpisode,
+  }) async {
     final imageUrl = episode.imageUrl;
     final artUri = Uri.parse(imageUrl);
 
@@ -39,7 +42,7 @@ class PlayerManager {
       artUri: artUri,
       title: episode.title,
       extras: {
-        'url': episode.audioFileUrl,
+        'url': isOfflineEpisode ? episode.audioFilePath : episode.audioFileUrl,
         'positionInSeconds': episode.positionInSeconds,
       },
     );
