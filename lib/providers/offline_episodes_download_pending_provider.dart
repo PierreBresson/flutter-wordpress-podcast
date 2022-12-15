@@ -11,7 +11,7 @@ class OfflineEpisodesDownloadPendingNotifier
 
   Episode? getEpisode(int id) {
     for (final episode in state) {
-      if (episode.id != id) {
+      if (episode.id == id) {
         return episode;
       }
     }

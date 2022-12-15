@@ -25,7 +25,7 @@ class PodcastProgressDownloadIndicator extends HookConsumerWidget {
         Icons.cancel,
         size: 24,
       ),
-      onTap: () {
+      onTap: () async {
         final Episode? episode = ref
             .read(offlineEpisodesDownloadPendingStateProvider.notifier)
             .getEpisode(taskEpisode.episodeId);
@@ -39,10 +39,22 @@ class PodcastProgressDownloadIndicator extends HookConsumerWidget {
             ref
                 .read(tasksStateProvider.notifier)
                 .removeTaskById(episode.audioFileDownloadTaskId!);
-            FlutterDownloader.remove(
-              taskId: episode.audioFileDownloadTaskId!,
-              shouldDeleteContent: true,
-            );
+
+            try {
+              await FlutterDownloader.cancel(
+                taskId: episode.audioFileDownloadTaskId!,
+              );
+              await FlutterDownloader.remove(
+                taskId: episode.audioFileDownloadTaskId!,
+                shouldDeleteContent: true,
+              );
+            } catch (error) {
+              if (kDebugMode) {
+                print(
+                  "TODO PodcastProgressDownloadIndicator remove audioFileDownloadTaskId failed with episode ${episode.toString()}",
+                );
+              }
+            }
           } else {
             if (kDebugMode) {
               print(
@@ -55,10 +67,22 @@ class PodcastProgressDownloadIndicator extends HookConsumerWidget {
             ref
                 .read(tasksStateProvider.notifier)
                 .removeTaskById(episode.imageDownloadTaskId!);
-            FlutterDownloader.remove(
-              taskId: episode.imageDownloadTaskId!,
-              shouldDeleteContent: true,
-            );
+
+            try {
+              await FlutterDownloader.cancel(
+                taskId: episode.imageDownloadTaskId!,
+              );
+              await FlutterDownloader.remove(
+                taskId: episode.imageDownloadTaskId!,
+                shouldDeleteContent: true,
+              );
+            } catch (error) {
+              if (kDebugMode) {
+                print(
+                  "TODO PodcastProgressDownloadIndicator remove imageDownloadTaskId failed with episode ${episode.toString()}",
+                );
+              }
+            }
           } else {
             if (kDebugMode) {
               print(

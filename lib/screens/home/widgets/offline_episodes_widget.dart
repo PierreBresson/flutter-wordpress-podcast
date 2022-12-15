@@ -22,6 +22,7 @@ class OfflineEpisodesState extends ConsumerState<OfflineEpisodes> {
 
   @override
   Widget build(BuildContext context) {
+    String amountOfDownloads = "";
     final List<Task> tasks = ref.watch(tasksStateProvider);
     final List<Episode> episodesPendingDownload =
         ref.watch(offlineEpisodesDownloadPendingStateProvider);
@@ -29,7 +30,7 @@ class OfflineEpisodesState extends ConsumerState<OfflineEpisodes> {
       episodesPendingDownload: episodesPendingDownload,
       tasks: tasks,
     );
-    String amountOfDownloads = "";
+
     if (tasksEpisode.isNotEmpty) {
       amountOfDownloads = "(${tasksEpisode.length.toString()})";
     }

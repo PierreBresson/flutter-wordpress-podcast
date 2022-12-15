@@ -7,6 +7,7 @@ List<TaskEpisode> getTaskEpisode({
   required List<Task> tasks,
 }) {
   final List<TaskEpisode> tasksEpisode = [];
+
   for (final episodePendingDownload in episodesPendingDownload) {
     final taskAudioFile = tasks.firstWhereOrNull(
       (task) => task.id == episodePendingDownload.audioFileDownloadTaskId,
@@ -24,7 +25,7 @@ List<TaskEpisode> getTaskEpisode({
       tasksEpisode.add(taskEpisode);
     } else {
       if (kDebugMode) {
-        print("TODO can't find corresponding task/episode");
+        print("TODO getTaskEpisode can't find corresponding task/episode");
       }
     }
   }
