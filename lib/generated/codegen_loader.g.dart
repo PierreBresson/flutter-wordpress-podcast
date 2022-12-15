@@ -69,6 +69,8 @@ class CodegenLoader extends AssetLoader {
     "episode_options_widget_download_offline_episode": "Download episode",
     "episode_options_widget_download_offline_episode_in_progress":
         "Downloading in progress",
+    "episode_options_widget_download_offline_episode_max_download_items_reach":
+        "One episode can be download at a time. Please wait or cancel current download",
     "episode_options_widget_delete_offline_episode": "Delete offline episode",
     "episode_options_widget_delete_offline_episode_sucess":
         "The offline episode was successfuly deleted",
@@ -144,6 +146,8 @@ class CodegenLoader extends AssetLoader {
     "episode_options_widget_download_offline_episode": "Télécharger l'épisode",
     "episode_options_widget_download_offline_episode_in_progress":
         "Le téléchargement de l'épisode a démarré",
+    "episode_options_widget_download_offline_episode_max_download_items_reach":
+        "Un seul episode à la fois peut être téléchargé à la fois. Merci de patienter ou d'annuler le téléchargement en cours",
     "episode_options_widget_delete_offline_episode":
         "Supprimer l'épisode hors-ligne",
     "episode_options_widget_delete_offline_episode_sucess":

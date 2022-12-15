@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fwp/models/models.dart';
+import 'package:fwp/providers/providers.dart';
 import 'package:fwp/widgets/bottom_sheet_header_widget.dart';
 import 'package:fwp/widgets/episode_options_widget/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class EpisodeOptions extends StatelessWidget {
+class EpisodeOptions extends HookConsumerWidget {
   final Episode episode;
 
   const EpisodeOptions({
@@ -12,8 +14,11 @@ class EpisodeOptions extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext contexts) {
+  Widget build(BuildContext contexts, WidgetRef ref) {
     bool isOfflineEpisode = false;
+    final isEpisodeBeingDownloaded = ref
+        .watch(offlineEpisodesDownloadPendingStateProvider.notifier)
+        .hasEpisode(episode.id);
 
     if (episode.audioFilePath != null && episode.audioFilePath!.isNotEmpty) {
       isOfflineEpisode = true;
@@ -37,7 +42,9 @@ class EpisodeOptions extends StatelessWidget {
         ),
         EpisodeOptionsListItemMarkAsRead(episode: episode),
         EpisodeOptionsListItemInfo(episode: episode),
-        if (isOfflineEpisode) ...[
+        if (isEpisodeBeingDownloaded) ...[
+          const SizedBox.shrink()
+        ] else if (isOfflineEpisode) ...[
           EpisodeOptionsListItemDeleteOfflineEpisode(episode: episode)
         ] else ...[
           EpisodeOptionsListItemDownloadOfflineEpisode(episode: episode)

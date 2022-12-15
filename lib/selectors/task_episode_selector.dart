@@ -23,10 +23,6 @@ List<TaskEpisode> getTaskEpisode({
         progress: taskAudioFile.progress - 1 + progressImage,
       );
       tasksEpisode.add(taskEpisode);
-    } else {
-      if (kDebugMode) {
-        print("TODO getTaskEpisode can't find corresponding task/episode");
-      }
     }
   }
   return tasksEpisode;

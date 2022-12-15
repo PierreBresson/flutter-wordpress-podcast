@@ -29,11 +29,13 @@ class OfflineEpisodesDownloadingState
       _port.sendPort,
       'downloader_send_port',
     );
+
     if (!isSuccess) {
       _unbindBackgroundIsolate();
       _bindBackgroundIsolate();
       return;
     }
+
     _port.listen((dynamic data) {
       final taskId = (data as List<dynamic>)[0] as String;
       final status = data[1] as DownloadTaskStatus;
@@ -73,6 +75,7 @@ class OfflineEpisodesDownloadingState
     ref.read(tasksStateProvider.notifier).addListener((state) {
       final List<Episode> episodes =
           ref.read(offlineEpisodesDownloadPendingStateProvider);
+
       for (final episode in episodes) {
         final taskAudioFile = state.firstWhereOrNull(
           (task) => task.id == episode.audioFileDownloadTaskId,
@@ -80,12 +83,16 @@ class OfflineEpisodesDownloadingState
         final taskImage = state.firstWhereOrNull(
           (task) => task.id == episode.imageDownloadTaskId,
         );
+
         if (taskAudioFile != null && taskImage != null) {
           if (taskAudioFile.status == DownloadTaskStatus.complete &&
               taskImage.status == DownloadTaskStatus.complete) {
             ref.read(offlineEpisodesStateProvider.notifier).addEpisode(episode);
             ref.read(tasksStateProvider.notifier).removeTask(taskAudioFile);
             ref.read(tasksStateProvider.notifier).removeTask(taskImage);
+            ref
+                .read(offlineEpisodesDownloadPendingStateProvider.notifier)
+                .removeEpisodeById(episode.id);
           }
         }
       }

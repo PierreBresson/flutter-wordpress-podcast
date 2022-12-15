@@ -107,78 +107,100 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
     _prepare();
   }
 
+  Future<void> startDownload(BuildContext context) async {
+    String? taskIdAudioFileUrl;
+    String? taskIdImage;
+    final navigator = Navigator.of(context);
+    final scaffold = ScaffoldMessenger.of(context);
+
+    try {
+      taskIdAudioFileUrl = await FlutterDownloader.enqueue(
+        url: widget.episode.audioFileUrl,
+        savedDir: _localPath,
+      );
+      taskIdImage = await FlutterDownloader.enqueue(
+        url: widget.episode.imageUrl,
+        savedDir: _localPath,
+      );
+    } catch (error) {
+      if (kDebugMode) {
+        print(
+          "TODO episode options error FlutterDownloader.enqueue $error",
+        );
+      }
+      showError(scaffold);
+      navigator.pop();
+      return;
+    }
+
+    if (taskIdAudioFileUrl != null && taskIdImage != null) {
+      final episodeWithTaskId = widget.episode;
+      episodeWithTaskId.audioFileDownloadTaskId = taskIdAudioFileUrl;
+      episodeWithTaskId.imageDownloadTaskId = taskIdImage;
+      final baseNameAudioFile =
+          basename(File(episodeWithTaskId.audioFileUrl).path);
+      final baseNameImage = basename(File(episodeWithTaskId.imageUrl).path);
+
+      episodeWithTaskId.audioFilePath = _localPath + baseNameAudioFile;
+      episodeWithTaskId.imagePath = _localPath + baseNameImage;
+
+      ref
+          .read(offlineEpisodesDownloadPendingStateProvider.notifier)
+          .addEpisode(episodeWithTaskId);
+    } else {
+      if (kDebugMode) {
+        print(
+          "TODO episode options at least one of one of the taskId is null",
+        );
+      }
+
+      navigator.pop();
+      showError(scaffold);
+      return;
+    }
+  }
+
+  Future<void> onTap(BuildContext context) async {
+    final List<Episode> episodesPendingDownload =
+        ref.read(offlineEpisodesDownloadPendingStateProvider);
+    final navigator = Navigator.of(context);
+    final scaffold = ScaffoldMessenger.of(context);
+
+    if (episodesPendingDownload.isNotEmpty) {
+      navigator.pop();
+      scaffold.showSnackBar(
+        SnackBar(
+          content: Text(
+            LocaleKeys
+                .episode_options_widget_download_offline_episode_max_download_items_reach
+                .tr(),
+          ),
+        ),
+      );
+      return;
+    }
+
+    await startDownload(context);
+
+    navigator.pop();
+    ref.read(homeMenuProvider.notifier).update((state) => HomeScreens.offline);
+
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(
+          LocaleKeys.episode_options_widget_download_offline_episode_in_progress
+              .tr(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return EpisodeOptionsListItem(
       iconData: Icons.download,
       text: LocaleKeys.episode_options_widget_download_offline_episode.tr(),
-      onTap: () async {
-        final navigator = Navigator.of(context);
-        final scaffold = ScaffoldMessenger.of(context);
-        String? taskIdAudioFileUrl;
-        String? taskIdImage;
-
-        try {
-          taskIdAudioFileUrl = await FlutterDownloader.enqueue(
-            url: widget.episode.audioFileUrl,
-            savedDir: _localPath,
-          );
-          taskIdImage = await FlutterDownloader.enqueue(
-            url: widget.episode.imageUrl,
-            savedDir: _localPath,
-          );
-        } catch (error) {
-          if (kDebugMode) {
-            print(
-              "TODO episode options error FlutterDownloader.enqueue $error",
-            );
-          }
-          showError(scaffold);
-          navigator.pop();
-          return;
-        }
-
-        if (taskIdAudioFileUrl != null && taskIdImage != null) {
-          final episodeWithTaskId = widget.episode;
-          episodeWithTaskId.audioFileDownloadTaskId = taskIdAudioFileUrl;
-          episodeWithTaskId.imageDownloadTaskId = taskIdImage;
-          final baseNameAudioFile =
-              basename(File(episodeWithTaskId.audioFileUrl).path);
-          final baseNameImage = basename(File(episodeWithTaskId.imageUrl).path);
-
-          episodeWithTaskId.audioFilePath = _localPath + baseNameAudioFile;
-          episodeWithTaskId.imagePath = _localPath + baseNameImage;
-
-          ref
-              .read(offlineEpisodesDownloadPendingStateProvider.notifier)
-              .addEpisode(episodeWithTaskId);
-        } else {
-          if (kDebugMode) {
-            print(
-              "TODO episode options at least one of one of the taskId is null",
-            );
-          }
-
-          showError(scaffold);
-          navigator.pop();
-          return;
-        }
-
-        navigator.pop();
-        ref
-            .read(homeMenuProvider.notifier)
-            .update((state) => HomeScreens.offline);
-
-        scaffold.showSnackBar(
-          SnackBar(
-            content: Text(
-              LocaleKeys
-                  .episode_options_widget_download_offline_episode_in_progress
-                  .tr(),
-            ),
-          ),
-        );
-      },
+      onTap: () => onTap(context),
     );
   }
 }

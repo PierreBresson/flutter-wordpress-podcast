@@ -65,6 +65,8 @@ abstract class LocaleKeys {
       'episode_options_widget_download_offline_episode';
   static const episode_options_widget_download_offline_episode_in_progress =
       'episode_options_widget_download_offline_episode_in_progress';
+  static const episode_options_widget_download_offline_episode_max_download_items_reach =
+      'episode_options_widget_download_offline_episode_max_download_items_reach';
   static const episode_options_widget_delete_offline_episode =
       'episode_options_widget_delete_offline_episode';
   static const episode_options_widget_delete_offline_episode_sucess =

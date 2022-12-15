@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fwp/models/models.dart';
 
@@ -18,11 +19,14 @@ class OfflineEpisodesDownloadPendingNotifier
     return null;
   }
 
-  void removeEpisode(Episode episodeToBeRemoved) {
-    state = [
-      for (final episode in state)
-        if (episode.id != episodeToBeRemoved.id) episode,
-    ];
+  bool hasEpisode(int id) {
+    final episode = state.firstWhereOrNull(
+      (item) => item.id == id,
+    );
+    if (episode != null) {
+      return true;
+    }
+    return false;
   }
 
   void removeEpisodeById(int id) {
