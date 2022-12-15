@@ -19,7 +19,7 @@ class HomeScreen extends HookConsumerWidget {
           ),
         ),
         context: context,
-        builder: (BuildContext context) => const MenuSheet(),
+        builder: (BuildContext context) => const HomeMenuSheet(),
       );
     }
 
@@ -36,7 +36,7 @@ class HomeScreen extends HookConsumerWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MenuButton(
+            HomeMenuButton(
               currentScreen: currentScreen,
               onPressed: () => onPressedMenu(context),
             ),
@@ -54,7 +54,7 @@ class HomeScreen extends HookConsumerWidget {
               child: Categories(),
             ),
           ] else if (currentScreen == HomeScreens.offline) ...[
-            const Expanded(
+            Expanded(
               child: OfflineEpisodes(),
             ),
           ]

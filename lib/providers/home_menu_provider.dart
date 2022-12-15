@@ -9,7 +9,7 @@ const List<HomeScreens> homeScreens = <HomeScreens>[
   HomeScreens.offline
 ];
 
-extension ScreensExtension on HomeScreens {
+extension HomeScreensExtension on HomeScreens {
   String translate() {
     switch (this) {
       case HomeScreens.latestEpisodes:
@@ -23,4 +23,4 @@ extension ScreensExtension on HomeScreens {
 }
 
 final homeMenuProvider =
-    StateProvider<HomeScreens>((ref) => HomeScreens.offline);
+    StateProvider<HomeScreens>((ref) => HomeScreens.latestEpisodes);

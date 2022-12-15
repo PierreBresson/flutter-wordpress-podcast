@@ -1,27 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:fwp/i18n.dart';
 import 'package:fwp/models/models.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/screens/home/widgets/widgets/widgets.dart';
 import 'package:fwp/selectors/selectors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-enum EpisodesTabs { downloaded, inDownload }
-
-class OfflineEpisodes extends ConsumerStatefulWidget {
-  const OfflineEpisodes({
-    super.key,
-  });
-
+class OfflineEpisodes extends HookConsumerWidget {
   @override
-  OfflineEpisodesState createState() => OfflineEpisodesState();
-}
-
-class OfflineEpisodesState extends ConsumerState<OfflineEpisodes> {
-  EpisodesTabs _selectedSegment = EpisodesTabs.downloaded;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     String amountOfDownloads = "";
     final List<Task> tasks = ref.watch(tasksStateProvider);
     final List<Episode> episodesPendingDownload =
@@ -30,6 +16,7 @@ class OfflineEpisodesState extends ConsumerState<OfflineEpisodes> {
       episodesPendingDownload: episodesPendingDownload,
       tasks: tasks,
     );
+    final currentScreen = ref.watch(offlineDownloadsMenuProvider);
 
     if (tasksEpisode.isNotEmpty) {
       amountOfDownloads = "(${tasksEpisode.length.toString()})";
@@ -40,34 +27,33 @@ class OfflineEpisodesState extends ConsumerState<OfflineEpisodes> {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
           child: Center(
-            child: CupertinoSlidingSegmentedControl<EpisodesTabs>(
-              groupValue: _selectedSegment,
-              onValueChanged: (EpisodesTabs? value) {
+            child: CupertinoSlidingSegmentedControl<OfflineEpisodesScreens>(
+              groupValue: currentScreen,
+              onValueChanged: (OfflineEpisodesScreens? value) {
                 if (value != null) {
-                  setState(() {
-                    _selectedSegment = value;
-                  });
+                  ref
+                      .read(offlineDownloadsMenuProvider.notifier)
+                      .update((state) => value);
                 }
               },
-              children: <EpisodesTabs, Widget>{
-                EpisodesTabs.downloaded: Padding(
+              children: <OfflineEpisodesScreens, Widget>{
+                OfflineEpisodesScreens.downloaded: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    LocaleKeys.offline_episodes_widget_downloaded.tr(),
+                    OfflineEpisodesScreens.downloaded.name,
                   ),
                 ),
-                EpisodesTabs.inDownload: Padding(
+                OfflineEpisodesScreens.inDownload: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    LocaleKeys.offline_episodes_widget_in_download.tr() +
-                        amountOfDownloads,
+                    OfflineEpisodesScreens.inDownload.name + amountOfDownloads,
                   ),
                 ),
               },
             ),
           ),
         ),
-        if (_selectedSegment == EpisodesTabs.downloaded) ...[
+        if (currentScreen == OfflineEpisodesScreens.downloaded) ...[
           const Expanded(
             child: OfflineEpisodesDownloaded(),
           ),

@@ -6,6 +6,7 @@ export './episodes_of_category_provider.dart';
 export './episodes_provider.dart';
 export './home_menu_provider.dart';
 export './offline_episodes_download_pending_provider.dart';
+export './offline_episodes_menu_provider.dart';
 export './offline_episodes_provider.dart';
 export './played_episodes_provider.dart';
 export './player_provider.dart';

@@ -147,6 +147,9 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
       ref
           .read(offlineEpisodesDownloadPendingStateProvider.notifier)
           .addEpisode(episodeWithTaskId);
+      ref
+          .read(offlineDownloadsMenuProvider.notifier)
+          .update((state) => OfflineEpisodesScreens.inDownload);
     } else {
       if (kDebugMode) {
         print(

@@ -3,8 +3,8 @@ import 'package:fwp/providers/providers.dart';
 import 'package:fwp/widgets/bottom_sheet_header_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MenuSheet extends HookConsumerWidget {
-  const MenuSheet({
+class HomeMenuSheet extends HookConsumerWidget {
+  const HomeMenuSheet({
     super.key,
   });
 
@@ -19,7 +19,7 @@ class MenuSheet extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const BottomSheetHeader(),
-        MenuItem(
+        HomeMenuItem(
           name: HomeScreens.latestEpisodes.translate(),
           onTap: () {
             updateCurrentScreen(HomeScreens.latestEpisodes);
@@ -27,7 +27,7 @@ class MenuSheet extends HookConsumerWidget {
           },
         ),
         const SizedBox(height: 10),
-        MenuItem(
+        HomeMenuItem(
           name: HomeScreens.categories.translate(),
           onTap: () {
             updateCurrentScreen(HomeScreens.categories);
@@ -35,7 +35,7 @@ class MenuSheet extends HookConsumerWidget {
           },
         ),
         const SizedBox(height: 10),
-        MenuItem(
+        HomeMenuItem(
           name: HomeScreens.offline.translate(),
           onTap: () {
             updateCurrentScreen(HomeScreens.offline);
@@ -48,11 +48,11 @@ class MenuSheet extends HookConsumerWidget {
   }
 }
 
-class MenuButton extends StatelessWidget {
+class HomeMenuButton extends StatelessWidget {
   final HomeScreens currentScreen;
   final VoidCallback onPressed;
 
-  const MenuButton({
+  const HomeMenuButton({
     super.key,
     required this.currentScreen,
     required this.onPressed,
@@ -94,11 +94,11 @@ class MenuButton extends StatelessWidget {
   }
 }
 
-class MenuItem extends StatelessWidget {
+class HomeMenuItem extends StatelessWidget {
   final String name;
   final VoidCallback onTap;
 
-  const MenuItem({
+  const HomeMenuItem({
     super.key,
     required this.name,
     required this.onTap,
