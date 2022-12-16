@@ -68,14 +68,15 @@ class Episode {
       final String title =
           unescape.convert(json['title']['rendered'] as String);
       final String date = json['date'] as String;
-      final String audioFileUrl = json['meta']['audio_file'] as String;
+      final String audioFileUrl =
+          Uri.encodeFull(json['meta']['audio_file'] as String);
       final String articleUrl = json['link'] as String;
       final String description = json["content"]["rendered"] as String;
       String imageUrl = "";
       String? youtubeUrl;
 
       if (APP.thinkerview.name == app) {
-        imageUrl = json['episode_featured_image'] as String;
+        imageUrl = Uri.encodeFull(json['episode_featured_image'] as String);
         /* in case acf plugin isn't working */
         final rendered = json['content']['rendered'] as String;
         final regexp = RegExp(
@@ -92,7 +93,7 @@ class Episode {
               "https://www.youtube.com/watch?v=${id.replaceAll('"', "")}";
         }
       } else if (APP.causecommune.name == app) {
-        imageUrl = json['episode_player_image'] as String;
+        imageUrl = Uri.encodeFull(json['episode_player_image'] as String);
       }
 
       return Episode(

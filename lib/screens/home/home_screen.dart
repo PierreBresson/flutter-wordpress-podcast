@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fwp/i18n.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/screens/home/widgets/widgets.dart';
@@ -43,6 +45,24 @@ class HomeScreen extends HookConsumerWidget {
           ],
         ),
       ),
+      floatingActionButton: kDebugMode
+          ? FloatingActionButton(
+              backgroundColor: Colors.green,
+              child: const Icon(Icons.navigation),
+              onPressed: () async {
+                final tasks = await FlutterDownloader.loadTasks();
+                if (tasks!.isNotEmpty) {
+                  for (final task in tasks) {
+                    print(task);
+                    await FlutterDownloader.remove(
+                      taskId: task.taskId,
+                      shouldDeleteContent: true,
+                    );
+                  }
+                }
+              },
+            )
+          : null,
       body: Column(
         children: [
           if (currentScreen == HomeScreens.latestEpisodes) ...[
