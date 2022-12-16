@@ -92,7 +92,7 @@ class OfflineEpisodesDownloadingState
             ref.read(tasksStateProvider.notifier).removeTask(taskImage);
             ref
                 .read(offlineEpisodesDownloadPendingStateProvider.notifier)
-                .removeEpisodeById(episode.id);
+                .removeEpisodeById(episode);
           }
         }
       }

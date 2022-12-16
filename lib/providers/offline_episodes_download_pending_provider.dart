@@ -19,9 +19,9 @@ class OfflineEpisodesDownloadPendingNotifier
     return null;
   }
 
-  bool hasEpisode(int id) {
+  bool hasEpisode(Episode episodeToBeFound) {
     final episode = state.firstWhereOrNull(
-      (item) => item.id == id,
+      (item) => item.id == episodeToBeFound.id,
     );
     if (episode != null) {
       return true;
@@ -29,10 +29,10 @@ class OfflineEpisodesDownloadPendingNotifier
     return false;
   }
 
-  void removeEpisodeById(int id) {
+  void removeEpisodeById(Episode episodeToBeRemoved) {
     state = [
       for (final episode in state)
-        if (episode.id != id) episode,
+        if (episode.id != episodeToBeRemoved.id) episode,
     ];
   }
 

@@ -16,10 +16,11 @@ List<TaskEpisode> getTaskEpisode({
     );
     if (taskAudioFile != null && taskImage != null) {
       final progressImage = (taskImage.progress / 100) == 1 ? 1 : 0;
+      final progress = taskAudioFile.progress + progressImage - 1;
       final taskEpisode = TaskEpisode(
         episodeId: episodePendingDownload.id,
         name: episodePendingDownload.title,
-        progress: taskAudioFile.progress - 1 + progressImage,
+        progress: progress > 0 ? progress : 0,
       );
       tasksEpisode.add(taskEpisode);
     }

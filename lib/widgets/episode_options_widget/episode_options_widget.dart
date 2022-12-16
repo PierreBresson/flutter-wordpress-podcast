@@ -15,14 +15,12 @@ class EpisodeOptions extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext contexts, WidgetRef ref) {
-    bool isOfflineEpisode = false;
     final isEpisodeBeingDownloaded = ref
-        .watch(offlineEpisodesDownloadPendingStateProvider.notifier)
-        .hasEpisode(episode.id);
-
-    if (episode.audioFilePath != null && episode.audioFilePath!.isNotEmpty) {
-      isOfflineEpisode = true;
-    }
+        .read(offlineEpisodesDownloadPendingStateProvider.notifier)
+        .hasEpisode(episode);
+    final isOfflineEpisode = ref
+        .read(offlineEpisodesStateProvider.notifier)
+        .isOfflineEpisode(episode);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
