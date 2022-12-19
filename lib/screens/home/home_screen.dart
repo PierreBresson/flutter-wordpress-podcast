@@ -50,16 +50,7 @@ class HomeScreen extends HookConsumerWidget {
               backgroundColor: Colors.green,
               child: const Icon(Icons.navigation),
               onPressed: () async {
-                final tasks = await FlutterDownloader.loadTasks();
-                if (tasks!.isNotEmpty) {
-                  for (final task in tasks) {
-                    print(task);
-                    await FlutterDownloader.remove(
-                      taskId: task.taskId,
-                      shouldDeleteContent: true,
-                    );
-                  }
-                }
+//
               },
             )
           : null,

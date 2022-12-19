@@ -46,8 +46,7 @@ class OfflineEpisodes extends HookConsumerWidget {
                 OfflineEpisodesScreens.inDownload: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    OfflineEpisodesScreens.inDownload.translate() +
-                        amountOfDownloads,
+                    "${OfflineEpisodesScreens.inDownload.translate()} $amountOfDownloads",
                   ),
                 ),
               },
