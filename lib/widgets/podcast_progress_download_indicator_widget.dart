@@ -35,10 +35,6 @@ class PodcastProgressDownloadIndicator extends HookConsumerWidget {
               .read(offlineEpisodesDownloadPendingStateProvider.notifier)
               .removeEpisodeById(episode);
 
-          print("TODO : fix FlutterDownloader.remove crash");
-          print(episode.audioFileDownloadTaskId);
-          print(episode.imageDownloadTaskId);
-
           if (episode.audioFileDownloadTaskId != null) {
             ref
                 .read(tasksStateProvider.notifier)

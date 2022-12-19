@@ -117,10 +117,14 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
       taskIdAudioFileUrl = await FlutterDownloader.enqueue(
         url: widget.episode.audioFileUrl,
         savedDir: _localPath,
+        showNotification: false,
+        saveInPublicStorage: true,
       );
       taskIdImage = await FlutterDownloader.enqueue(
         url: widget.episode.imageUrl,
         savedDir: _localPath,
+        showNotification: false,
+        saveInPublicStorage: true,
       );
     } catch (error) {
       if (kDebugMode) {
