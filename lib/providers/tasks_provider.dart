@@ -23,6 +23,12 @@ class TasksNotifier extends StateNotifier<List<Task>> {
     ];
   }
 
+  Task? getTask(String id) {
+    return state.firstWhereOrNull(
+      (task) => task.id == id,
+    );
+  }
+
   void updateTask(Task taskToBeUpdated) {
     final List<Task> newState = [];
 

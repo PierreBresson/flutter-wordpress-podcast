@@ -44,16 +44,22 @@ class PodcastProgressDownloadIndicator extends HookConsumerWidget {
                 .read(tasksStateProvider.notifier)
                 .removeTaskById(episode.audioFileDownloadTaskId!);
 
-            try {
-              await FlutterDownloader.remove(
-                taskId: episode.audioFileDownloadTaskId!,
-                shouldDeleteContent: true,
-              );
-            } catch (error) {
-              if (kDebugMode) {
-                print(
-                  "TODO PodcastProgressDownloadIndicator remove audioFileDownloadTaskId failed with episode ${episode.toString()}",
+            final audioTask = ref
+                .read(tasksStateProvider.notifier)
+                .getTask(episode.audioFileDownloadTaskId!);
+
+            if (audioTask != null) {
+              try {
+                await FlutterDownloader.remove(
+                  taskId: episode.audioFileDownloadTaskId!,
+                  shouldDeleteContent: true,
                 );
+              } catch (error) {
+                if (kDebugMode) {
+                  print(
+                    "TODO PodcastProgressDownloadIndicator remove audioFileDownloadTaskId failed with episode ${episode.toString()}",
+                  );
+                }
               }
             }
           } else {
@@ -69,16 +75,22 @@ class PodcastProgressDownloadIndicator extends HookConsumerWidget {
                 .read(tasksStateProvider.notifier)
                 .removeTaskById(episode.imageDownloadTaskId!);
 
-            try {
-              await FlutterDownloader.remove(
-                taskId: episode.imageDownloadTaskId!,
-                shouldDeleteContent: true,
-              );
-            } catch (error) {
-              if (kDebugMode) {
-                print(
-                  "TODO PodcastProgressDownloadIndicator remove imageDownloadTaskId failed with episode ${episode.toString()}",
+            final imageTask = ref
+                .read(tasksStateProvider.notifier)
+                .getTask(episode.imageDownloadTaskId!);
+
+            if (imageTask != null) {
+              try {
+                await FlutterDownloader.remove(
+                  taskId: episode.imageDownloadTaskId!,
+                  shouldDeleteContent: true,
                 );
+              } catch (error) {
+                if (kDebugMode) {
+                  print(
+                    "TODO PodcastProgressDownloadIndicator remove imageDownloadTaskId failed with episode ${episode.toString()}",
+                  );
+                }
               }
             }
           } else {
