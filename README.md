@@ -25,7 +25,7 @@ Already existing and planned features
 - [x] Audio playback when leaving app
 - [x] Search
 - [x] Env config / scripts - white label apps
-- [x] Log crash/bugs to Sentry
+- [ ] Log crash/bugs
 - [x] Image caching
 - [x] Episode detail - Fact checking for Thinkerview
 - [x] localization - i18n

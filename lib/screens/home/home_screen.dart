@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fwp/i18n.dart';
 import 'package:fwp/providers/providers.dart';
 import 'package:fwp/screens/home/widgets/widgets.dart';

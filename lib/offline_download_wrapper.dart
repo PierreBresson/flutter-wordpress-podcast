@@ -84,10 +84,25 @@ class OfflineEpisodesDownloadingState
           (task) => task.id == episode.imageDownloadTaskId,
         );
 
+        print("titi");
         if (taskAudioFile != null && taskImage != null) {
+          print("toto");
+          print(taskAudioFile.status);
+          print(taskImage.status);
+          print("toto end");
           if (taskAudioFile.status == DownloadTaskStatus.complete &&
               taskImage.status == DownloadTaskStatus.complete) {
+            print("tata");
             ref.read(offlineEpisodesStateProvider.notifier).addEpisode(episode);
+            ref.read(tasksStateProvider.notifier).removeTask(taskAudioFile);
+            ref.read(tasksStateProvider.notifier).removeTask(taskImage);
+            ref
+                .read(offlineEpisodesDownloadPendingStateProvider.notifier)
+                .removeEpisodeById(episode);
+          }
+
+          if (taskAudioFile.status == DownloadTaskStatus.failed &&
+              taskImage.status == DownloadTaskStatus.failed) {
             ref.read(tasksStateProvider.notifier).removeTask(taskAudioFile);
             ref.read(tasksStateProvider.notifier).removeTask(taskImage);
             ref

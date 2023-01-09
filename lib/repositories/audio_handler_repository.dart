@@ -86,17 +86,22 @@ class MyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> playMediaItem(MediaItem newMediaItem) async {
-    final url = newMediaItem.extras?.entries.first.value as String;
+    final path = newMediaItem.extras?.entries.first.value as String;
     final positionInSeconds = newMediaItem.extras?.entries.last.value as int;
     queue.add([newMediaItem]);
     mediaItem.add(newMediaItem);
+    final isLocalFile = true;
 
     if (_player.playing) {
       await _player.stop();
     }
 
     try {
-      await _player.setUrl(url);
+      if (isLocalFile) {
+        await _player.setAsset(path);
+      } else {
+        await _player.setUrl(path);
+      }
     } on PlayerException catch (error) {
       if (kDebugMode) {
         print("TODO audioHandler : Error code: ${error.code}");

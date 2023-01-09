@@ -68,7 +68,7 @@ class HttpRepository {
       );
     } catch (error) {
       if (kDebugMode) {
-        print("TODO error $error");
+        print("TODO getEpisodes error $error");
       }
       throw "Impossible de recuperer les episodes";
     }
@@ -131,7 +131,7 @@ class HttpRepository {
       );
     } catch (error) {
       if (kDebugMode) {
-        print("TODO error $error");
+        print("TODO getEpisodesFromCategory error $error");
       }
       throw "Error when getting episodes from category $categoryId";
     }
@@ -190,7 +190,7 @@ class HttpRepository {
       return ids;
     } else {
       if (kDebugMode) {
-        print("TODO error incorrect search");
+        print("TODO search error incorrect search");
       }
       throw "La recherche a échoué";
     }
@@ -263,7 +263,7 @@ class HttpRepository {
               id = item['id'] as int;
             } catch (error) {
               if (kDebugMode) {
-                print("TODO error get id getEpisodesCategories $error");
+                print("TODO get id getEpisodesCategories error $error");
               }
             }
             if (id == 1) {
@@ -286,7 +286,7 @@ class HttpRepository {
         }
       } catch (error) {
         if (kDebugMode) {
-          print("TODO error parse x-wp-total $error");
+          print("TODO parse x-wp-total error $error");
         }
       }
 

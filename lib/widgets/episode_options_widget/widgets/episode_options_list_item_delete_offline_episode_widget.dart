@@ -39,7 +39,7 @@ class EpisodeOptionsListItemDeleteOfflineEpisode extends HookConsumerWidget {
         } catch (error) {
           if (kDebugMode) {
             print(
-              "TODO error episode delete episode ${episode.id.toString()} $error",
+              "TODO delete episode error ${episode.id.toString()} $error",
             );
           }
 

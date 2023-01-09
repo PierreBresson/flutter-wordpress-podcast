@@ -44,7 +44,7 @@ class EpisodeOptionsListItemPlay extends HookConsumerWidget {
           Navigator.of(context).maybePop();
         } catch (error) {
           if (kDebugMode) {
-            print("TODO error play episode $error");
+            print("TODO play episode error $error");
           }
 
           ScaffoldMessenger.of(context).showSnackBar(

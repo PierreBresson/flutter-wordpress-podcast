@@ -7,6 +7,7 @@ class OfflineEpisodesDownloadPendingNotifier
   OfflineEpisodesDownloadPendingNotifier() : super([]);
 
   void addEpisode(Episode episode) {
+    print("OfflineEpisodesDownloadPendingNotifier addEpisode $episode");
     state = [...state, episode];
   }
 
@@ -47,6 +48,7 @@ class OfflineEpisodesDownloadPendingNotifier
   }
 
   void updateEpisode(Episode episodeToBeUpdated) {
+    print("updateEpisode $episodeToBeUpdated");
     final List<Episode> newState = [];
     for (final episode in state) {
       if (episode.id == episodeToBeUpdated.id) {
@@ -57,6 +59,7 @@ class OfflineEpisodesDownloadPendingNotifier
     }
 
     state = newState;
+    print("updateEpisode state $state");
   }
 }
 

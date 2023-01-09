@@ -57,6 +57,7 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
 
   Future<void> _prepareSaveDir() async {
     _localPath = (await _getSavedDir())!;
+    print(_localPath);
     final savedDir = Directory(_localPath);
     if (!savedDir.existsSync()) {
       await savedDir.create();
@@ -145,8 +146,8 @@ class EpisodeOptionsListItemDownloadOfflineEpisodeState
           basename(File(episodeWithTaskId.audioFileUrl).path);
       final baseNameImage = basename(File(episodeWithTaskId.imageUrl).path);
 
-      episodeWithTaskId.audioFilePath = _localPath + baseNameAudioFile;
-      episodeWithTaskId.imagePath = _localPath + baseNameImage;
+      episodeWithTaskId.audioFilePath = "$_localPath/$baseNameAudioFile";
+      episodeWithTaskId.imagePath = "$_localPath/$baseNameImage";
 
       ref
           .read(offlineEpisodesDownloadPendingStateProvider.notifier)

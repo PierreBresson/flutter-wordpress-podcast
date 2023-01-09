@@ -5,6 +5,7 @@ class OfflineEpisodesNotifier extends StateNotifier<List<Episode>> {
   OfflineEpisodesNotifier() : super([]);
 
   void addEpisode(Episode episode) {
+    print("OfflineEpisodesNotifier addEpisode $episode");
     state = [...state, episode];
   }
 
